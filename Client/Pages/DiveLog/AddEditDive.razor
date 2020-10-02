@@ -1,0 +1,60 @@
+﻿@page "/divelog/addeditdive/{Act:bool}/{Id:int}"
+@inject HttpClient http
+@inject NavigationManager uriHelper
+@inject IJSRuntime js
+<h5>@butontext</h5>
+<DiveForm ButtonText=@butontext div="div" loc="loc" ddd="ddd" dg="dg" OnValidSubmit="@SaveDive" />
+
+@code {
+    [Parameter] public bool Act { get; set; }
+    [Parameter] public int Id { get; set; }
+
+    string butontext = string.Empty;
+
+    DiveFormData dfd = new DiveFormData();
+    Dives div = new Dives();
+    List<DiveDropdownData> ddd = new List<DiveDropdownData>();
+    List<ViewLocation> loc = new List<ViewLocation>();
+    DiveGraphic dg = new DiveGraphic();
+
+    protected async override Task OnParametersSetAsync()
+    {
+        try
+        {
+            if (Act)
+            {
+                dfd = await http.GetFromJsonAsync<DiveFormData>($"api/dive/{Id}");
+                div = dfd.Dive;
+                loc = dfd.Viewlocations;
+                ddd = dfd.DDD;
+
+                butontext = "Update";
+            }
+            else
+            {
+                div = new Dives();
+                butontext = "Save";
+            }
+        }
+        catch (Exception ex)
+        {
+            string e = ex.InnerException.ToString();
+        }
+    }
+
+    async Task SaveDive()
+    {
+        if (Act)
+        {
+            await http.PutAsJsonAsync("api/dive", div);
+            await js.InvokeVoidAsync("alert", $"Updated Suicessfully!");
+            uriHelper.NavigateTo("divelog");
+
+        }
+        else
+        {
+            await http.PostAsJsonAsync("api/dive", div);
+            uriHelper.NavigateTo("divelog");
+        }
+    }
+}

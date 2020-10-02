@@ -1,0 +1,111 @@
+﻿@page "/viewdives"
+@inject HttpClient client
+@inject IJSRuntime js
+@{
+    string title = string.Empty;
+    decimal tbt = 0;
+}
+@if (dv == null)
+{
+    title = "Loading...";
+}
+else if (dv.Length == 0)
+{
+    <div class="row">
+        <div class="col-sm-3 form-group">
+            <a class="btn btn-success" href="divelog/adddive"><i class="oi oi-plus"></i> Log New Dive</a>
+        </div>
+        <div class="col-sm-3"><h5>No Records Found.</h5></div>
+        <div class="col-sm-6 justify-content-end">
+            <h5>Total HR's Bottom Time: 0</h5>
+        </div>
+    </div>
+}
+else
+{
+    var count = dv.Count();
+
+    foreach (DiveView div in dv)
+    {
+        tbt = tbt + div.BottomTime;
+    }
+    tbt = tbt / 60;
+    <div class="row">
+        <div class="col-sm-3 form-group">
+            <a class="btn btn-success" href="divelog/addeditdive/false/0"><i class="oi oi-plus"></i> Log New Dive</a>
+        </div>
+        <div class="col-sm-3"><h5>Records Found @count</h5></div>
+        <div class="col-sm-6 justify-content-end">
+            <h5>Total HR's Bottom Time: @tbt.ToString("N2")</h5>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 table">
+            <div class="lh-table-container">
+                <div class="lh-header-container">
+                </div>
+                <div class="lh-table-container-inner">
+                    <table class="table table-condensed table-striped table-hover">
+                        <thead>
+                            <tr>
+                                @*<th class="lh-th"><div class="lh-th-bottomline"></div></th>*@
+                                <th class="lh-th"><div class="lh-th-bottomline"></div></th>
+                                <th class="lh-th"><div class="lh-th-bottomline">Date &amp; Time</div></th>
+                                <th class="lh-th"><div class="lh-th-bottomline">Depth</div></th>
+                                <th class="lh-th"><div class="lh-th-bottomline">Bottom</div></th>
+                                <th class="lh-th"><div class="lh-th-bottomline">Country</div></th>
+                                <th class="lh-th"><div class="lh-th-bottomline">Located</div></th>
+                                <th class="lh-th"><div class="lh-th-bottomline">Location</div></th>
+                                <th class="lh-th"><div class="lh-th-bottomline"></div></th>
+                            </tr>
+                        </thead>
+                        <tbody class="rowlink" data-link="row">
+                            @foreach (DiveView dive in dv)
+                            {
+                                //var tt = "<span class='text-yellow'>Located in: </span>test<br /><span class='text-yellow'>Latitude: </span>here<br /><span class='text-yellow'>Longitude: </span>test<br /><span class='text-yellow'>What to see: </span>see<br />"
+                                ;
+
+                            <tr>
+                                @*<td class="lh-td">@dive.DiverId</td>*@
+                                <td class="col-xs-1 lh-td">
+                                    <a class="text-primary oi oi-pencil" href="divelog/addeditdive/true/@dive.DiveLogId"></a>
+                                </td>
+                                <td class="lh-td">@dive.DiveDateTime</td>
+                                <td class="lh-td">@dive.Depth</td>
+                                <td class="lh-td">@dive.BottomTime</td>
+                                <td class="lh-td">@dive.Country</td>
+                                <td class="lh-td">@dive.Located</td>
+                                <td class="lh-td">@dive.Location</td>
+                                <td class="col-xs-1 lh-td">
+                                    <a class="text-danger oi oi-delete" @onclick="@(() => Delete((int)dive.DiveLogId))"></a>
+                                </td>
+                            </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code { 
+    DiveView[] dv { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        dv = await client.GetFromJsonAsync<DiveView[]>("api/dive");
+    }
+
+    async Task Delete(int diveId)
+    {
+        //var div = DiveView.First(x => x.Id == diveId);
+        //if (await js.InvokeAsync<bool>("confirm", $"Do you want to delete {div.DiveDateTime} Record?"))
+        //{
+        //    await client.DeleteAsync($"api/dive/{diveId}");
+        //    await OnInitializedAsync();
+        //}
+    }
+
+
+}

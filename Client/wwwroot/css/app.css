@@ -1,0 +1,497 @@
+﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
+
+html, body {
+    height: 100%;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background-color: #8FFFF2;
+}
+
+a, .btn-link {
+    color: #0366d6;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+app {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+.top-row {
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+}
+
+/*.main {
+    flex: 1;
+}
+
+    .main .top-row {
+        background-color: white;        
+        justify-content: center;*/
+/*z-index: 1000;*/
+/*}
+
+        .main .top-row > a, .main .top-row .btn-link {
+            white-space: nowrap;
+            margin-left: 1px;
+        }
+
+.main .top-row a:first-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}*/
+
+.sidebar {
+    background-image: linear-gradient(180deg, #8FFFF2 10%, #0E96EA 70%);
+}
+
+    .sidebar .top-row {
+        background-color: #8FFFF2;
+    }
+
+    .sidebar .navbar-brand {
+        font-size: 1rem;
+    }
+
+    .sidebar .oi {
+        width: 2rem;
+        font-size: 1.1rem;
+        vertical-align: text-top;
+        top: -2px;
+    }
+
+    .sidebar .nav-item {
+        font-size: 1rem;
+        padding-bottom: 0.5rem;
+    }
+
+        .sidebar .nav-item:first-of-type {
+            padding-top: 1rem;
+        }
+
+        .sidebar .nav-item:last-of-type {
+            padding-bottom: 1rem;
+        }
+
+        .sidebar .nav-item a {
+            color: blue;
+            border-radius: 4px;
+            height: 3rem;
+            display: flex;
+            align-items: center;
+            line-height: 3rem;
+        }
+
+            .sidebar .nav-item a.active {
+                background-color: blue;
+                color: white;
+            }
+
+            .sidebar .nav-item a:hover {
+                background-color: steelblue;
+                color: white;
+            }
+
+.content {
+    padding-top: 1.1rem;
+}
+
+.navbar-toggler {
+    background-color: rgba(0, 0, 255, 0.1);
+}
+
+.valid.modified:not([type=checkbox]) {
+    outline: 1px solid #26b050;
+}
+
+.invalid {
+    outline: 1px solid red;
+}
+
+.validation-message {
+    color: red;
+}
+
+#blazor-error-ui {
+    background: lightyellow;
+    bottom: 0;
+    box-shadow: 0 -1px 2px rgba(0, 0, 0, 0.2);
+    display: none;
+    left: 0;
+    padding: 0.6rem 1.25rem 0.7rem 1.25rem;
+    position: fixed;
+    width: 100%;
+    z-index: 1000;
+}
+
+    #blazor-error-ui .dismiss {
+        cursor: pointer;
+        position: absolute;
+        right: 0.75rem;
+        top: 0.5rem;
+    }
+
+@media (max-width: 767.98px) {
+    /* .main .top-row:not(.auth) {
+        display: none;
+    }
+
+    .main .top-row.auth {
+        justify-content: space-between;
+    }
+
+    .main .top-row a, .main .top-row .btn-link {
+        margin-left: 0;
+    }*/
+}
+
+@media (min-width: 768px) {
+    app {
+        flex-direction: row;
+    }
+
+    .sidebar {
+        width: 12em;
+        height: 100vh;
+        position: sticky;
+        top: 0;
+    }
+
+    /*.main .top-row {
+        position: sticky;
+        top: 0;
+    }
+
+    .main > div {
+        padding-left: 2rem !important;
+        padding-right: 1.5rem !important;
+    }*/
+
+    .navbar-toggler {
+        display: none;
+    }
+
+    .sidebar .collapse {
+        /* Never collapse the sidebar for wide screens */
+        display: block;
+    }
+}
+
+.centerimage {
+    display: block;
+    margin-left: 35px;
+    margin-right: auto;
+    margin-bottom: auto;
+    margin-top: 0px;
+}
+
+.long-email-address-css {
+    word-wrap: break-word;
+}
+
+/*#region Alterations and Overrides*/
+/*#region Scrollable Area Section*/
+
+.scrollable-nav {
+    width: 100%;
+    height: 70vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.scrollable-main {
+    width: 100%;
+    height: 90vh;
+    margin-top: 5px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.scrollable-img-area {
+    height: 62vh;
+    width: 100%;
+    margin-top: 5px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.scrollable-preview-area {
+    height: 15vh;
+    width: 100%;
+    margin-top: 5px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.tbody-scrollable {
+    height: 30vh;
+    margin-top: 5px;
+    overflow-x: auto;
+    overflow-y: auto;
+}
+
+/*#endregion*/
+
+/*#region Lock table header Section*/
+
+.lh-table-container {
+    background-color: transparent;
+    border: none;
+    height: 337px;
+    margin: 10px auto;
+    padding-top: 0;
+    position: relative;
+    width: 98%;
+    min-width: 500px;
+}
+
+
+.lh-table-container-inner {
+    height: 100%;
+    overflow-x: auto;
+    overflow-y: auto;
+    min-width: 500px;
+}
+
+.lh-header-container {
+    background-color: rgb(51, 122, 183);
+    height: 1.5em;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 96.2%;
+    z-index: 10;
+}
+
+.lh-td-container {
+    background-color: rgb(51, 122, 183);
+    height: 335px;
+    left: 0;
+    position: absolute;
+    text-align: center;
+    top: 0;
+    width: 40px;
+    z-index: 11;
+}
+
+.lh-table {
+    border-collapse: collapse;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    width: 97.3%;
+}
+
+.lh-th-topline {
+    color: white;
+    font-size: 12px;
+    height: 20px;
+    padding: 0 0 0 1px;
+    padding-left: 1px;
+    position: absolute;
+    text-align: center !important;
+    top: 1px;
+    vertical-align: bottom;
+    width: 100%;
+    z-index: 10;
+}
+
+.lh-th-bottomline {
+    color: white;
+    font-size: 12px;
+    height: 20px;
+    padding: 0 0 0 1px;
+    padding-left: 1px;
+    position: absolute;
+    text-align: left;
+    top: .0em;
+    vertical-align: bottom;
+    z-index: 10;
+}
+
+.lh-th {
+    height: 19px;
+}
+
+.lh-td-spacer {
+    width: 40px;
+}
+
+.lh-td {
+    color: blue;
+    font-size: 12px;
+    font-weight: bold;
+    text-align: left;
+    z-index: 1;
+}
+
+.verticaltext {
+    background-color: rgb(51, 122, 183);
+    font-size: 12px;
+    text-align: center;
+    width: 20px;
+}
+
+.lh-td-rowspan {
+    background-color: #337ab7;
+    background-color: rgba(51, 122, 183, 0.36);
+    color: white;
+    vertical-align: middle !important;
+    width: 20px;
+}
+
+.lh-td-first {
+    background-color: #337ab7;
+    background-color: rgba(51, 122, 183, 0.36);
+    color: white;
+    width: 20px;
+}
+
+.lh-first {
+    border-left: none;
+}
+
+.lh-caption {
+    display: none;
+}
+
+/*#endregion*/
+
+/*#region Padi dive tables*/
+.bg-gray {
+    background-color: lightgray;
+    z-index: 1;
+}
+
+.bg-black {
+    background-color: black;
+    color: white;
+    z-index: 1;
+}
+
+.rnt {
+    background-color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.70);
+    color: blue;
+}
+
+.abt {
+    background-color: #5daaeb;
+    background-color: rgba(93, 170, 235, 0.86);
+    color: white;
+}
+
+.maxdepth {
+    background-color: #ff0000;
+    background-color: rgba(255, 0, 0, 0.60);
+}
+
+.maxdepthtitle {
+    color: #ff0000;
+    color: rgba(255, 0, 0, 0.60);
+}
+/*#endregion*/
+
+.long-email-address-css {
+    word-wrap: break-word;
+}
+
+.danger {
+    background: red;
+    color: yellow;
+}
+/*#endregion*/
+
+.centerimage {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 100px;
+}
+
+.formlabel{
+    color: blue;
+}
+
+/*#region Dive Chart Section*/
+
+.divechart {
+    background: url('~/css/Images/DiveChart.png') no-repeat scroll 0 0/8em 4em transparent;
+    height: 14em;
+}
+
+/*#endregion*/
+
+/*#region Inputs Section*/
+
+/* Set width on the form input elements since they're 100% wide by default */
+
+input,
+select {
+    max-width: 280px;
+}
+
+.input-area {
+    width: 98%;
+}
+
+.input-phone {
+    width: 160px;
+}
+
+.input-datetime {
+    width: 130px;
+}
+
+.input-11, .input-date {
+    width: 120px;
+}
+
+.input-10 {
+    width: 110px;
+}
+
+.input-time {
+    width: 90px;
+}
+
+.input-5 {
+    width: 65px;
+}
+
+.input-4 {
+    width: 60px;
+}
+
+.input-3 {
+    width: 50px;
+}
+
+.input-2 {
+    width: 45px;
+}
+
+.input-1 {
+    width: 40px;
+}
+
+.input.invalid {
+    background-color: #FDD;
+    border-color: #900;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/*#endregion*/

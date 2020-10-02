@@ -1,0 +1,27 @@
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+
+@*@inject NavigationManager Navigation
+    @inject SignOutSessionStateManager SignOutManager*@
+
+<AuthorizeView>
+    <Authorized>
+        <img src="css/Images/scuba_diver.png" asp-append-version="true" width="50" />
+        <a class="navbar-brand" href=""> <h5 class="text-primary"> The Dive Log</h5></a>
+        @*<button class="navbar-toggler" @onclick="ToggleNavMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>*@
+        <a href="authentication/profile">Hello, @context.User.Identity.Name!</a>
+        @*<button class="nav-link btn btn-link" @onclick="BeginSignOut">Log out</button>*@
+    </Authorized>
+    <NotAuthorized>
+        <img src="css/Images/scuba_diver.png" asp-append-version="true" width="50" />
+        <a class="navbar-brand" href=""> <h5 class="text-primary"> The Dive Log</h5></a>
+        @*<a href="authentication/register">Register</a>
+            <a href="authentication/login">Log in</a>*@
+    </NotAuthorized>
+</AuthorizeView>
+
+@code{
+    context.User.Identity.Name
+        }
