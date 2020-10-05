@@ -1,4 +1,5 @@
-﻿<EditForm Model="@div" OnValidSubmit="@OnValidSubmit">
+﻿
+<EditForm Model="@div" OnValidSubmit="@OnValidSubmit">
     <DataAnnotationsValidator />
     <div class="scrollable-area">
         @*<input id="Act" name="Act" type="hidden" value="@act" />*@
@@ -95,7 +96,7 @@
                                 </div>
                                 <div style="background-image: url('~/wwwroot/css/Images/DiveChart.png');">
                                     @*<p style="background-image: url('~/wwwroot/css/Images/DiveChart.png');">
-                                    </p>*@
+                                        </p>*@
                                     <br />
                                     <span class="field-label" title="Bottom time (in minutes)">BT</span>
                                     <br />
@@ -298,7 +299,6 @@
 
 </EditForm>
 
-
 @code {
     //[Parameter] public DiveFormData dfd { get; set; }
     [Parameter] public Dives div { get; set; }
@@ -309,6 +309,4 @@
 
     [Parameter] public string ButtonText { get; set; } = "Save";
     [Parameter] public EventCallback OnValidSubmit { get; set; }
-
-
 }

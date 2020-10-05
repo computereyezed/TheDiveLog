@@ -13,7 +13,8 @@ else if (dv.Length == 0)
 {
     <div class="row">
         <div class="col-sm-3 form-group">
-            <a class="btn btn-success" href="divelog/adddive"><i class="oi oi-plus"></i> Log New Dive</a>
+            <a class="btn btn-success" href="divelog/addeditdive/false/0" Id="tooltip1"><i class="oi oi-plus"></i> Log New Dive</a>
+            <BSTooltip Target="tooltip1" Placement="Placement.Auto">Log New Dive</BSTooltip>
         </div>
         <div class="col-sm-3"><h5>No Records Found.</h5></div>
         <div class="col-sm-6 justify-content-end">
@@ -32,7 +33,12 @@ else
     tbt = tbt / 60;
     <div class="row">
         <div class="col-sm-3 form-group">
-            <a class="btn btn-success" href="divelog/addeditdive/false/0"><i class="oi oi-plus"></i> Log New Dive</a>
+            <a class="btn btn-success" href="divelog/addeditdive/false/0" Id="tooltip2"><i class="oi oi-plus"></i></a>
+            <BSTooltip Target="tooltip2" Placement="Placement.Auto">Log New Dive</BSTooltip>
+
+
+            <BSButton Color="Color.Primary" @onclick="@onToggle">Log New Dive</BSButton>
+
         </div>
         <div class="col-sm-3"><h5>Records Found @count</h5></div>
         <div class="col-sm-6 justify-content-end">
@@ -65,21 +71,21 @@ else
                                 //var tt = "<span class='text-yellow'>Located in: </span>test<br /><span class='text-yellow'>Latitude: </span>here<br /><span class='text-yellow'>Longitude: </span>test<br /><span class='text-yellow'>What to see: </span>see<br />"
                                 ;
 
-                            <tr>
-                                @*<td class="lh-td">@dive.DiverId</td>*@
-                                <td class="col-xs-1 lh-td">
-                                    <a class="text-primary oi oi-pencil" href="divelog/addeditdive/true/@dive.DiveLogId"></a>
-                                </td>
-                                <td class="lh-td">@dive.DiveDateTime</td>
-                                <td class="lh-td">@dive.Depth</td>
-                                <td class="lh-td">@dive.BottomTime</td>
-                                <td class="lh-td">@dive.Country</td>
-                                <td class="lh-td">@dive.Located</td>
-                                <td class="lh-td">@dive.Location</td>
-                                <td class="col-xs-1 lh-td">
-                                    <a class="text-danger oi oi-delete" @onclick="@(() => Delete((int)dive.DiveLogId))"></a>
-                                </td>
-                            </tr>
+                                <tr>
+                                    @*<td class="lh-td">@dive.DiverId</td>*@
+                                    <td class="col-xs-1 lh-td">
+                                        <a class="text-primary oi oi-pencil" href="divelog/addeditdive/true/@dive.DiveLogId"></a>
+                                    </td>
+                                    <td class="lh-td">@dive.DiveDateTime</td>
+                                    <td class="lh-td">@dive.Depth</td>
+                                    <td class="lh-td">@dive.BottomTime</td>
+                                    <td class="lh-td">@dive.Country</td>
+                                    <td class="lh-td">@dive.Located</td>
+                                    <td class="lh-td">@dive.Location</td>
+                                    <td class="col-xs-1 lh-td">
+                                        <a class="text-danger oi oi-delete" @onclick="@(() => Delete((int)dive.DiveLogId))"></a>
+                                    </td>
+                                </tr>
                             }
                         </tbody>
                     </table>
@@ -88,13 +94,22 @@ else
         </div>
     </div>
 }
-
-@code { 
+@code {
     DiveView[] dv { get; set; }
+    //BSModal FullWidth { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         dv = await client.GetFromJsonAsync<DiveView[]>("api/dive");
+    }
+
+    BSModal VerticallyCentered;
+    //BSModal IgnoreClickOnBackDrop;
+    //BSModal IgnoreEscape;
+
+    void onToggle(MouseEventArgs e)
+    {
+        VerticallyCentered.Toggle();
     }
 
     async Task Delete(int diveId)
@@ -109,3 +124,4 @@ else
 
 
 }
+

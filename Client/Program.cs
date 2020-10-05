@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using BlazorStrap;
 
 namespace TheDiveLog.Client
 {
@@ -26,7 +27,11 @@ namespace TheDiveLog.Client
 
             builder.Services.AddApiAuthorization();
 
+            builder.Services.AddBootstrapCss();
+
             await builder.Build().RunAsync();
+
+            //await BootstrapCss.SetBootstrapCss("4.3.1");
         }
     }
 }

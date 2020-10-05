@@ -2,6 +2,7 @@
 @inject HttpClient http
 @inject NavigationManager uriHelper
 @inject IJSRuntime js
+
 <h5>@butontext</h5>
 <DiveForm ButtonText=@butontext div="div" loc="loc" ddd="ddd" dg="dg" OnValidSubmit="@SaveDive" />
 
@@ -28,12 +29,12 @@
                 loc = dfd.Viewlocations;
                 ddd = dfd.DDD;
 
-                butontext = "Update";
+                butontext = "Update Dive";
             }
             else
             {
                 div = new Dives();
-                butontext = "Save";
+                butontext = "Add New Dive";
             }
         }
         catch (Exception ex)
