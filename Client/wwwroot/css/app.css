@@ -399,8 +399,10 @@ app {
 }
 /*#endregion*/
 
-.long-email-address-css {
-    word-wrap: break-word;
+.select {
+    height: 2em;
+    width: 50px;
+    white-space: pre-wrap;
 }
 
 .danger {
@@ -416,7 +418,7 @@ app {
     margin-bottom: 100px;
 }
 
-.formlabel{
+.formlabel {
     color: blue;
 }
 

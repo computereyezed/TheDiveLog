@@ -33,7 +33,10 @@
             }
             else
             {
+                dfd = await http.GetFromJsonAsync<DiveFormData>($"api/dive/{Id}");
                 div = new Dives();
+                loc = dfd.Viewlocations;
+                ddd = dfd.DDD;
                 butontext = "Add New Dive";
             }
         }
@@ -49,13 +52,13 @@
         {
             await http.PutAsJsonAsync("api/dive", div);
             await js.InvokeVoidAsync("alert", $"Updated Suicessfully!");
-            uriHelper.NavigateTo("divelog");
+            uriHelper.NavigateTo("viewdives");
 
         }
         else
         {
             await http.PostAsJsonAsync("api/dive", div);
-            uriHelper.NavigateTo("divelog");
+            uriHelper.NavigateTo("viewdives");
         }
     }
 }

@@ -19,11 +19,12 @@
                             <div class="col-sm-4">
                                 <span class="field-label" title="Location">Location</span>
                                 <br />
-                                <InputSelect class="form-control form-control-lg" @bind-Value=div.DiveLocationID>
-                                    <option value="1">Pending</option>
-                                    <option value="2">Active</option>
-                                    <option value="3">Suspended</option>
-                                </InputSelect>
+                                <select class="select" @bind=div.DiveLocationID>
+                                    @foreach (ViewLocation item in loc)
+                                    {
+                                        <option value="@item.Id">@($"{item.Location}, {item.Country} {item.Located}")</option>
+                                    }
+                                </select>
                             </div>
                             <div class="col-sm-4">
                                 <span class="field-label" title="Dive date & start time">Date &amp; Time</span>
