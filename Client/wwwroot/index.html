@@ -31,12 +31,21 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
             integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
             crossorigin="anonymous"></script>
-
-    <!--<script src="_content/BlazorStrap/blazorStrap.js"></script>-->
     <script src="_content/Microsoft.AspNetCore.Components.WebAssembly.Authentication/AuthenticationService.js"></script>
     <script src="_framework/blazor.webassembly.js"></script>
+
     <script src="_content/Mobsites.Blazor.SignaturePad/bundle.js"></script>
     <script src="_content/Radzen.Blazor/Radzen.Blazor.js"></script>
+
+    <script>
+        window.initializeCarousel = () => {
+            $('#slidshow').carousel({ interval: 2000 });
+            $('#slidshow-prev').click(
+                () => $('#slidshow').carousel('prev'));
+            $('#slidshow-next').click(
+                () => $('#slidshow').carousel('next'));
+        }
+    </script>
 </body>
 
 </html>
