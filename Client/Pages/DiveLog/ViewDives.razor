@@ -13,8 +13,7 @@ else if (dv.Length == 0)
 {
     <div class="row">
         <div class="col-sm-3 form-group">
-            <a class="btn btn-success" href="divelog/addeditdive/false/0" Id="tooltip1"><i class="oi oi-plus"></i> Log New Dive</a>
-            <BSTooltip Target="tooltip1" Placement="Placement.Auto">Log New Dive</BSTooltip>
+            <a class="btn btn-success" href="divelog/addeditdive/false/0" data-toggle="tooltip" data-placement="auto" title="Log New Dive"><i class="oi oi-plus"></i> Log New Dive</a>
         </div>
         <div class="col-sm-3"><h5>No Records Found.</h5></div>
         <div class="col-sm-6 justify-content-end">
@@ -69,7 +68,7 @@ else
 
                                 <tr>
                                     <td class="col-xs-1 lh-td">
-                                        <a class="btn btn-transparent" href="divelog/addeditdive/true/@dive.DiveLogId" data-toggle="tooltip" data-placement="auto" title="Edit Dive"><i class="oi oi-pencil"></i></a>                                       
+                                        <a class="btn btn-transparent text-primary" href="divelog/addeditdive/true/@dive.DiveLogId" data-toggle="tooltip" data-placement="auto" title="Edit Dive"><i class="oi oi-pencil"></i></a>                                       
                                     </td>
                                     <td class="lh-td">@dive.DiveDateTime</td>
                                     <td class="lh-td">@dive.Depth</td>

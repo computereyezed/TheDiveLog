@@ -29,9 +29,9 @@
                                 <div class="col-12 col-sm-6 col-md-6 col-lg-6">
                                     <span class="field-label" title="Dive date & start time">Date &amp; Time</span>
                                     <br />
-                                    <RadzenDatePicker ShowTime="true" @bind-Value="@div.DiveDateTime" HourFormat="12" DateFormat="dd/MM/yyyy hh:mm tt" />
+                                    <RadzenDatePicker class="form-control form-control-lg input-datetime" ShowTime="true" @bind-Value="@div.DiveDateTime" HourFormat="12" DateFormat="dd/MM/yyyy hh:mm tt" />
                                 </div>
-                                <div class="col-12 col-sm-6 col-md-6 col-lg-4">
+                                <div class="col-6 col-sm-6 col-md-6 col-lg-4">
                                     <span class="field-label" title="Breathing">Breathing</span>
                                     <br />
                                     <span class="field-value">
@@ -43,19 +43,19 @@
                                         </select>
                                     </span>
                                 </div>
-                                <div class="col-12 col-sm-6 col-md-6 col-lg-4">
+                                <div class="col-6 col-sm-6 col-md-6 col-lg-4">
                                     <span class="field-label" title="Tank starting pressure">Tank starting pressure</span>
                                     <br />
                                     <input type="number" class="form-control form-control-lg input-10" maxlength="5" @bind="@div.TankPressureStart" />
                                     <ValidationMessage For="@(() => div.TankPressureStart)" />
                                 </div>
-                                <div class="col-12 col-sm-6 col-md-6 col-lg-4">
+                                <div class="col-6 col-sm-6 col-md-6 col-lg-4">
                                     <span class="field-label" title="Tank ending pressure">Tank ending pressure</span>
                                     <br />
                                     <input type="number" class="form-control form-control-lg input-10" maxlength="5" @bind="@div.TankPressureEnd" />
                                     <ValidationMessage For="@(() => div.TankPressureEnd)" />
                                 </div>
-                                <div class="col-12 col-sm-6 col-md-6 col-lg-4">
+                                <div class="col-6 col-sm-6 col-md-6 col-lg-4">
                                     <span class="field-label" title="Water Type">Water Type</span>
                                     <br />
                                     <select class="form-control form-control-lg select-water" @bind=div.WaterTypeID>
@@ -65,7 +65,7 @@
                                         }
                                     </select>
                                 </div>
-                                <div class="col-12 col-sm-6 col-md-6 col-lg-4">
+                                <div class="col-6 col-sm-6 col-md-6 col-lg-4">
                                     <span class="field-label" title="Water Entry">Water Entry</span>
                                     <br />
                                     <select class="form-control form-control-lg select-water" @bind=div.WaterEntryID>
@@ -75,7 +75,7 @@
                                         }
                                     </select>
                                 </div>
-                                <div class="col-12 col-sm-6 col-md-6 col-lg-4">
+                                <div class="col-6 col-sm-6 col-md-6 col-lg-4">
                                     <span class="field-label" title="Water Visibility">Water Visibility</span>
                                     <br />
                                     <input type="number" class="form-control form-control-lg input-10" maxlength="4" @bind="@div.WaterVisibility" />
@@ -100,7 +100,7 @@
                                         <div class="col-6 col-sm-6 col-md-6 col-lg-6 md">
                                             <span class="field-label" title="Max Depth">MD</span>
                                             <br />
-                                            <input type="number" class="form-control form-control-lg input-2" maxlength="4" @bind="@div.Depth" />
+                                            <input type="number" class="form-control form-control-lg input-6" maxlength="4" @bind="@div.Depth" />
                                             <ValidationMessage For="@(() => div.Depth)" />
                                         </div>
                                     </div>
@@ -136,9 +136,7 @@
                                 <div class="col-12 col-sm-12 col-md-12 col-lg-7">
                                     <span class="field-label" title="Signature">Signature</span>
                                     <br />
-                                    <div class="signaterpad-size">
-                                        <SignaturePad />
-                                    </div>
+                                    <SignaturePad />
                                 </div>
                             </div>
                         </div>
@@ -156,7 +154,7 @@
                     <div id="exposure" class="collapse" aria-labelledby="exposureheading" data-parent="#diveaccordion">
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-4">
+                                <div class="col-6 col-sm-6 col-md-3 col-lg-3">
                                     <span class="field-label" title="Suit">Suit</span>
                                     <br />
                                     <span class="field-value">
@@ -168,7 +166,7 @@
                                         </select>
                                     </span>
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-6 col-sm-6 col-md-4 col-lg-3">
                                     <span class="field-label" title="Head/Hands/Feet">Head/Hands/Feet</span>
                                     <br />
                                     <span class="field-value">
@@ -180,13 +178,13 @@
                                         </select>
                                     </span>
                                 </div>
-                                <div class="col-sm-2">
+                                <div class="col-6 col-sm-6 col-md-3 col-lg-3">
                                     <span class="field-label" title="Thickness in mm">Thickness</span>
                                     <br />
                                     <input type="number" class="form-control form-control-lg input-5" maxlength="3" @bind="@div.ExposureProtectionMM" />
                                     <ValidationMessage For="@(() => div.ExposureProtectionMM)" />
                                 </div>
-                                <div class="col-sm-2">
+                                <div class="col-6 col-sm-6 col-md-2 col-lg-3">
                                     <span class="field-label" title="Weight">Weight</span>
                                     <br />
                                     <input type="number" class="form-control form-control-lg input-5" maxlength="3" @bind="@div.Weight" />
@@ -209,7 +207,7 @@
                     <div id="locweather" class="collapse" aria-labelledby="locweatherheading" data-parent="#diveaccordion">
                         <div class="card-body">
                             <div class="row">
-                                <div class="col-sm-4">
+                                <div class="col-6 col-sm-6 col-md-6 col-lg-6">
                                     <span class="field-label" title="Weather">Weather</span>
                                     <br />
                                     <span class="field-value">
@@ -221,7 +219,7 @@
                                         </select>
                                     </span>
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-6 col-sm-6 col-md-6 col-lg-6">
                                     <span class="field-label" title="Air Temperature">Air temp</span>
                                     <br />
                                     <input type="number" class="form-control form-control-lg input-5" @bind="@div.AirTemperature" />
@@ -230,7 +228,7 @@
                             </div>
                             <hr />
                             <div class="row">
-                                <div class="col-sm-4">
+                                <div class="col-12 col-sm-6 col-md-6 col-lg-6">
                                     <span class="field-label" title="Water conditions">Water</span>
                                     <br />
                                     <span class="field-value">
@@ -242,13 +240,13 @@
                                         </select>
                                     </span>
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-6 col-sm-4 col-md-3 col-lg-3">
                                     <span class="field-label" title="Surface Temperature">Surface temp</span>
                                     <br />
                                     <input type="number" class="form-control form-control-lg input-5" maxlength="3" @bind="@div.WaterSurfaceTemperature" />
                                     <ValidationMessage For="@(() => div.WaterSurfaceTemperature)" />
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-6 col-sm-4 col-md-3 col-lg-3">
                                     <span class="field-label" title="Bottom Temperature">Bottom temp</span>
                                     <br />
                                     <input type="number" class="form-control form-control-lg input-5" maxlength="3" @bind="@div.WaterBottomTemperature" />
