@@ -11,6 +11,7 @@
     <Content Remove="Shared\AppTitle.razor" />
     <Content Remove="Shared\LoginDisplay.razor" />
     <Content Remove="Shared\SurveyPrompt.razor" />
+    <Content Remove="wwwroot\css\signaturepad.scss" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,6 +21,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="3.2.1" PrivateAssets="all" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Authentication" Version="3.2.1" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="3.1.8" />
+    <PackageReference Include="Mobsites.Blazor.SignaturePad" Version="1.1.7" />
+    <PackageReference Include="Radzen.Blazor" Version="2.15.10" />
     <PackageReference Include="System.Net.Http.Json" Version="3.2.1" />
   </ItemGroup>
 

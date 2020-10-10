@@ -1,7 +1,7 @@
 ﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
 html, body {
-    height: 100%;
+    height: 85vh;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     background-color: #8FFFF2;
 }
@@ -14,6 +14,12 @@ a, .btn-link {
     color: #fff;
     background-color: #1b6ec2;
     border-color: #1861ac;
+}
+
+.btn-transparent {
+    color: #fff;
+    background-color: transparent;
+    border-color: transparent;
 }
 
 app {
@@ -208,7 +214,15 @@ app {
 
 .scrollable-main {
     width: 100%;
-    height: 90vh;
+    height: 88vh;
+    margin-top: 5px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.scrollable-form {
+    width: 100%;
+    height: 75vh;
     margin-top: 5px;
     overflow-x: hidden;
     overflow-y: auto;
@@ -231,7 +245,7 @@ app {
 }
 
 .tbody-scrollable {
-    height: 30vh;
+    height: 80vh;
     margin-top: 5px;
     overflow-x: auto;
     overflow-y: auto;
@@ -239,12 +253,18 @@ app {
 
 /*#endregion*/
 
+/*#region Card Section*/
+
+/*#endregion*/
+.special-card {
+    background-color: transparent;
+}
 /*#region Lock table header Section*/
 
 .lh-table-container {
     background-color: transparent;
     border: none;
-    height: 337px;
+    height: 68vh;
     margin: 10px auto;
     padding-top: 0;
     position: relative;
@@ -400,8 +420,7 @@ app {
 /*#endregion*/
 
 .select {
-    height: 2em;
-    width: 50px;
+    width: 92px;
     white-space: pre-wrap;
 }
 
@@ -425,8 +444,17 @@ app {
 /*#region Dive Chart Section*/
 
 .divechart {
-    background: url('~/css/Images/DiveChart.png') no-repeat scroll 0 0/8em 4em transparent;
-    height: 14em;
+    margin-left: 40px;
+    background: url('/css/Images/DiveChart.png') no-repeat scroll 0 0/20rem 8rem transparent;
+}
+
+.md {
+    margin-left: -20px;
+    margin-top: 30px;
+}
+
+.bt {
+    margin-left: 70px;
 }
 
 /*#endregion*/
@@ -435,10 +463,41 @@ app {
 
 /* Set width on the form input elements since they're 100% wide by default */
 
-input,
 select {
-    max-width: 280px;
+    max-width: 480px;
 }
+
+.select-breathing {
+    width: 160px;
+}
+
+.select-hhf {
+    width: 130px;
+}
+
+.select-suit {
+    width: 120px;
+}
+
+.select-water {
+    width: 160px;
+}
+
+.select-waterc {
+    width: 210px;
+}
+
+.select-weather {
+    width: 180px;
+}
+
+.select-verifacation {
+    width: 180px;
+}
+
+/*input {
+    max-width: 192px;
+}*/
 
 .input-area {
     width: 98%;
@@ -449,10 +508,14 @@ select {
 }
 
 .input-datetime {
-    width: 130px;
+    width: 240px;
 }
 
-.input-11, .input-date {
+.input-11 {
+    width: 120px;
+}
+
+.input-date {
     width: 120px;
 }
 
@@ -462,6 +525,10 @@ select {
 
 .input-time {
     width: 90px;
+}
+
+.input-6 {
+    width: 70px;
 }
 
 .input-5 {
@@ -484,6 +551,10 @@ select {
     width: 40px;
 }
 
+.input-1-alpha {
+    width: 48px;
+}
+
 .input.invalid {
     background-color: #FDD;
     border-color: #900;
@@ -497,3 +568,9 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 /*#endregion*/
+
+.signaterpad-size {
+    height: 100px;
+    margin-bottom: 250px;
+    width: 100%;
+}
