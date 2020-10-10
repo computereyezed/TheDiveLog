@@ -13,7 +13,7 @@ using Microsoft.Extensions.Hosting;
 using System.Linq;
 using TheDiveLog.Server.Data;
 using TheDiveLog.Server.Models;
-using BlazorStrap;
+//using BlazorStrap;
 using Radzen;
 
 namespace TheDiveLog.Server
@@ -37,7 +37,7 @@ namespace TheDiveLog.Server
             
             services.AddDbContext<DiveCtx>(options => options.UseSqlServer(Configuration.GetConnectionString("DiveCon")));
 
-            services.AddBootstrapCss();
+            //services.AddBootstrapCss();
 
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();

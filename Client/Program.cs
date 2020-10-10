@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using BlazorStrap;
+//using BlazorStrap;
 using Radzen;
 
 namespace TheDiveLog.Client
@@ -28,7 +28,7 @@ namespace TheDiveLog.Client
 
             builder.Services.AddApiAuthorization();
 
-            builder.Services.AddBootstrapCss();
+            //builder.Services.AddBootstrapCss();
             builder.Services.AddScoped<DialogService>();
             builder.Services.AddScoped<NotificationService>();
             builder.Services.AddScoped<TooltipService>();
