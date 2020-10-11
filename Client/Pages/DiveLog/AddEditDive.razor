@@ -3,8 +3,17 @@
 @inject NavigationManager uriHelper
 @inject IJSRuntime js
 
-<h5>@butontext</h5>
-<DiveForm ButtonText=@butontext div="div" loc="loc" ddd="ddd" dg="dg" OnValidSubmit="@SaveDive" />
+<AuthorizeView>
+    <Authorized>
+        <h5>@butontext</h5>
+        <DiveForm ButtonText=@butontext div="div" loc="loc" ddd="ddd" dg="dg" OnValidSubmit="@SaveDive" />
+    </Authorized>
+    <NotAuthorized>
+        <h1>Authentication Failure!</h1>
+        <p>You're not signed in.</p>
+    </NotAuthorized>
+</AuthorizeView>
+
 
 @code {
     [Parameter] public bool Act { get; set; }
