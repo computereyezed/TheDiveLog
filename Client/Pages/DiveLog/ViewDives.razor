@@ -103,7 +103,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        dv = await client.GetFromJsonAsync<DiveView[]>("api/dive");
+        dv = await client.GetFromJsonAsync<DiveView[]>($"api/dive/byEmail?email={AppState.User}");
     }
 
     async Task Delete(int diveId)

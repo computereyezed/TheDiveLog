@@ -1,5 +1,60 @@
-﻿<h3>ViewDiver</h3>
+﻿@page "/viewdiver"
+@inject HttpClient client
+@inject IJSRuntime js
+
+<h3>View Diver Information</h3>
+
+@{
+    string title = string.Empty;
+}
+
+<AuthorizeView>
+    <Authorized>
+        @if (dvr == null)
+        {
+            title = "Loading...";
+        }
+        else if (dvr.Length == 0)
+        {
+            <div class="row">
+                <div class="col-sm-3 form-group">
+                    <a class="btn btn-success" href="divelog/addeditdiver/false" data-toggle="tooltip" data-placement="auto" title="New Diver"><i class="oi oi-plus"></i></a>
+                </div>
+                <div class="col-sm-3"><h5>No Records Found.</h5></div>
+            </div>
+        }
+        else
+        {
+            <div class="row">
+                <div class="col-sm-3 form-group">
+                    <a class="btn btn-success" href="divelog/addeditdiver/true" data-toggle="tooltip" data-placement="auto" title="Edit Diver Information"><i class="oi oi-pencil"></i></a>
+                </div>
+            </div>
+            <div class="row">
+            </div>
+        }
+    </Authorized>
+    <NotAuthorized>
+        <h1>Authentication Failure!</h1>
+        <p>You're not signed in.</p>
+    </NotAuthorized>
+</AuthorizeView>
 
 @code {
+    DiverInformation[] dvr { get; set; }
 
+    protected override async Task OnInitializedAsync()
+    {
+        dvr = await client.GetFromJsonAsync<DiverInformation[]>("api/diver");
+    }
+
+    async Task Delete(int diveId)
+    {
+        //var div = DiveView.First(x => x.Id == diveId);
+        //if (await js.InvokeAsync<bool>("confirm", $"Do you want to delete {div.DiveDateTime} Record?"))
+        //{
+        //    await client.DeleteAsync($"api/dive/{diveId}");
+        //    await OnInitializedAsync();
+        //}
+    }
 }

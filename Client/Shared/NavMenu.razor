@@ -10,11 +10,14 @@
 </div>
 <AuthorizeView>
     <Authorized>
+        @{ 
+            AppState.User = context.User.Identity.Name;
+        }
         <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
             <div class="scrollable-nav">
                 <div class="row">
                     <div class="col-sm-12 text-center">
-                        <a href="Identity/Account/Manage" class="long-email-address-css">@context.User.Identity.Name</a>
+                        <a href="Identity/Account/Manage" class="long-email-address-css">@AppState.User</a>
                     </div>
                 </div>
                 <ul class="nav flex-column">

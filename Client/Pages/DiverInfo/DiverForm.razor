@@ -1,5 +1,14 @@
 ﻿<h3>DiverForm</h3>
 
-@code {
+<EditForm Model="@dvr" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
 
-}
+</EditForm>
+
+    @code {
+        [Parameter] public DiverInformation dvr { get; set; }
+
+
+        [Parameter] public string ButtonText { get; set; } = "Save";
+        [Parameter] public EventCallback OnValidSubmit { get; set; }
+    }

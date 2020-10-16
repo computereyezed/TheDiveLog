@@ -15,6 +15,7 @@ using TheDiveLog.Server.Data;
 using TheDiveLog.Server.Models;
 //using BlazorStrap;
 using Radzen;
+using TheDiveLog.Client.Services;
 
 namespace TheDiveLog.Server
 {
@@ -54,6 +55,7 @@ namespace TheDiveLog.Server
             services.AddScoped<NotificationService>();
             services.AddScoped<TooltipService>();
             services.AddScoped<ContextMenuService>();
+            services.AddScoped<AppState>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

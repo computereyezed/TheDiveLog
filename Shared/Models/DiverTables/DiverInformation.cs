@@ -8,6 +8,7 @@ namespace TheDiveLog.Shared.Models.DiverTables
     {
         public long Id { get; set; }
         public System.Guid UserID { get; set; }
+        public string Email { get; set; }
         public string DiverNo { get; set; }
         public string DiverName { get; set; }
         public Nullable<System.DateTime> Birthday { get; set; }

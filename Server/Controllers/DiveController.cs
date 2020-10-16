@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+//using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using TheDiveLog.Server.Data;
 using TheDiveLog.Shared.Models;
 using TheDiveLog.Shared.Models.DiveTables;
@@ -27,6 +28,7 @@ namespace TheDiveLog.Server.Controllers
         [HttpGet]
         public IActionResult Get()
         {
+            Guid userid = GetUserId("byron@computereyezed.com");
             ListDV = (List<DiveView>)(from d in _divectx.Dives
                                       join dl in _divectx.Locations on d.DiveLocationID equals dl.Id
                                       join c in _divectx.Countries on dl.CountryID equals c.Id
@@ -48,13 +50,38 @@ namespace TheDiveLog.Server.Controllers
                                           WhatToSee = dl.WhatToSee,
                                           Comments = dl.Comments
                                       }).ToList();
-            //var dive = new List<DiveView>(query);
             return Ok(ListDV);
-            //var dives = await _divectx.Dives.ToListAsync();
-            //return Ok(dives);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("byEmail")]
+        public async Task<IActionResult> Get(string email)
+        {
+            Guid userid = GetUserId(email);
+            ListDV = (List<DiveView>) await (from d in _divectx.Dives
+                                      join dl in _divectx.Locations on d.DiveLocationID equals dl.Id
+                                      join c in _divectx.Countries on dl.CountryID equals c.Id
+                                      where d.UserID == userid
+                                      orderby d.DiveDateTime descending
+                                      select new DiveView
+                                      {
+                                          DiveLogId = d.Id,
+                                          DiverId = d.UserID,
+                                          DiveLocationId = d.DiveLocationID,
+                                          DiveDateTime = d.DiveDateTime,
+                                          Depth = d.Depth,
+                                          BottomTime = d.BottomTime,
+                                          Country = c.Country,
+                                          Located = dl.Located,
+                                          Location = dl.Location,
+                                          Latitude = dl.Latitude,
+                                          Longitude = dl.Longitude,
+                                          WhatToSee = dl.WhatToSee,
+                                          Comments = dl.Comments
+                                      }).ToListAsync();
+            return Ok(ListDV);
+        }
+
+        [HttpGet("byId")]
         public async Task<IActionResult> Get(long id)
         {
             DiveFormData diveFormData = new DiveFormData
@@ -105,6 +132,12 @@ namespace TheDiveLog.Server.Controllers
             _divectx.Remove(div);
             await _divectx.SaveChangesAsync();
             return NoContent();
+        }
+
+        public Guid GetUserId(string email)
+        {
+            Guid userid = _divectx.DiverInformation.Where(w => w.Email == email).Select(s => s.UserID).FirstOrDefault();
+            return (userid);
         }
     }
 }

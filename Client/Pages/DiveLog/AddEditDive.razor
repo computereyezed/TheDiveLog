@@ -33,7 +33,7 @@
         {
             if (Act)
             {
-                dfd = await http.GetFromJsonAsync<DiveFormData>($"api/dive/{Id}");
+                dfd = await http.GetFromJsonAsync<DiveFormData>($"api/dive/byId?id={Id}");
                 div = dfd.Dive;
                 loc = dfd.Viewlocations;
                 ddd = dfd.DDD;
@@ -42,7 +42,7 @@
             }
             else
             {
-                dfd = await http.GetFromJsonAsync<DiveFormData>($"api/dive/{Id}");
+                dfd = await http.GetFromJsonAsync<DiveFormData>($"api/dive/byId?id={Id}");
                 div = new Dives();
                 loc = dfd.Viewlocations;
                 ddd = dfd.DDD;
