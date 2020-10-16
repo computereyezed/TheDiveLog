@@ -1,11 +1,9 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-//using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using TheDiveLog.Server.Data;
 using TheDiveLog.Shared.Models;
 using TheDiveLog.Shared.Models.DiveTables;
@@ -25,10 +23,10 @@ namespace TheDiveLog.Server.Controllers
             this._divectx = context;
         }
 
-        [HttpGet]
+        [HttpGet("All")]
         public IActionResult Get()
         {
-            Guid userid = GetUserId("byron@computereyezed.com");
+            //Guid userid = GetUserId("byron@computereyezed.com");
             ListDV = (List<DiveView>)(from d in _divectx.Dives
                                       join dl in _divectx.Locations on d.DiveLocationID equals dl.Id
                                       join c in _divectx.Countries on dl.CountryID equals c.Id
@@ -53,14 +51,14 @@ namespace TheDiveLog.Server.Controllers
             return Ok(ListDV);
         }
 
-        [HttpGet("byEmail")]
-        public async Task<IActionResult> Get(string email)
+        [HttpGet("byUserId")]
+        public async Task<IActionResult> Get(string userid)
         {
-            Guid userid = GetUserId(email);
+            //Guid userid = GetUserId(email);
             ListDV = (List<DiveView>) await (from d in _divectx.Dives
                                       join dl in _divectx.Locations on d.DiveLocationID equals dl.Id
                                       join c in _divectx.Countries on dl.CountryID equals c.Id
-                                      where d.UserID == userid
+                                      where d.UserID == new Guid(userid)
                                       orderby d.DiveDateTime descending
                                       select new DiveView
                                       {

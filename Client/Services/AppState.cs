@@ -11,16 +11,17 @@ namespace TheDiveLog.Client.Services
     {
         public static bool IsAuthenticated { get; set; }
         public static string User { get; set; }
+        public static string UserId { get; set; }
 
         public string Email { get; private set; } = string.Empty;
 
-        public void UpdateEmail(ComponentBase Source, string Email)
-        {
-            this.Email = Email;
-            NotifyStateChanged(Source, "Email");
-        }
+        //public void UpdateEmail(ComponentBase Source, string Email)
+        //{
+        //    this.Email = Email;
+        //    NotifyStateChanged(Source, "Email");
+        //}
 
-        public event Action<ComponentBase, string> StateChanged;
-        private void NotifyStateChanged(ComponentBase Source, string Property) => StateChanged?.Invoke(Source, Property);
+        //public event Action<ComponentBase, string> StateChanged;
+        //private void NotifyStateChanged(ComponentBase Source, string Property) => StateChanged?.Invoke(Source, Property);
     }
 }

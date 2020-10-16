@@ -17,7 +17,7 @@
             {
                 <div class="row">
                     <div class="col-sm-3 form-group">
-                        <a class="btn btn-success" href="divelog/addeditdive/false/0" data-toggle="tooltip" data-placement="auto" title="Log New Dive"><i class="oi oi-plus"></i> Log New Dive</a>
+                        <a class="btn btn-success" href="divelog/addeditdive/false/0" data-toggle="tooltip" data-placement="auto" title="Log New Dive"><i class="oi oi-plus"></i></a>
                     </div>
                     <div class="col-sm-3"><h5>No Records Found.</h5></div>
                     <div class="col-sm-6 justify-content-end">
@@ -39,7 +39,7 @@
                     <div class="col-sm-3 form-group">
                         <a class="btn btn-success" href="divelog/addeditdive/false/0" data-toggle="tooltip" data-placement="auto" title="Log New Dive"><i class="oi oi-plus"></i></a>
                     </div>
-                    <div class="col-sm-3"><h5>Records Found @count</h5></div>
+                    <div class="col-sm-3"><h5>Records Found: @count</h5></div>
                     <div class="col-sm-6 justify-content-end">
                         <h5>Total HR's Bottom Time: @tbt.ToString("N2")</h5>
                     </div>
@@ -80,7 +80,7 @@
                                                 <td class="lh-td">@dive.Country</td>
                                                 <td class="lh-td" data-toggle="tooltip" data-placement="auto" title="@tt">@dive.Location</td>
                                                 <td class="col-xs-1 lh-td">
-                                                    <a class="text-danger oi oi-delete" @onclick="@(() => Delete((int)dive.DiveLogId))"></a>
+                                                    <a class="btn btn-transparent text-danger" @onclick="@(() => Delete((long)dive.DiveLogId))" data-toggle="tooltip" data-placement="auto" title="Remove Dive"><i  class="oi oi-delete"></i></a>
                                                 </td>
                                             </tr>
                                         }
@@ -103,10 +103,10 @@
 
     protected override async Task OnInitializedAsync()
     {
-        dv = await client.GetFromJsonAsync<DiveView[]>($"api/dive/byEmail?email={AppState.User}");
+        dv = await client.GetFromJsonAsync<DiveView[]>($"api/dive/byUserId?userid={AppState.UserId}");
     }
 
-    async Task Delete(int diveId)
+    async Task Delete(long diveId)
     {
         var div = dv.First(x => x.DiveLogId == diveId);
         if (await js.InvokeAsync<bool>("confirm", $"Do you want to delete dive {div.DiveDateTime} record?"))
