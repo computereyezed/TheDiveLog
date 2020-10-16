@@ -48,13 +48,13 @@
         dvr = await client.GetFromJsonAsync<DiverInformation[]>("api/diver");
     }
 
-    async Task Delete(int diveId)
+    async Task Delete(int diverId)
     {
-        //var div = DiveView.First(x => x.Id == diveId);
-        //if (await js.InvokeAsync<bool>("confirm", $"Do you want to delete {div.DiveDateTime} Record?"))
-        //{
-        //    await client.DeleteAsync($"api/dive/{diveId}");
-        //    await OnInitializedAsync();
-        //}
+        var dr = dvr.First(x => x.Id == diverId);
+        if (await js.InvokeAsync<bool>("confirm", $"Do you want to delete diver {dr.DiverName} record?"))
+        {
+            await client.DeleteAsync($"api/dive/{diverId}");
+            await OnInitializedAsync();
+        }
     }
 }

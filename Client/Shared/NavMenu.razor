@@ -12,6 +12,7 @@
     <Authorized>
         @{ 
             AppState.User = context.User.Identity.Name;
+            AppState.IsAuthenticated = true;
         }
         <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
             <div class="scrollable-nav">
@@ -61,6 +62,10 @@
         </div>
     </Authorized>
     <NotAuthorized>
+        @{ 
+            AppState.User = string.Empty;
+            AppState.IsAuthenticated = false;
+        }
         <div class="@NavMenuCssClass" @onclick="ToggleNavMenu">
             <ul class="nav flex-column">
                 <li class="nav-item px-2">

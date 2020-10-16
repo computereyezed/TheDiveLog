@@ -9,6 +9,7 @@ namespace TheDiveLog.Client.Services
 {
     public class AppState
     {
+        public static bool IsAuthenticated { get; set; }
         public static string User { get; set; }
 
         public string Email { get; private set; } = string.Empty;
