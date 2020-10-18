@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TheDiveLog.Server.Data;
+using TheDiveLog.Shared.Models;
 using TheDiveLog.Shared.Models.DiverTables;
+using static TheDiveLog.Shared.Models.DiverView;
 
 namespace TheDiveLog.Server.Controllers
 {
@@ -21,18 +24,41 @@ namespace TheDiveLog.Server.Controllers
             this._divectx = context;
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetAsync()
+        [HttpGet("byUserId")]
+        public async Task<IActionResult> Get(string userid)
         {
-            var diverinfo = await _divectx.DiverInformation.ToListAsync();
-            return Ok(diverinfo);
-        }
+            DiverView diverview = new DiverView
+            {
+                Certs = await (from c in _divectx.Certifications
+                               join dl in _divectx.DDD on c.CertificationID equals dl.Id
+                               join cc in _divectx.Countries on c.CountryCode equals cc.Id
+                               where c.UserID == new Guid(userid)
+                               orderby c.CertDate descending
+                               select new CertView
+                               {
+                                   Id = c.Id,
+                                   UserID = c.UserID,
+                                   CertificationID = dl.Id,
+                                   Certification = dl.Name,
+                                   CertDate = c.CertDate,
+                                   InstrName = c.InstrName,
+                                   InstrNo = c.InstrNo,
+                                   CountryCode = c.CountryCode,
+                                   Country = cc.Country,
+                                   Location = c.Location,
+                                   Phone = c.Phone
+                               }).ToListAsync(),
 
-        //[HttpGet("{id}")]
-        //public async Task<IActionResult> Get(long id)
-        //{
-        //    return Ok(DiverInformation);
-        //}
+                Diver = await _divectx.DiverInformation.FirstOrDefaultAsync(a => a.UserID == new Guid(userid))
+            };
+
+            if (diverview.Certs.Count < 1)
+            {
+                diverview.Certs = new List<CertView>();
+            }
+
+            return Ok(diverview);
+        }
 
         public async Task<IActionResult> Post(DiverInformation dvr)
         {
