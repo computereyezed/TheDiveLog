@@ -1,5 +1,6 @@
 ﻿@page "/viewdiver"
-@inject HttpClient client
+@inject HttpClient http
+@inject NavigationManager uriHelper
 @inject IJSRuntime js
 
 <h3>View Diver Information</h3>
@@ -34,14 +35,61 @@
             </div>
             <div class="col-sm-3"><h5>Records Found: </h5></div>
             <div class="col-sm-6 justify-content-end">
-                
+
             </div>
         </div>
         <div class="row">
-            <div class="col-6">
-
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+                <EditForm Model="@dvr" OnValidSubmit="@SaveDive">
+                    <DataAnnotationsValidator />
+                    
+                        <div class="row">
+                            <div class="col-7">
+                                <span class="field-label" title="First and Last Name">First and Last Name</span>
+                                <br />
+                                <input type="text" class="form-control form-control-lg" @bind="@dvr.DiverName" />
+                                <ValidationMessage For="@(() => dvr.DiverName)" />
+                            </div>
+                            <div class="col-5">
+                                <span class="field-label" title="Birthday">Birthday</span>
+                                <br />
+                                <input type="date" class="form-control form-control-lg" @bind="@dvr.Birthday" />
+                                <ValidationMessage For="@(() => dvr.Birthday)" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-6">
+                                <span class="field-label" title="Diver No.">Diver No.</span>
+                                <br />
+                                <input type="text" class="form-control form-control-lg" @bind="@dvr.DiverNo" />
+                                <ValidationMessage For="@(() => dvr.DiverNo)" />
+                            </div>
+                            <div class="col-6">
+                                <span class="field-label" title="Measurement">Measurement</span>
+                                <br />
+                                <input type="text" class="form-control form-control-lg" @bind="@dvr.MeasurementID" />
+                                <ValidationMessage For="@(() => dvr.MeasurementID)" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <span class="field-label" title="Email">Email</span>
+                                <br />
+                                <input type="text" class="form-control form-control-lg" @bind="@dvr.Email" />
+                                <ValidationMessage For="@(() => dvr.Email)" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-12">
+                                <button type="submit" class="btn btn-success">
+                                    @butontext
+                                </button>
+                            </div>
+                        </div>
+                    
+                </EditForm>
             </div>
-            <div class="col-6">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6">
                 <div class="row">
                     <div class="col-12 table">
                         <div class="lh-table-container">
@@ -62,23 +110,18 @@
                                     <tbody class="rowlink" data-link="row">
                                         @foreach (DiverView.CertView cert in diverview.Certs)
                                         {
-                                            //var tt = $"Located in: {dive.Located}{System.Environment.NewLine}" +
-                                            //         $"Latitude: {dive.Latitude}{System.Environment.NewLine}" +
-                                            //         $"Longitude: {dive.Longitude}{System.Environment.NewLine}" +
-                                            //         $" What to see: {dive.WhatToSee}";
-
-                                        <tr>
-                                            <td class="lh-td">
-                                                <a class="btn btn-transparent text-primary" href="divelog/addeditdiver/true/@cert.Id" data-toggle="tooltip" data-placement="auto" title="Edit Dive"><i class="oi oi-pencil"></i></a>
-                                            </td>
-                                            <td class="lh-td">@cert.CertDate?.ToString("MM/dd/yyyy")</td>
-                                            <td class="col-1 lh-td">@cert.Certification</td>
-                                            <td class="lh-td">@cert.InstrNo</td>
-                                            <td class="lh-td">@cert.InstrName</td>
-                                            <td class="lh-td">
-                                                <a class="btn btn-transparent text-danger" @onclick="@(() => Delete(cert.Id))" data-toggle="tooltip" data-placement="auto" title="Remove Dive"><i class="oi oi-delete"></i></a>
-                                            </td>
-                                        </tr>
+                                            <tr>
+                                                <td class="lh-td">
+                                                    <a class="btn btn-transparent text-primary" href="divelog/addeditdiver/true/@cert.Id" data-toggle="tooltip" data-placement="auto" title="Edit Dive"><i class="oi oi-pencil"></i></a>
+                                                </td>
+                                                <td class="lh-td">@cert.CertDate?.ToString("MM/dd/yyyy")</td>
+                                                <td class="col-1 lh-td">@cert.Certification</td>
+                                                <td class="lh-td">@cert.InstrNo</td>
+                                                <td class="lh-td">@cert.InstrName</td>
+                                                <td class="lh-td">
+                                                    <a class="btn btn-transparent text-danger" @onclick="@(() => Delete(cert.Id))" data-toggle="tooltip" data-placement="auto" title="Remove Dive"><i class="oi oi-delete"></i></a>
+                                                </td>
+                                            </tr>
                                         }
                                     </tbody>
                                 </table>
@@ -99,20 +142,54 @@ else
 
 
 @code {
+    [Parameter] public DiverInformation dvr { get; set; }
+    private bool act { get; set; }
+    private string butontext = string.Empty;
     DiverView diverview { get; set; }
+
 
     protected override async Task OnInitializedAsync()
     {
-        diverview = await client.GetFromJsonAsync<DiverView>($"api/diver/byUserId?userid={AppState.UserId}");
+        diverview = await http.GetFromJsonAsync<DiverView>($"api/diver/byUserId?userid={AppState.UserId}");
+
+        dvr = diverview.Diver;
+
+        if (dvr == null)
+        {
+            act = false;
+            butontext = "Save";
+        }
+        else
+        {
+            act = true;
+            butontext = "Update";
+        }
+
     }
 
     async Task Delete(long diverId)
     {
-        //var dr = dvr.First(x => x. == diverId);
-        //if (await js.InvokeAsync<bool>("confirm", $"Do you want to delete diver {dr.DiverName} record?"))
-        //{
-        //    await client.DeleteAsync($"api/dive/{diverId}");
-        //    await OnInitializedAsync();
-        //}
+        if (await js.InvokeAsync<bool>("confirm", $"Do you want to delete diver {dvr.DiverName} record?"))
+        {
+            await http.DeleteAsync($"api/dive/{diverId}");
+            await OnInitializedAsync();
+        }
     }
+
+    async Task SaveDive()
+    {
+        if (act)
+        {
+            await http.PutAsJsonAsync("api/diver", dvr);
+            await js.InvokeVoidAsync("alert", $"Updated Suicessfully!");
+            uriHelper.NavigateTo("viewdives");
+
+        }
+        else
+        {
+            await http.PostAsJsonAsync("api/diver", dvr);
+            uriHelper.NavigateTo("viewdives");
+        }
+    }
+
 }
