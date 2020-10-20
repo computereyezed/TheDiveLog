@@ -3,6 +3,8 @@
 @inject NavigationManager uriHelper
 @inject IJSRuntime js
 
+<TheDiveLog.Client.Pages.Components.CertModal @ref="CertModal" ></TheDiveLog.Client.Pages.Components.CertModal>
+
 <h3>View Diver Information</h3>
 
 @{
@@ -112,11 +114,7 @@
                                         {
                                             <tr>
                                                 <td class="lh-td">
-                                                    @*<button @onclick="(() => GetCert(cert.Id))" type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                                                        <i class="oi oi-pencil"></i>
-                                                    </button>*@
-                                                    <a class="btn btn-transparent text-primary" data-toggle="modal" data-target="#exampleModal"><i class="oi oi-pencil"></i></a>
-                                                    @*<a class="btn btn-transparent text-primary" href="divelog/addeditdiver/true/@cert.Id" data-toggle="tooltip" data-placement="auto" title="Edit Dive"><i class="oi oi-pencil"></i></a>*@
+                                                    <a class="btn btn-transparent text-primary" @onclick="() => CertModal.CertOpen(cert.Id)"><i class="oi oi-pencil"></i></a>
                                                 </td>
                                                 <td class="lh-td">@cert.CertDate?.ToString("MM/dd/yyyy")</td>
                                                 <td class="col-1 lh-td">@cert.Certification</td>
@@ -143,34 +141,13 @@ else
     <p>You're not signed in.</p>
 }
 
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                Hello
-                @*<EditForm Model="certinfo" OnValidSubmit="@SaveDiver">
-                    <h3>@certinfo.Id</h3>
-                </EditForm>*@
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
-        </div>
-    </div>
-</div>
-
 @code {
-    [Parameter] public DiverInformation dvr { get; set; }
+    private TheDiveLog.Client.Pages.Components.CertModal CertModal { get; set; }
     private bool act { get; set; }
     private string butontext = string.Empty;
+
+    [Parameter] public DiverInformation dvr { get; set; }
+
     DiverView diverview { get; set; }
     Certifications certinfo { get; set; } = new Certifications();
 
@@ -202,12 +179,6 @@ else
         }
     }
 
-    async Task GetCert(long certId)
-    {
-        certinfo = await http.GetFromJsonAsync<Certifications>($"api/diver/byCertId?certid={certId}");
-    }
-
-
     async Task SaveDiver()
     {
         if (act)
@@ -223,5 +194,4 @@ else
             uriHelper.NavigateTo("viewdives");
         }
     }
-
 }

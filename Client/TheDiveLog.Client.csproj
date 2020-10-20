@@ -6,6 +6,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="Pages\Components\AddEditCert.razor" />
+    <Content Remove="Pages\Components\Modal.razor" />
     <Content Remove="Pages\Counter.razor" />
     <Content Remove="Pages\DiverInfo\AddEditDiver.razor" />
     <Content Remove="Pages\DiverInfo\DiverForm.razor" />

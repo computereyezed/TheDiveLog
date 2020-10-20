@@ -1,0 +1,107 @@
+﻿@inject HttpClient http
+@inject NavigationManager uriHelper
+@inject IJSRuntime js
+
+<div class="modal @ModalClass" tabindex="-1" role="dialog" aria-labelledby="CertModal" aria-hidden="true" style="display:@ModalDisplay">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Edit Certifications</h5>
+                <button type="button" class="close" data-dismiss="modal" @onclick="() => CertCancel()" aria-label="Cancel">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <EditForm Model="@certinfo">
+                    <div class="row">
+                        <div class="col-6 col-sm-6 col-md-6 col-lg-4">
+                            <span class="field-label" title="Instructors No.">Instructors No.</span>
+                            <br />
+                            <input type="text" class="form-control form-control-lg " @bind="@certinfo.InstrNo" />
+                            <ValidationMessage For="@(() => certinfo.InstrNo)" />
+                        </div>
+                        <div class="col-6 col-sm-6 col-md-6 col-lg-4">
+                            <span class="field-label" title="Instructors Name">Instructors Name</span>
+                            <br />
+                            <input type="text" class="form-control form-control-lg" @bind="@certinfo.InstrName" />
+                            <ValidationMessage For="@(() => certinfo.InstrName)" />
+                        </div>
+                    </div>
+                    <div class="row">                        
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+                            <span class="field-label" title="Location">Location</span>
+                            <br />
+                            <input type="text" class="form-control form-control-lg" @bind="@certinfo.Location" />
+                            <ValidationMessage For="@(() => certinfo.Location)" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 col-sm-6 col-md-6 col-lg-4">
+                            <span class="field-label" title="Phone No.">Phone No.</span>
+                            <br />
+                            <input type="text" class="form-control form-control-lg " @bind="@certinfo.Phone" />
+                            <ValidationMessage For="@(() => certinfo.Phone)" />
+                        </div>
+                        <div class="col-6 col-sm-6 col-md-6 col-lg-4">
+                            <span class="field-label" title="Cert Date">Cert Date</span>
+                            <br />
+                            <input type="date" class="form-control form-control-lg" @bind="@certinfo.CertDate" />
+                            <ValidationMessage For="@(() => certinfo.CertDate)" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 col-sm-6 col-md-6 col-lg-4">
+                            <span class="field-label" title="Certification">Certification</span>
+                            <br />
+                            <input type="text" class="form-control form-control-lg " @bind="@certinfo.CertificationID" />
+                            <ValidationMessage For="@(() => certinfo.CertificationID)" />
+                        </div>
+                        <div class="col-6 col-sm-6 col-md-6 col-lg-4">
+                            <span class="field-label" title="Country">Country</span>
+                            <br />
+                            <input type="text" class="form-control form-control-lg" @bind="@certinfo.CountryCode" />
+                            <ValidationMessage For="@(() => certinfo.CountryCode)" />
+                        </div>
+                    </div>
+                </EditForm>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="() => CertCancel()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (ShowBackdrop)
+{
+    <div class="modal-backdrop fade show"></div>
+}
+
+@code {
+
+    Certifications certinfo { get; set; } = new Certifications();
+
+    public Guid Guid = Guid.NewGuid();
+    public string ModalDisplay = "none;";
+    public string ModalClass = "";
+    public bool ShowBackdrop = false;
+
+    public async void CertOpen(long certId)
+    {
+        certinfo = await http.GetFromJsonAsync<Certifications>($"api/diver/byCertId?certid={certId}");
+
+        ModalDisplay = "block;";
+        ModalClass = "Show";
+        ShowBackdrop = true;
+        StateHasChanged();
+    }
+
+    public void CertCancel()
+    {
+        ModalDisplay = "none";
+        ModalClass = "";
+        ShowBackdrop = false;
+        StateHasChanged();
+    }
+}
