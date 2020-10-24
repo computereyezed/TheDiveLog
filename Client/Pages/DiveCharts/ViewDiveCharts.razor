@@ -2,11 +2,330 @@
 @inject HttpClient client
 @inject IJSRuntime js
 
-<h3>View Dive Charts</h3>
+@{
+    string title = string.Empty;
+}
+
+@if (AppState.IsAuthenticated)
+{
+    @if (result == null)
+    {
+        title = "Loading...";
+    }
+    else
+    {
+        <div class="lh-table-container">
+            <div class="lh-header-container">
+            </div>
+            <div class="lh-td-container">
+                <h5 class="verticaltext">
+                    &nbsp;&nbsp;Pressuer&nbsp;Group
+                </h5>
+            </div>
+            <div class="lh-table-container-inner">
+                <table class="table table-sm table-striped lh-table">
+                    <caption class="lh-caption">
+                        No Decompression Limits and Group Designation
+                    </caption>
+                    <thead>
+                        <tr>
+                            <th class="lh-th" colspan="14"><div class="lh-th-topline lh-first">Depth in feet</div></th>
+                        </tr>
+                        <tr>
+                            <th colspan="2" class="lh-th"><div class="lh-th-bottomline"></div></th>
+                            <th class="lh-th"><div class="lh-th-bottomline">35</div></th>
+                            <th class="lh-th"><div class="lh-th-bottomline">40</div></th>
+                            <th class="lh-th"><div class="lh-th-bottomline">50</div></th>
+                            <th class="lh-th"><div class="lh-th-bottomline">60</div></th>
+                            <th class="lh-th"><div class="lh-th-bottomline">70</div></th>
+                            <th class="lh-th"><div class="lh-th-bottomline">80</div></th>
+                            <th class="lh-th"><div class="lh-th-bottomline">90</div></th>
+                            <th class="lh-th"><div class="lh-th-bottomline">100</div></th>
+                            <th class="lh-th"><div class="lh-th-bottomline">110</div></th>
+                            <th class="lh-th"><div class="lh-th-bottomline">120</div></th>
+                            <th class="lh-th"><div class="lh-th-bottomline">130</div></th>
+                            <th class="lh-th"><div class="lh-th-bottomline maxdepthtitle">140</div></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in result)
+                        {
+                            const string nbg = "text-black";
+                            const string sbg = "text-black bg-gray";
+                            const string lbg = "text-white bg-black";
+                            string gray = $"Gray area:{Environment.NewLine}SAFETY STOP REQUIRED";
+                            string black = $"Black area:{Environment.NewLine}NO DECOMPRESSION LIMITS{Environment.NewLine}SAFETY STOP REQUIRED";
+                            var bg = nbg;
+                            var ntt = string.Empty;
+                            var tt = string.Empty;
+                            <tr>
+                                <td class="lh-td-spacer"></td>
+                                <td class="lh-td lh-td-first">@item.PressureGroup</td>
+                                @if (item.C35 != null)
+                                {
+                                    if (item.C35 > 139)
+                                    {
+                                        bg = sbg;
+                                        tt = gray;
+                                    }
+                                    if (item.C35 > 188)
+                                    {
+                                        bg = lbg;
+                                        tt = black;
+                                    }
+                                    <td class="@bg lh-td" title="@tt" data-placement="auto" data-container="body">@item.C35</td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                                @if (item.C40 != null)
+                                {
+                                    bg = nbg;
+                                    tt = ntt;
+                                    if (item.C40 > 104)
+                                    {
+                                        bg = sbg;
+                                        tt = gray;
+                                    }
+                                    if (item.C40 > 129)
+                                    {
+                                        bg = lbg;
+                                        tt = black;
+                                    }
+                                    <td class="@bg lh-td" title="@tt" data-placement="auto" data-container="body">@item.C40</td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                                @if (item.C50 != null)
+                                {
+                                    bg = nbg;
+                                    tt = ntt;
+                                    if (item.C50 > 63)
+                                    {
+                                        bg = sbg;
+                                        tt = gray;
+                                    }
+                                    if (item.C50 > 75)
+                                    {
+                                        bg = lbg;
+                                        tt = black;
+                                    }
+                                    <td class="@bg lh-td" title="@tt" data-placement="auto" data-container="body">@item.C50</td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                                @if (item.C60 != null)
+                                {
+                                    bg = nbg;
+                                    tt = ntt;
+                                    if (item.C60 > 47)
+                                    {
+                                        bg = sbg;
+                                        tt = gray;
+                                    }
+                                    if (item.C60 > 54)
+                                    {
+                                        bg = lbg;
+                                        tt = black;
+                                    }
+                                    <td class="@bg lh-td" title="@tt" data-placement="auto" data-container="body">@item.C60</td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                                @if (item.C70 != null)
+                                {
+                                    bg = nbg;
+                                    tt = ntt;
+                                    if (item.C70 >= 35)
+                                    {
+                                        bg = sbg;
+                                        tt = gray;
+                                    }
+                                    if (item.C70 > 38)
+                                    {
+                                        bg = lbg;
+                                        tt = black;
+                                    }
+                                    <td class="@bg lh-td" title="@tt" data-placement="auto" data-container="body">@item.C70</td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                                @if (item.C80 != null)
+                                {
+                                    bg = nbg;
+                                    tt = ntt;
+                                    if (item.C80 > 25)
+                                    {
+                                        bg = sbg;
+                                        tt = gray;
+                                    }
+                                    if (item.C80 > 29)
+                                    {
+                                        bg = lbg;
+                                        tt = black;
+                                    }
+                                    <td class="@bg lh-td" title="@tt" data-placement="auto" data-container="body">@item.C80</td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                                @if (item.C90 != null)
+                                {
+                                    bg = nbg;
+                                    tt = ntt;
+                                    if (item.C90 > 21)
+                                    {
+                                        bg = sbg;
+                                        tt = gray;
+                                    }
+                                    if (item.C90 > 24)
+                                    {
+                                        bg = lbg;
+                                        tt = black;
+                                    }
+                                    <td class="@bg lh-td" title="@tt" data-placement="auto" data-container="body">@item.C90</td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                                @if (item.C100 != null)
+                                {
+                                    bg = sbg;
+                                    tt = gray;
+                                    if (item.C100 > 19)
+                                    {
+                                        bg = lbg;
+                                        tt = black;
+                                    }
+                                    <td class="@bg lh-td" title="@tt" data-placement="auto" data-container="body">@item.C100</td>
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                                @if (item.C110 != null)
+                                {
+                                    bg = sbg;
+                                    tt = gray;
+                                    if (item.C110 > 15)
+                                    {
+                                        bg = lbg;
+                                        tt = black;
+                                    }
+                                    if (item.C110 == -1)
+                                    {
+                                        <td class="@bg lh-td" title="@tt" data-placement="auto" data-container="body"><span class="oi oi-arrow-thick-bottom setzindex"></span></td>
+                                    }
+                                    else
+                                    {
+                                        <td class="@bg lh-td" title="@tt" data-placement="auto" data-container="body">@item.C110</td>
+                                    }
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                                @if (item.C120 != null)
+                                {
+                                    bg = sbg;
+                                    tt = gray;
+                                    if (item.C120 > 12)
+                                    {
+                                        bg = lbg;
+                                        tt = black;
+                                    }
+                                    if (item.C120 == -1)
+                                    {
+                                        <td class="@bg lh-td" title="@tt" data-placement="auto" data-container="body"><span class="oi oi-arrow-thick-bottom setzindex"></span></td>
+                                    }
+                                    else
+                                    {
+                                        <td class="@bg lh-td" title="@tt" data-placement="auto" data-container="body">@item.C120</td>
+                                    }
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                                @if (item.C130 != null)
+                                {
+                                    bg = sbg;
+                                    tt = gray;
+                                    if (item.C130 > 9)
+                                    {
+                                        bg = lbg;
+                                        tt = black;
+                                    }
+                                    if (item.C130 == -1)
+                                    {
+                                        <td class="@bg lh-td" title="@tt" data-placement="auto" data-container="body"><span class="oi oi-arrow-thick-bottom setzindex"></span></td>
+                                    }
+                                    else
+                                    {
+                                        <td class="@bg lh-td" title="@tt" data-placement="auto" data-container="body">@item.C130</td>
+                                    }
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                                @if (item.C140 != null)
+                                {
+                                    bg = "maxdepth";
+                                    tt = $"140ft:{Environment.NewLine}Is for emergency purposes only, do not dive to this depth.";
+                                    if (item.C140 > 7)
+                                    {
+                                        bg = lbg;
+                                        tt = $"140ft:{Environment.NewLine}Is for emergency purposes only, do not dive to this depth.{Environment.NewLine}" + black;
+                                    }
+                                    if (item.C140 == -1)
+                                    {
+                                        <td class="@bg lh-td" title="@tt" data-placement="auto" data-container="body"><span class="oi oi-arrow-thick-bottom setzindex"></span></td>
+                                    }
+                                    else
+                                    {
+                                        <td class="@bg lh-td" title="@tt" data-placement="auto" data-container="body">@item.C140</td>
+                                    }
+                                }
+                                else
+                                {
+                                    <td></td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }
+}
+else
+{
+    <h1>Authentication Failure!</h1>
+    <p>You're not signed in.</p>
+}
 
 @code {
+    DiveChartView dcv { get; set; }
+
+    List<DiveChartView.Usp_PADINDLPGD_Result> result { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
-        var ndl = await client.GetFromJsonAsync<DiveChartView>($"api/padi/byMeasurement?mesurementid=35");
+        dcv = await client.GetFromJsonAsync<DiveChartView>($"api/padi/byMeasurement?mesurementid=35");
+
+        result = dcv.ListNDLPGD;
+
     }
 }
