@@ -1,7 +1,12 @@
 ﻿@page "/viewdivecharts"
+@inject HttpClient client
+@inject IJSRuntime js
 
 <h3>View Dive Charts</h3>
 
 @code {
-
+    protected override async Task OnInitializedAsync()
+    {
+        var ndl = await client.GetFromJsonAsync<DiveChartView>($"api/padi/byMeasurement?mesurementid=35");
+    }
 }

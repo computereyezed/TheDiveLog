@@ -5,6 +5,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Models\PADINDLPGD.cs" />
+    <Compile Remove="Models\usp_PADINDLPGD_Result.cs" />
     <Compile Remove="WeatherForecast.cs" />
   </ItemGroup>
 

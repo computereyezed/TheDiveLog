@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TheDiveLog.Shared.Models;
 using TheDiveLog.Shared.Models.DiverTables;
 using TheDiveLog.Shared.Models.DiveSiteTables;
 using TheDiveLog.Shared.Models.DiveTables;
