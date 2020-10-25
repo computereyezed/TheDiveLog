@@ -33,44 +33,96 @@ namespace TheDiveLog.Server.Controllers
             DiveChartView diveChartView = new DiveChartView
             {
                 ListNDLPGD = new List<Usp_PADINDLPGD_Result>(),
-                Result = new Usp_PADINDLPGD_Result()
+                NDLPG_Result = new Usp_PADINDLPGD_Result(),
+                ListSIC =new List<Usp_PADISIC_Result>(),
+                SIC_Result = new Usp_PADISIC_Result()
             };
 
-            using var conn = new SqlConnection("Data Source=BJS-SURFACE;Initial Catalog=DiveLogBook;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            using var ndclconn = new SqlConnection("Data Source=BJS-SURFACE;Initial Catalog=DiveLogBook;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
             {
-                using var command = new SqlCommand("dbo.usp_PADINDLPGD", conn)
+                //NDCL
+                using var cmdndcl = new SqlCommand("dbo.usp_PADINDLPGD", ndclconn)
                 {
                     CommandType = CommandType.StoredProcedure
                 };
 
-                conn.Open();
-                SqlDataReader reader = command.ExecuteReader();
+                ndclconn.Open();
+                SqlDataReader ndclreader = cmdndcl.ExecuteReader();
 
-                if (reader.HasRows)
+                if (ndclreader.HasRows)
                 {
-                    while (reader.Read())
+                    while (ndclreader.Read())
                     {
-                        diveChartView.Result = new Usp_PADINDLPGD_Result()
+                        diveChartView.NDLPG_Result = new Usp_PADINDLPGD_Result
                         {
-                            PressureGroup = (string)reader.GetValue(0),
-                            C35 = GetInt(reader, 1),
-                            C40 = GetInt(reader, 2),
-                            C50 = GetInt(reader, 3),
-                            C60 = GetInt(reader, 4),
-                            C70 = GetInt(reader, 5),
-                            C80 = GetInt(reader, 6),
-                            C90 = GetInt(reader, 7),
-                            C100 = GetInt(reader, 8),
-                            C110 = GetInt(reader, 9),
-                            C120 = GetInt(reader, 10),
-                            C130 = GetInt(reader, 11),
-                            C140 = GetInt(reader, 12),
+                            PressureGroup = (string)ndclreader.GetValue(0),
+                            C35 = GetInt(ndclreader, 1),
+                            C40 = GetInt(ndclreader, 2),
+                            C50 = GetInt(ndclreader, 3),
+                            C60 = GetInt(ndclreader, 4),
+                            C70 = GetInt(ndclreader, 5),
+                            C80 = GetInt(ndclreader, 6),
+                            C90 = GetInt(ndclreader, 7),
+                            C100 = GetInt(ndclreader, 8),
+                            C110 = GetInt(ndclreader, 9),
+                            C120 = GetInt(ndclreader, 10),
+                            C130 = GetInt(ndclreader, 11),
+                            C140 = GetInt(ndclreader, 12),
                         };
-                        diveChartView.ListNDLPGD.Add(diveChartView.Result);
+                        diveChartView.ListNDLPGD.Add(diveChartView.NDLPG_Result);
+                    }
+                }
+            }
+
+            using var sicconn = new SqlConnection("Data Source=BJS-SURFACE;Initial Catalog=DiveLogBook;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
+            {
+                //SIC
+                using var cmdsic = new SqlCommand("dbo.usp_PADISIC", sicconn)
+                {
+                    CommandType = CommandType.StoredProcedure
+                };
+
+                sicconn.Open();
+                SqlDataReader sicreader = cmdsic.ExecuteReader();
+
+                if (sicreader.HasRows)
+                {
+                    while (sicreader.Read())
+                    {
+                        diveChartView.SIC_Result = new Usp_PADISIC_Result()
+                        {
+                            StartingPressureGroup = (string)sicreader.GetValue(0),
+                            A = GetInt(sicreader, 1),
+                            B = GetInt(sicreader, 2),
+                            C = GetInt(sicreader, 3),
+                            D = GetInt(sicreader, 4),
+                            E = GetInt(sicreader, 5),
+                            F = GetInt(sicreader, 6),
+                            G = GetInt(sicreader, 7),
+                            H = GetInt(sicreader, 8),
+                            I = GetInt(sicreader, 9),
+                            J = GetInt(sicreader, 10),
+                            K = GetInt(sicreader, 11),
+                            L = GetInt(sicreader, 12),
+                            M = GetInt(sicreader, 13),
+                            N = GetInt(sicreader, 14),
+                            O = GetInt(sicreader, 15),
+                            P = GetInt(sicreader, 16),
+                            Q = GetInt(sicreader, 17),
+                            R = GetInt(sicreader, 18),
+                            S = GetInt(sicreader, 19),
+                            T = GetInt(sicreader, 20),
+                            U = GetInt(sicreader, 21),
+                            V = GetInt(sicreader, 22),
+                            W = GetInt(sicreader, 23),
+                            X = GetInt(sicreader, 24),
+                            Y = GetInt(sicreader, 25),
+                            Z = GetInt(sicreader, 26),
+                        };
+                        diveChartView.ListSIC.Add(diveChartView.SIC_Result);
                     }
                 }
             };
-
             return Ok(diveChartView);
         }
 
