@@ -446,20 +446,27 @@ app {
 /*#region Dive Chart Section*/
 
 .divechart {
-    margin-left: 40px;
+    /*margin-left: 40px;*/
+    width: 40px;
     background: url('/css/Images/DiveChart.png') no-repeat scroll 0 0/20rem 8rem transparent;
 }
 
 .md {
-    margin-left: -35px;
-    margin-top: 30px;
+    margin-left: -10px;
+    /*margin-top: 30px;*/
 }
 
 .bt {
-    margin-left: 70px;
+    margin-left: 100px;
+    margin-top: 10px;
 }
 
 /*#endregion*/
+
+.divegraphcard {
+    width: 25rem;
+    height: 25rem;
+}
 
 /*#region Inputs Section*/
 

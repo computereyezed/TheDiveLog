@@ -1,7 +1,328 @@
 ﻿@page "/diveplanning"
 
-<h3>Dive Planning</h3>
+@inject HttpClient client
+@inject IJSRuntime js
+@*@model TheDiveLogClasses.Models.DivePlanning*@
 
-@code {
+@{
+    string mesurement = "feet";
+    int mesureid = 1;
 
+    //if (Session["sMeasurement"].ToString() == "2")
+    //{
+    //    mesurement = "meters";
+    //    mesureid = 2;
+
+    //}
 }
+
+<br />
+<div class="row">
+    <div class="col-sm-12 well well-sm">
+        <h4 class="text-center">
+            The Recreational Dive Planner is designed specifically for planning recreational (no decompression) dives on air only.<br /><span class="text-danger">Do not attempt to use it for planning decompression dives.</span>
+        </h4>
+    </div>
+</div>
+<div class="row">
+    <div class="col-auto mb-3 card mx-auto">
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="pill" href="#ed">Emergency Decompression</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="pill" href="#ss">Safety Stops</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="pill" href="#fad">Flying After Diving</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="pill" href="#da">Diving at Altitude</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="pill" href="#md">Special Rules for Multiple Dives</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="pill" href="#gr">General Rules</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane container active" id="ed">
+                <p class="text-black">
+                    <ul>
+                        <li class="text-black">
+                            If a no decompression limit is exceeded by no more than 5 minutes, an 8 minute decompression stop at 15ft is mandatory.
+                        </li>
+                        <li class="text-black">
+                            Upon surfacing, the diver must remain out of the water for at least 6 hours prior to making another dive. If a no decompression limit is exceeded by more than 5 minutes, a 15ft decompression stop of no less than 15 minutes is urged (air supply permitting).
+                        </li>
+                        <li class="text-black">
+                            Upon surfacing, <span class="text-danger">the diver must remain out of the water for at least 24 hours prior to making another dive.</span>
+                        </li>
+                    </ul>
+                </p>
+            </div>
+            <div class="tab-pane container fade" id="ss">
+                <p class="text-black">
+                    A safety stop for 3 minutes at 15ft is required:
+                    <ul>
+                        <li class="text-black">Any time the diver comes up to or within 3 pressure groups of a no decompression limit.</li>
+                        <li class="text-black">For any dive to a depth of <span class="text-danger">100ft or deeper</span>.</li>
+                    </ul>
+                </p>
+            </div>
+            <div class="tab-pane container fade" id="fad">
+                <p class="text-black">
+                    Recommendations For Dives Within the No Decompression Limit:
+                    <ul>
+                        <li class="text-black">
+                            Single Dives: Aminimum pre-flight surface interval of  12 hours is suggested.
+                        </li>
+                        <li class="text-black">
+                            Repetitive Dives and/or Multi-day Dives: Aminimum pre-flight surface interval of 18 hours is suggested. For Dives Requiring Decompression Stops
+                        </li>
+                        <li class="text-black">
+                            A minimum pre-flight surface interval greater than 18 hours is suggested.
+                        </li>
+                    </ul>
+                </p>
+            </div>
+            <div class="tab-pane container fade" id="da">
+                <p class="text-black">
+                    Diving at altitude (1000ft or higher) requires the use of special procedures.
+                </p>
+            </div>
+            <div class="tab-pane container fade" id="md">
+                <p class="text-black">
+                    If you are planning 3 or more dives in a day<br />
+                    Beginning with the first dive:
+
+                    <ul>
+                        <li class="text-black">
+                            If your ending pressure group after any dive is W or X, the minimum surface interval between all subsequent dives is 1 hour.
+                        </li>
+                    </ul>
+
+                    <span class="text-black">Note: Since little is presently known about the physiological effects of multiple dives over multiple days, divers are wise to make fewer dives and limit their exposure toward the end of a multi-day dive series.</span>
+                </p>
+            </div>
+            <div class="tab-pane container fade" id="gr">
+                <p class="text-black">
+                    <ul>
+                        <li class="text-black">Ascend from all dives at a rate not to exceed 60ft per minute.</li>
+                        <li class="text-black">When planning a dive in cold water or under conditions that might be strenuous, plan the dive assuming the depth is 10ft deeper than actual.</li>
+                        <li class="text-black">Plan repetitive dives so each successive dive is to a shallower depth. Limit repetitive dives to 100ft or shallower.</li>
+                        <li class="text-danger">Never exceed the limits of this planner and, whenever possible, avoid diving to the limits of the planner. 140ft is for emergency purposes only, do not dive to this depth.</li>
+                    </ul>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-auto mb-3">
+        <div class="card card-block divegraphcard border-primary mb-3">
+            <div class="card-header">
+                First Dive
+            </div>
+            <div class="card-body img-fluid  align-items-center d-flex justify-content-center">
+                <img class="card-img-bottom my-auto" src="/css/Images/DiveChart.png" alt="Card image" style="width:100%">
+            </div>
+            <div class="card-img-overlay">
+                <br />
+                <br />
+                <br />
+                <div class="float-left">
+                    <span class="field-label" title="Starting Pressure Group">SPG</span>
+                    <br />
+                    <input type="text" id="SPG1" name="SPG1" class="form-control-lg input-1-alpha" maxlength="1" />
+                </div>
+                <div class="float-right">
+                    <span class="field-label" title="Ending pressure group">EPG</span>
+                    <br />
+                    <input type="text" class="form-control form-control-lg input-1-alpha" maxlength="1" />
+                </div>
+                <br />
+                <br />
+                <br />
+                <br />
+                <div class="float-left md">
+                    <span class="field-label" title="Max Depth">MD</span>
+                    <br />
+                    <input type="number" class="form-control form-control-lg input-6" maxlength="4" />
+                </div>
+                <br />
+                <br />
+                <br />
+                <div class="bt">
+                    <br />
+                    <span class="field-label" title="Bottom time (in minutes)">BT</span>
+                    <br />
+                    <input type="number" class="form-control form-control-lg input-6" maxlength="3" />
+                    <span class="field-label">minutes</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-auto mb-3">
+        <div class="card card-block divegraphcard border-primary mb-3">
+            <div class="card-header">
+                Second Dive
+            </div>
+            <div class="card-body img-fluid  align-items-center d-flex justify-content-center">
+                <img class="card-img-bottom my-auto" src="/css/Images/DiveChart.png" alt="Card image" style="width:100%">
+            </div>
+            <div class="card-img-overlay">
+                <br />
+                <br />
+                <br />
+                <div class="float-left">
+                    <span class="field-label" title="Starting Pressure Group">SPG</span>
+                    <br />
+                    <input type="text" id="SPG1" name="SPG1" class="form-control-lg input-1-alpha" maxlength="1" />
+                </div>
+                <div class="float-right">
+                    <span class="field-label" title="Ending pressure group">EPG</span>
+                    <br />
+                    <input type="text" class="form-control form-control-lg input-1-alpha" maxlength="1" />
+                </div>
+                <br />
+                <br />
+                <br />
+                <br />
+                <div class="float-left md">
+                    <span class="field-label" title="Max Depth">MD</span>
+                    <br />
+                    <input type="number" class="form-control form-control-lg input-6" maxlength="4" />
+                </div>
+                <br />
+                <br />
+                <br />
+                <div class="bt">
+                    <br />
+                    <span class="field-label" title="Bottom time (in minutes)">BT</span>
+                    <br />
+                    <input type="number" class="form-control form-control-lg input-6" maxlength="3" />
+                    <span class="field-label">minutes</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-auto mb-3">
+        <div class="card card-block divegraphcard border-primary mb-3">
+            <div class="card-header">
+                Third Dive
+            </div>
+            <div class="card-body img-fluid  align-items-center d-flex justify-content-center">
+                <img class="card-img-bottom my-auto" src="/css/Images/DiveChart.png" alt="Card image" style="width:100%">
+            </div>
+            <div class="card-img-overlay">
+                <br />
+                <br />
+                <br />
+                <div class="float-left">
+                    <span class="field-label" title="Starting Pressure Group">SPG</span>
+                    <br />
+                    <input type="text" id="SPG1" name="SPG1" class="form-control-lg input-1-alpha" maxlength="1" />
+                </div>
+                <div class="float-right">
+                    <span class="field-label" title="Ending pressure group">EPG</span>
+                    <br />
+                    <input type="text" class="form-control form-control-lg input-1-alpha" maxlength="1" />
+                </div>
+                <br />
+                <br />
+                <br />
+                <br />
+                <div class="float-left md">
+                    <span class="field-label" title="Max Depth">MD</span>
+                    <br />
+                    <input type="number" class="form-control form-control-lg input-6" maxlength="4" />
+                </div>
+                <br />
+                <br />
+                <br />
+                <div class="bt">
+                    <br />
+                    <span class="field-label" title="Bottom time (in minutes)">BT</span>
+                    <br />
+                    <input type="number" class="form-control form-control-lg input-6" maxlength="3" />
+                    <span class="field-label">minutes</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-auto mb-3">
+        <div class="card card-block divegraphcard border-primary mb-3">
+            <div class="card-header">
+                Fourth Dive
+            </div>
+            <div class="card-body img-fluid  align-items-center d-flex justify-content-center">
+                <img class="card-img-bottom my-auto" src="/css/Images/DiveChart.png" alt="Card image" style="width:100%">
+            </div>
+            <div class="card-img-overlay">
+                <br />
+                <br />
+                <br />
+                <div class="float-left">
+                    <span class="field-label" title="Starting Pressure Group">SPG</span>
+                    <br />
+                    <input type="text" id="SPG1" name="SPG1" class="form-control-lg input-1-alpha" maxlength="1" />
+                </div>
+                <div class="float-right">
+                    <span class="field-label" title="Ending pressure group">EPG</span>
+                    <br />
+                    <input type="text" class="form-control form-control-lg input-1-alpha" maxlength="1" />
+                </div>
+                <br />
+                <br />
+                <br />
+                <br />
+                <div class="float-left md">
+                    <span class="field-label" title="Max Depth">MD</span>
+                    <br />
+                    <input type="number" class="form-control form-control-lg input-6" maxlength="4" />
+                </div>
+                <br />
+                <br />
+                <br />
+                <div class="bt">
+                    <br />
+                    <span class="field-label" title="Bottom time (in minutes)">BT</span>
+                    <br />
+                    <input type="number" class="form-control form-control-lg input-6" maxlength="3" />
+                    <span class="field-label">minutes</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br />
+<div class="row">
+    <div class="col-auto mb-4 card">
+        <ul class="nav nav-pills">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="pill" href="#ndlgd">No Decompression Limits and Group Designation</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="pill" href="#sic">Surface Interval Credit Table</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="pill" href="#abtsne">Repetitive Dive Timetable</a>
+            </li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane container active float-left" id="ndlgd">
+                <TheDiveLog.Client.Pages.Partials.NDLChart></TheDiveLog.Client.Pages.Partials.NDLChart>
+            </div>
+            <div class="tab-pane container fade float-left" id="sic">
+                <TheDiveLog.Client.Pages.Partials.SicChart></TheDiveLog.Client.Pages.Partials.SicChart>
+            </div>
+            <div class="tab-pane container fade float-left" id="abtsne">
+                <h6>table 3</h6>
+            </div>
+        </div>
+    </div>
+</div>
+
