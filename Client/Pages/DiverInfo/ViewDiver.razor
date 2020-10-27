@@ -3,7 +3,7 @@
 @inject NavigationManager uriHelper
 @inject IJSRuntime js
 
-<TheDiveLog.Client.Pages.Components.CertModal @ref="CertModal" ></TheDiveLog.Client.Pages.Components.CertModal>
+<TheDiveLog.Client.Pages.Components.CertModal @ref="CertModal"></TheDiveLog.Client.Pages.Components.CertModal>
 
 <h3>View Diver Information</h3>
 
@@ -31,108 +31,101 @@
     }
     else
     {
+<div class="row">
+    @*Diver Info Form*@
+    <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+        <EditForm Model="@dvr" OnValidSubmit="@SaveDiver">
+            <DataAnnotationsValidator />
+
+            <div class="row">
+                <div class="col-7">
+                    <span class="field-label" title="First and Last Name">First and Last Name</span>
+                    <br />
+                    <input type="text" class="form-control form-control-lg" @bind="@dvr.DiverName" />
+                    <ValidationMessage For="@(() => dvr.DiverName)" />
+                </div>
+                <div class="col-5">
+                    <span class="field-label" title="Birthday">Birthday</span>
+                    <br />
+                    <input type="date" class="form-control form-control-lg" @bind="@dvr.Birthday" />
+                    <ValidationMessage For="@(() => dvr.Birthday)" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <span class="field-label" title="Diver No.">Diver No.</span>
+                    <br />
+                    <input type="text" class="form-control form-control-lg" @bind="@dvr.DiverNo" />
+                    <ValidationMessage For="@(() => dvr.DiverNo)" />
+                </div>
+                <div class="col-6">
+                    <span class="field-label" title="Measurement">Measurement</span>
+                    <br />
+                    <input type="text" class="form-control form-control-lg" @bind="@dvr.MeasurementID" />
+                    <ValidationMessage For="@(() => dvr.MeasurementID)" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <span class="field-label" title="Email">Email</span>
+                    <br />
+                    <input type="text" class="form-control form-control-lg" @bind="@dvr.Email" />
+                    <ValidationMessage For="@(() => dvr.Email)" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <button type="submit" class="btn btn-success">
+                        @butontext
+                    </button>
+                </div>
+            </div>
+
+        </EditForm>
+    </div>
+    @*Certifacations*@
+    <div class="col-12 col-sm-12 col-md-12 col-lg-6">
         <div class="row">
-            <div class="col-sm-3 form-group">
-                <a class="btn btn-success" href="divelog/addeditdiver/false/0" data-toggle="tooltip" data-placement="auto" title="New Diver"><i class="oi oi-plus"></i></a>
-            </div>
-            <div class="col-sm-3"><h5>Records Found: </h5></div>
-            <div class="col-sm-6 justify-content-end">
-
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12 col-sm-12 col-md-12 col-lg-6">
-                <EditForm Model="@dvr" OnValidSubmit="@SaveDiver">
-                    <DataAnnotationsValidator />
-
-                    <div class="row">
-                        <div class="col-7">
-                            <span class="field-label" title="First and Last Name">First and Last Name</span>
-                            <br />
-                            <input type="text" class="form-control form-control-lg" @bind="@dvr.DiverName" />
-                            <ValidationMessage For="@(() => dvr.DiverName)" />
-                        </div>
-                        <div class="col-5">
-                            <span class="field-label" title="Birthday">Birthday</span>
-                            <br />
-                            <input type="date" class="form-control form-control-lg" @bind="@dvr.Birthday" />
-                            <ValidationMessage For="@(() => dvr.Birthday)" />
-                        </div>
+            <div class="col-12 table">
+                <div class="lh-table-container">
+                    <div class="lh-header-container">
                     </div>
-                    <div class="row">
-                        <div class="col-6">
-                            <span class="field-label" title="Diver No.">Diver No.</span>
-                            <br />
-                            <input type="text" class="form-control form-control-lg" @bind="@dvr.DiverNo" />
-                            <ValidationMessage For="@(() => dvr.DiverNo)" />
-                        </div>
-                        <div class="col-6">
-                            <span class="field-label" title="Measurement">Measurement</span>
-                            <br />
-                            <input type="text" class="form-control form-control-lg" @bind="@dvr.MeasurementID" />
-                            <ValidationMessage For="@(() => dvr.MeasurementID)" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <span class="field-label" title="Email">Email</span>
-                            <br />
-                            <input type="text" class="form-control form-control-lg" @bind="@dvr.Email" />
-                            <ValidationMessage For="@(() => dvr.Email)" />
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-12">
-                            <button type="submit" class="btn btn-success">
-                                @butontext
-                            </button>
-                        </div>
-                    </div>
-
-                </EditForm>
-            </div>
-            <div class="col-12 col-sm-12 col-md-12 col-lg-6">
-                <div class="row">
-                    <div class="col-12 table">
-                        <div class="lh-table-container">
-                            <div class="lh-header-container">
-                            </div>
-                            <div class="lh-table-container-inner">
-                                <table class="table table-condensed table-striped table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th class="lh-th"><div class="lh-th-bottomline"></div></th>
-                                            <th class="lh-th"><div class="lh-th-bottomline">Date</div></th>
-                                            <th class="lh-th"><div class="lh-th-bottomline">Certification</div></th>
-                                            <th class="lh-th"><div class="lh-th-bottomline">InstrNo</div></th>
-                                            <th class="lh-th"><div class="lh-th-bottomline">InstrName</div></th>
-                                            <th class="lh-th"><div class="lh-th-bottomline"></div></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody class="rowlink" data-link="row">
-                                        @foreach (DiverView.CertView cert in diverview.Certs)
-                                        {
-                                            <tr>
-                                                <td class="lh-td">
-                                                    <a class="btn btn-transparent text-primary" @onclick="() => CertModal.CertOpen(cert.Id)"><i class="oi oi-pencil"></i></a>
-                                                </td>
-                                                <td class="lh-td">@cert.CertDate?.ToString("MM/dd/yyyy")</td>
-                                                <td class="col-1 lh-td">@cert.Certification</td>
-                                                <td class="lh-td">@cert.InstrNo</td>
-                                                <td class="lh-td">@cert.InstrName</td>
-                                                <td class="lh-td">
-                                                    <a class="btn btn-transparent text-danger" @onclick="@(() => Delete(cert.Id))" data-toggle="tooltip" data-placement="auto" title="Remove Dive"><i class="oi oi-delete"></i></a>
-                                                </td>
-                                            </tr>
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
+                    <div class="lh-table-container-inner">
+                        <table class="table table-condensed table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="lh-th"><div class="lh-th-bottomline"></div></th>
+                                    <th class="lh-th"><div class="lh-th-bottomline">Date</div></th>
+                                    <th class="lh-th"><div class="lh-th-bottomline">Certification</div></th>
+                                    <th class="lh-th"><div class="lh-th-bottomline">InstrNo</div></th>
+                                    <th class="lh-th"><div class="lh-th-bottomline">InstrName</div></th>
+                                    <th class="lh-th"><div class="lh-th-bottomline"></div></th>
+                                </tr>
+                            </thead>
+                            <tbody class="rowlink" data-link="row">
+                                @foreach (DiverView.CertView cert in diverview.Certs)
+                                {
+                                    <tr>
+                                        <td class="lh-td">
+                                            <a class="btn btn-transparent text-primary" @onclick="() => CertModal.CertOpen(cert.Id)"><i class="oi oi-pencil"></i></a>
+                                        </td>
+                                        <td class="lh-td">@cert.CertDate?.ToString("MM/dd/yyyy")</td>
+                                        <td class="col-1 lh-td">@cert.Certification</td>
+                                        <td class="lh-td">@cert.InstrNo</td>
+                                        <td class="lh-td">@cert.InstrName</td>
+                                        <td class="lh-td">
+                                            <a class="btn btn-transparent text-danger" @onclick="@(() => Delete(cert.Id))" data-toggle="tooltip" data-placement="auto" title="Remove Dive"><i class="oi oi-delete"></i></a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
     }
 }
 else

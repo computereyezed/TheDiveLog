@@ -1,10 +1,15 @@
 ﻿@page "/"
+@inject HttpClient http
 @inject IJSRuntime JsRuntime;
 
 <div class="container">
-    <div class="row">
+    <div class="row ">
+        <div class="col-sm-12 text-center">
+            <a href="Identity/Account/Manage" class="long-email-address-css">Dive Log Book for: @AppState.User</a>
+        </div>
+    </div>    <div class="row">
         <div class="col-sm-4">
-            <div class="card text-blue">
+            <div class="card text-blue card-transparent">
                 <h4 class="alert-primary text-lg-center">Our Favorite Diving Locations</h4>
                 <ul>
                     <li>Honokohau Bay, Maui HI.</li>
@@ -55,7 +60,7 @@
             </div>
         </div>
         <div class="col-sm-4">
-            <div class="card text-blue">
+            <div class="card text-blue card-transparent">
                 <h4 class="alert-primary text-lg-center">Getting started</h4>
 
                 If you have an account click Log in.
@@ -75,7 +80,7 @@
     <div class="row">
         <div class="col-sm-3"></div>
         <div class="col-sm-6">
-            <div class="card text-blue">
+            <div class="card text-blue card-transparent">
                 <h4 class="card-title alert-primary text-lg-center">Diving Tips</h4>
                 <div class="card-body">
                     <ul>
@@ -118,12 +123,33 @@
 </div>
 
 @code{
+    private DiverInformation dvr { get; set; }
+
+    DiverView diverview { get; set; }
+
+
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
             await JsRuntime.InvokeAsync<object>("initializeCarousel");
             firstRender = false;
+        }
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (AppState.UserId != null)
+        {
+            diverview = await http.GetFromJsonAsync<DiverView>($"api/diver/byUserId?userid={AppState.UserId}");
+
+            dvr = diverview.Diver;
+
+            if(dvr.DiverName != string.Empty)
+            {
+                AppState.User = dvr.DiverName;
+            }
+
         }
     }
 }

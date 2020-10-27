@@ -7,650 +7,356 @@
 
 @if (AppState.IsAuthenticated)
 {
-    @if (NDLPG_result == null)
+    @if (SIC_result == null)
     {
         title = "Loading...";
     }
     else
     {
-        @*//No Decompression Limits and Group Designation
-        <div class="lh-table-container">
-            <div class="lh-header-container">
-            </div>
-            <div class="lh-td-container">
-                <h5 class="verticaltext">
-                    &nbsp;&nbsp;Pressuer&nbsp;Group
-                </h5>
-            </div>
-            <div class="lh-table-container-inner">
-                <table class="table table-sm table-striped lh-table">
-                    <caption class="lh-caption">
-                        No Decompression Limits and Group Designation
-                    </caption>
-                    <thead>
-                        <tr>
-                            <th class="lh-th" colspan="14"><div class="lh-th-topline lh-first">Depth in feet</div></th>
-                        </tr>
-                        <tr>
-                            <th colspan="2" class="lh-th"><div class="lh-th-bottomline"></div></th>
-                            <th class="lh-th"><div class="lh-th-bottomline">35</div></th>
-                            <th class="lh-th"><div class="lh-th-bottomline">40</div></th>
-                            <th class="lh-th"><div class="lh-th-bottomline">50</div></th>
-                            <th class="lh-th"><div class="lh-th-bottomline">60</div></th>
-                            <th class="lh-th"><div class="lh-th-bottomline">70</div></th>
-                            <th class="lh-th"><div class="lh-th-bottomline">80</div></th>
-                            <th class="lh-th"><div class="lh-th-bottomline">90</div></th>
-                            <th class="lh-th"><div class="lh-th-bottomline">100</div></th>
-                            <th class="lh-th"><div class="lh-th-bottomline">110</div></th>
-                            <th class="lh-th"><div class="lh-th-bottomline">120</div></th>
-                            <th class="lh-th"><div class="lh-th-bottomline">130</div></th>
-                            <th class="lh-th"><div class="lh-th-bottomline maxdepthtitle">140</div></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in NDLPG_result)
-                        {
-                            const string nbg = "text-black";
-                            const string sbg = "text-black bg-gray";
-                            const string lbg = "text-white bg-black";
-                            string gray = $"Gray area:{Environment.NewLine}SAFETY STOP REQUIRED";
-                            string black = $"Black area:{Environment.NewLine}NO DECOMPRESSION LIMITS{Environment.NewLine}SAFETY STOP REQUIRED";
-                            var bg = nbg;
-                            var ntt = string.Empty;
-                            var tt = string.Empty;
-                            <tr>
-                                <td class="lh-td-spacer"></td>
-                                <td class="lh-td lh-td-first">@item.PressureGroup</td>
-                                @if (item.C35 != null)
-                                {
-                                    if (item.C35 > 139)
-                                    {
-                                        bg = sbg;
-                                        tt = gray;
-                                    }
-                                    if (item.C35 > 188)
-                                    {
-                                        bg = lbg;
-                                        tt = black;
-                                    }
-                                    <td class="@bg lh-td" title="@tt" data-placement="auto" data-container="body">@item.C35</td>
-                                }
-                                else
-                                {
-                                    <td></td>
-                                }
-                                @if (item.C40 != null)
-                                {
-                                    bg = nbg;
-                                    tt = ntt;
-                                    if (item.C40 > 104)
-                                    {
-                                        bg = sbg;
-                                        tt = gray;
-                                    }
-                                    if (item.C40 > 129)
-                                    {
-                                        bg = lbg;
-                                        tt = black;
-                                    }
-                                    <td class="@bg lh-td" title="@tt" data-placement="auto" data-container="body">@item.C40</td>
-                                }
-                                else
-                                {
-                                    <td></td>
-                                }
-                                @if (item.C50 != null)
-                                {
-                                    bg = nbg;
-                                    tt = ntt;
-                                    if (item.C50 > 63)
-                                    {
-                                        bg = sbg;
-                                        tt = gray;
-                                    }
-                                    if (item.C50 > 75)
-                                    {
-                                        bg = lbg;
-                                        tt = black;
-                                    }
-                                    <td class="@bg lh-td" title="@tt" data-placement="auto" data-container="body">@item.C50</td>
-                                }
-                                else
-                                {
-                                    <td></td>
-                                }
-                                @if (item.C60 != null)
-                                {
-                                    bg = nbg;
-                                    tt = ntt;
-                                    if (item.C60 > 47)
-                                    {
-                                        bg = sbg;
-                                        tt = gray;
-                                    }
-                                    if (item.C60 > 54)
-                                    {
-                                        bg = lbg;
-                                        tt = black;
-                                    }
-                                    <td class="@bg lh-td" title="@tt" data-placement="auto" data-container="body">@item.C60</td>
-                                }
-                                else
-                                {
-                                    <td></td>
-                                }
-                                @if (item.C70 != null)
-                                {
-                                    bg = nbg;
-                                    tt = ntt;
-                                    if (item.C70 >= 35)
-                                    {
-                                        bg = sbg;
-                                        tt = gray;
-                                    }
-                                    if (item.C70 > 38)
-                                    {
-                                        bg = lbg;
-                                        tt = black;
-                                    }
-                                    <td class="@bg lh-td" title="@tt" data-placement="auto" data-container="body">@item.C70</td>
-                                }
-                                else
-                                {
-                                    <td></td>
-                                }
-                                @if (item.C80 != null)
-                                {
-                                    bg = nbg;
-                                    tt = ntt;
-                                    if (item.C80 > 25)
-                                    {
-                                        bg = sbg;
-                                        tt = gray;
-                                    }
-                                    if (item.C80 > 29)
-                                    {
-                                        bg = lbg;
-                                        tt = black;
-                                    }
-                                    <td class="@bg lh-td" title="@tt" data-placement="auto" data-container="body">@item.C80</td>
-                                }
-                                else
-                                {
-                                    <td></td>
-                                }
-                                @if (item.C90 != null)
-                                {
-                                    bg = nbg;
-                                    tt = ntt;
-                                    if (item.C90 > 21)
-                                    {
-                                        bg = sbg;
-                                        tt = gray;
-                                    }
-                                    if (item.C90 > 24)
-                                    {
-                                        bg = lbg;
-                                        tt = black;
-                                    }
-                                    <td class="@bg lh-td" title="@tt" data-placement="auto" data-container="body">@item.C90</td>
-                                }
-                                else
-                                {
-                                    <td></td>
-                                }
-                                @if (item.C100 != null)
-                                {
-                                    bg = sbg;
-                                    tt = gray;
-                                    if (item.C100 > 19)
-                                    {
-                                        bg = lbg;
-                                        tt = black;
-                                    }
-                                    <td class="@bg lh-td" title="@tt" data-placement="auto" data-container="body">@item.C100</td>
-                                }
-                                else
-                                {
-                                    <td></td>
-                                }
-                                @if (item.C110 != null)
-                                {
-                                    bg = sbg;
-                                    tt = gray;
-                                    if (item.C110 > 15)
-                                    {
-                                        bg = lbg;
-                                        tt = black;
-                                    }
-                                    if (item.C110 == -1)
-                                    {
-                                        <td class="@bg lh-td" title="@tt" data-placement="auto" data-container="body"><span class="oi oi-arrow-thick-bottom setzindex"></span></td>
-                                    }
-                                    else
-                                    {
-                                        <td class="@bg lh-td" title="@tt" data-placement="auto" data-container="body">@item.C110</td>
-                                    }
-                                }
-                                else
-                                {
-                                    <td></td>
-                                }
-                                @if (item.C120 != null)
-                                {
-                                    bg = sbg;
-                                    tt = gray;
-                                    if (item.C120 > 12)
-                                    {
-                                        bg = lbg;
-                                        tt = black;
-                                    }
-                                    if (item.C120 == -1)
-                                    {
-                                        <td class="@bg lh-td" title="@tt" data-placement="auto" data-container="body"><span class="oi oi-arrow-thick-bottom setzindex"></span></td>
-                                    }
-                                    else
-                                    {
-                                        <td class="@bg lh-td" title="@tt" data-placement="auto" data-container="body">@item.C120</td>
-                                    }
-                                }
-                                else
-                                {
-                                    <td></td>
-                                }
-                                @if (item.C130 != null)
-                                {
-                                    bg = sbg;
-                                    tt = gray;
-                                    if (item.C130 > 9)
-                                    {
-                                        bg = lbg;
-                                        tt = black;
-                                    }
-                                    if (item.C130 == -1)
-                                    {
-                                        <td class="@bg lh-td" title="@tt" data-placement="auto" data-container="body"><span class="oi oi-arrow-thick-bottom setzindex"></span></td>
-                                    }
-                                    else
-                                    {
-                                        <td class="@bg lh-td" title="@tt" data-placement="auto" data-container="body">@item.C130</td>
-                                    }
-                                }
-                                else
-                                {
-                                    <td></td>
-                                }
-                                @if (item.C140 != null)
-                                {
-                                    bg = "maxdepth";
-                                    tt = $"140ft:{Environment.NewLine}Is for emergency purposes only, do not dive to this depth.";
-                                    if (item.C140 > 7)
-                                    {
-                                        bg = lbg;
-                                        tt = $"140ft:{Environment.NewLine}Is for emergency purposes only, do not dive to this depth.{Environment.NewLine}" + black;
-                                    }
-                                    if (item.C140 == -1)
-                                    {
-                                        <td class="@bg lh-td" title="@tt" data-placement="auto" data-container="body"><span class="oi oi-arrow-thick-bottom setzindex"></span></td>
-                                    }
-                                    else
-                                    {
-                                        <td class="@bg lh-td" title="@tt" data-placement="auto" data-container="body">@item.C140</td>
-                                    }
-                                }
-                                else
-                                {
-                                    <td></td>
-                                }
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
-        <br />*@
         //Surface Interval Credit Table
-        <div class="lh-table-container">
-            <div class="lh-header-container">
-            </div>
-            <div class="lh-td-container">
-                <h5 class="verticaltext">&nbsp;&nbsp;&nbsp;Start&nbsp;of&nbsp;Surface&nbsp;Interval</h5>
-            </div>
-            <div class="lh-table-container-inner">
-                <table class="table table-sm table-striped lh-table">
-                    <caption class="lh-caption">
-                        Surface Interval Credit Table (all times in minutes)
-                    </caption>
-                    <thead>
-                        <tr>
-                            <th class="lh-th" colspan="30"><div class="lh-th-topline lh-first">Pressure group at end of surface interval (all times in minutes)</div></th>
-                        </tr>
-                        <tr>
-                            <th colspan="3" class="lh-th"><div class="lh-th-bottomline"></div></th>
-                            <th class="lh-th"><div class="lh-th-bottomline">Z</div></th>
-                            <th class="lh-th"><div class="lh-th-bottomline">Y</div></th>
-                            <th class="lh-th"><div class="lh-th-bottomline">X</div></th>
-                            <th class="lh-th"><div class="lh-th-bottomline">W</div></th>
-                            <th class="lh-th"><div class="lh-th-bottomline">V</div></th>
-                            <th class="lh-th"><div class="lh-th-bottomline">U</div></th>
-                            <th class="lh-th"><div class="lh-th-bottomline">T</div></th>
-                            <th class="lh-th"><div class="lh-th-bottomline">S</div></th>
-                            <th class="lh-th"><div class="lh-th-bottomline">R</div></th>
-                            <th class="lh-th"><div class="lh-th-bottomline">Q</div></th>
-                            <th class="lh-th"><div class="lh-th-bottomline">P</div></th>
-                            <th class="lh-th"><div class="lh-th-bottomline">O</div></th>
-                            <th class="lh-th"><div class="lh-th-bottomline">N</div></th>
-                            <th class="lh-th"><div class="lh-th-bottomline">M</div></th>
-                            <th class="lh-th"><div class="lh-th-bottomline">L</div></th>
-                            <th class="lh-th"><div class="lh-th-bottomline">K</div></th>
-                            <th class="lh-th"><div class="lh-th-bottomline">J</div></th>
-                            <th class="lh-th"><div class="lh-th-bottomline">I</div></th>
-                            <th class="lh-th"><div class="lh-th-bottomline">H</div></th>
-                            <th class="lh-th"><div class="lh-th-bottomline">G</div></th>
-                            <th class="lh-th"><div class="lh-th-bottomline">F</div></th>
-                            <th class="lh-th"><div class="lh-th-bottomline">E</div></th>
-                            <th class="lh-th"><div class="lh-th-bottomline">D</div></th>
-                            <th class="lh-th"><div class="lh-th-bottomline">C</div></th>
-                            <th class="lh-th"><div class="lh-th-bottomline">B</div></th>
-                            <th class="lh-th"><div class="lh-th-bottomline">A</div></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in SIC_result)
-                        {
-                            <tr>
-                                <td class="lh-td-spacer"></td>
-                                <td class="lh-td-rowspan" rowspan="2">
-                                    @item.StartingPressureGroup
-                                </td>
-                                <td class="lh-td">Start</td>
-                                <td class="lh-td">@(item.Z - item.Z)</td>
-                                <td class="lh-td">
-                                    @if (item.Z != null)
-                                    {
-                                        @(item.Z + 1)
-                                    }
-                                    else if (item.Y != null)
-                                    {
-                                        @(item.Y - item.Y)
-                                    }
-                                </td>
-                                <td class="lh-td">
-                                    @if (item.Y != null)
-                                    {
-                                        @(item.Y + 1)
-                                    }
-                                    else if (item.X != null)
-                                    {
-                                        @(item.X - item.X)
-                                    }
-                                </td>
-                                <td class="lh-td">
-                                    @if (item.X != null)
-                                    {
-                                        @(item.X + 1)
-                                    }
-                                    else if (item.W != null)
-                                    {
-                                        @(item.W - item.W)
-                                    }
-                                </td>
-                                <td class="lh-td">
-                                    @if (item.W != null)
-                                    {
-                                        @(item.W + 1)
-                                    }
-                                    else if (item.V != null)
-                                    {
-                                        @(item.V - item.V)
-                                    }
-                                </td>
-                                <td class="lh-td">
-                                    @if (item.V != null)
-                                    {
-                                        @(item.V + 1)
-                                    }
-                                    else if (item.U != null)
-                                    {
-                                        @(item.U - item.U)
-                                    }
-                                </td>
-                                <td class="lh-td">
-                                    @if (item.U != null)
-                                    {
-                                        @(item.U + 1)
-                                    }
-                                    else if (item.T != null)
-                                    {
-                                        @(item.T - item.T)
-                                    }
-                                </td>
-                                <td class="lh-td">
-                                    @if (item.T != null)
-                                    {
-                                        @(item.T + 1)
-                                    }
-                                    else if (item.S != null)
-                                    {
-                                        @(item.S - item.S)
-                                    }
-                                </td>
-                                <td class="lh-td">
-                                    @if (item.S != null)
-                                    {
-                                        @(item.S + 1)
-                                    }
-                                    else if (item.R != null)
-                                    {
-                                        @(item.R - item.R)
-                                    }
-                                </td>
-                                <td class="lh-td">
-                                    @if (item.R != null)
-                                    {
-                                        @(item.R + 1)
-                                    }
-                                    else if (item.Q != null)
-                                    {
-                                        @(item.Q - item.Q)
-                                    }
-                                </td>
-                                <td class="lh-td">
-                                    @if (item.Q != null)
-                                    {
-                                        @(item.Q + 1)
-                                    }
-                                    else if (item.P != null)
-                                    {
-                                        @(item.P - item.P)
-                                    }
-                                </td>
-                                <td class="lh-td">
-                                    @if (item.P != null)
-                                    {
-                                        @(item.P + 1)
-                                    }
-                                    else if (item.O != null)
-                                    {
-                                        @(item.O - item.O)
-                                    }
-                                </td>
-                                <td class="lh-td">
-                                    @if (item.O != null)
-                                    {
-                                        @(item.O + 1)
-                                    }
-                                    else if (item.N != null)
-                                    {
-                                        @(item.N - item.N)
-                                    }
-                                </td>
-                                <td class="lh-td">
-                                    @if (item.N != null)
-                                    {
-                                        @(item.N + 1)
-                                    }
-                                    else if (item.M != null)
-                                    {
-                                        @(item.M - item.M)
-                                    }
-                                </td>
-                                <td class="lh-td">
-                                    @if (item.M != null)
-                                    {
-                                        @(item.M + 1)
-                                    }
-                                    else if (item.L != null)
-                                    {
-                                        @(item.L - item.L)
-                                    }
-                                </td>
-                                <td class="lh-td">
-                                    @if (item.L != null)
-                                    {
-                                        @(item.L + 1)
-                                    }
-                                    else if (item.K != null)
-                                    {
-                                        @(item.K - item.K)
-                                    }
-                                </td>
-                                <td class="lh-td">
-                                    @if (item.K != null)
-                                    {
-                                        @(item.K + 1)
-                                    }
-                                    else if (item.J != null)
-                                    {
-                                        @(item.J - item.J)
-                                    }
-                                </td>
-                                <td class="lh-td">
-                                    @if (item.J != null)
-                                    {
-                                        @(item.J + 1)
-                                    }
-                                    else if (item.I != null)
-                                    {
-                                        @(item.I - item.I)
-                                    }
-                                </td>
-                                <td class="lh-td">
-                                    @if (item.I != null)
-                                    {
-                                        @(item.I + 1)
-                                    }
-                                    else if (item.H != null)
-                                    {
-                                        @(item.H - item.H)
-                                    }
-                                </td>
-                                <td class="lh-td">
-                                    @if (item.H != null)
-                                    {
-                                        @(item.H + 1)
-                                    }
-                                    else if (item.G != null)
-                                    {
-                                        @(item.G - item.G)
-                                    }
-                                </td>
-                                <td class="lh-td">
-                                    @if (item.G != null)
-                                    {
-                                        @(item.G + 1)
-                                    }
-                                    else if (item.F != null)
-                                    {
-                                        @(item.F - item.F)
-                                    }
-                                </td>
-                                <td class="lh-td">
-                                    @if (item.F != null)
-                                    {
-                                        @(item.F + 1)
-                                    }
-                                    else if (item.E != null)
-                                    {
-                                        @(item.E - item.E)
-                                    }
-                                </td>
-                                <td class="lh-td">
-                                    @if (item.E != null)
-                                    {
-                                        @(item.E + 1)
-                                    }
-                                    else if (item.D != null)
-                                    {
-                                        @(item.D - item.D)
-                                    }
-                                </td>
-                                <td class="lh-td">
-                                    @if (item.D != null)
-                                    {
-                                        @(item.D + 1)
-                                    }
-                                    else if (item.C != null)
-                                    {
-                                        @(item.C - item.C)
-                                    }
-                                </td>
-                                <td class="lh-td">
-                                    @if (item.C != null)
-                                    {
-                                        @(item.C + 1)
-                                    }
-                                    else if (item.B != null)
-                                    {
-                                        @(item.B - item.B)
-                                    }
-                                </td>
-                                <td class="lh-td">
-                                    @if (item.B != null)
-                                    {
-                                        @(item.B + 1)
-                                    }
-                                    else if (item.A != null)
-                                    {
-                                        @(item.A - item.A)
-                                    }
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="lh-td-spacer"></td>
-                                <td class="lh-td">End</td>
-                                <td class="lh-td">@item.Z</td>
-                                <td class="lh-td">@item.Y</td>
-                                <td class="lh-td">@item.X</td>
-                                <td class="lh-td">@item.W</td>
-                                <td class="lh-td">@item.V</td>
-                                <td class="lh-td">@item.U</td>
-                                <td class="lh-td">@item.T</td>
-                                <td class="lh-td">@item.S</td>
-                                <td class="lh-td">@item.R</td>
-                                <td class="lh-td">@item.Q</td>
-                                <td class="lh-td">@item.P</td>
-                                <td class="lh-td">@item.O</td>
-                                <td class="lh-td">@item.N</td>
-                                <td class="lh-td">@item.M</td>
-                                <td class="lh-td">@item.L</td>
-                                <td class="lh-td">@item.K</td>
-                                <td class="lh-td">@item.J</td>
-                                <td class="lh-td">@item.I</td>
-                                <td class="lh-td">@item.H</td>
-                                <td class="lh-td">@item.G</td>
-                                <td class="lh-td">@item.F</td>
-                                <td class="lh-td">@item.E</td>
-                                <td class="lh-td">@item.D</td>
-                                <td class="lh-td">@item.C</td>
-                                <td class="lh-td">@item.B</td>
-                                <td class="lh-td">@item.A</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
+<div class="table-responsive">
+    <div class="lh-table-container-chart">
+        <div class="lh-header-container">
         </div>
+        <div class="lh-td-container">
+            <h5 class="verticaltext">&nbsp;&nbsp;&nbsp;Start&nbsp;of&nbsp;Surface&nbsp;Interval</h5>
+        </div>
+        <div class="lh-table-container-inner">
+            <table class="table table-sm table-striped lh-table table-hover">
+                <caption class="lh-caption">
+                    Surface Interval Credit Table (all times in minutes)
+                </caption>
+                <thead>
+                    <tr>
+                        <th class="lh-th" colspan="30"><div class="lh-th-topline lh-first">Pressure group at end of surface interval (all times in minutes)</div></th>
+                    </tr>
+                    <tr>
+                        <th colspan="3" class="lh-th"><div class="lh-th-bottomline"></div></th>
+                        <th class="lh-th"><div class="lh-th-bottomline">Z</div></th>
+                        <th class="lh-th"><div class="lh-th-bottomline">Y</div></th>
+                        <th class="lh-th"><div class="lh-th-bottomline">X</div></th>
+                        <th class="lh-th"><div class="lh-th-bottomline">W</div></th>
+                        <th class="lh-th"><div class="lh-th-bottomline">V</div></th>
+                        <th class="lh-th"><div class="lh-th-bottomline">U</div></th>
+                        <th class="lh-th"><div class="lh-th-bottomline">T</div></th>
+                        <th class="lh-th"><div class="lh-th-bottomline">S</div></th>
+                        <th class="lh-th"><div class="lh-th-bottomline">R</div></th>
+                        <th class="lh-th"><div class="lh-th-bottomline">Q</div></th>
+                        <th class="lh-th"><div class="lh-th-bottomline">P</div></th>
+                        <th class="lh-th"><div class="lh-th-bottomline">O</div></th>
+                        <th class="lh-th"><div class="lh-th-bottomline">N</div></th>
+                        <th class="lh-th"><div class="lh-th-bottomline">M</div></th>
+                        <th class="lh-th"><div class="lh-th-bottomline">L</div></th>
+                        <th class="lh-th"><div class="lh-th-bottomline">K</div></th>
+                        <th class="lh-th"><div class="lh-th-bottomline">J</div></th>
+                        <th class="lh-th"><div class="lh-th-bottomline">I</div></th>
+                        <th class="lh-th"><div class="lh-th-bottomline">H</div></th>
+                        <th class="lh-th"><div class="lh-th-bottomline">G</div></th>
+                        <th class="lh-th"><div class="lh-th-bottomline">F</div></th>
+                        <th class="lh-th"><div class="lh-th-bottomline">E</div></th>
+                        <th class="lh-th"><div class="lh-th-bottomline">D</div></th>
+                        <th class="lh-th"><div class="lh-th-bottomline">C</div></th>
+                        <th class="lh-th"><div class="lh-th-bottomline">B</div></th>
+                        <th class="lh-th"><div class="lh-th-bottomline">A</div></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in SIC_result)
+                    {
+                        <tr>
+                            <td class="lh-td-spacer"></td>
+                            <td class="lh-td-rowspan" rowspan="2">
+                                @item.StartingPressureGroup
+                            </td>
+                            <td class="lh-td">Start</td>
+                            <td class="lh-td">@(item.Z - item.Z)</td>
+                            <td class="lh-td">
+                                @if (item.Z != null)
+                                {
+                                    @(item.Z + 1)
+                                }
+                                else if (item.Y != null)
+                                {
+                                    @(item.Y - item.Y)
+                                }
+                            </td>
+                            <td class="lh-td">
+                                @if (item.Y != null)
+                                {
+                                    @(item.Y + 1)
+                                }
+                                else if (item.X != null)
+                                {
+                                    @(item.X - item.X)
+                                }
+                            </td>
+                            <td class="lh-td">
+                                @if (item.X != null)
+                                {
+                                    @(item.X + 1)
+                                }
+                                else if (item.W != null)
+                                {
+                                    @(item.W - item.W)
+                                }
+                            </td>
+                            <td class="lh-td">
+                                @if (item.W != null)
+                                {
+                                    @(item.W + 1)
+                                }
+                                else if (item.V != null)
+                                {
+                                    @(item.V - item.V)
+                                }
+                            </td>
+                            <td class="lh-td">
+                                @if (item.V != null)
+                                {
+                                    @(item.V + 1)
+                                }
+                                else if (item.U != null)
+                                {
+                                    @(item.U - item.U)
+                                }
+                            </td>
+                            <td class="lh-td">
+                                @if (item.U != null)
+                                {
+                                    @(item.U + 1)
+                                }
+                                else if (item.T != null)
+                                {
+                                    @(item.T - item.T)
+                                }
+                            </td>
+                            <td class="lh-td">
+                                @if (item.T != null)
+                                {
+                                    @(item.T + 1)
+                                }
+                                else if (item.S != null)
+                                {
+                                    @(item.S - item.S)
+                                }
+                            </td>
+                            <td class="lh-td">
+                                @if (item.S != null)
+                                {
+                                    @(item.S + 1)
+                                }
+                                else if (item.R != null)
+                                {
+                                    @(item.R - item.R)
+                                }
+                            </td>
+                            <td class="lh-td">
+                                @if (item.R != null)
+                                {
+                                    @(item.R + 1)
+                                }
+                                else if (item.Q != null)
+                                {
+                                    @(item.Q - item.Q)
+                                }
+                            </td>
+                            <td class="lh-td">
+                                @if (item.Q != null)
+                                {
+                                    @(item.Q + 1)
+                                }
+                                else if (item.P != null)
+                                {
+                                    @(item.P - item.P)
+                                }
+                            </td>
+                            <td class="lh-td">
+                                @if (item.P != null)
+                                {
+                                    @(item.P + 1)
+                                }
+                                else if (item.O != null)
+                                {
+                                    @(item.O - item.O)
+                                }
+                            </td>
+                            <td class="lh-td">
+                                @if (item.O != null)
+                                {
+                                    @(item.O + 1)
+                                }
+                                else if (item.N != null)
+                                {
+                                    @(item.N - item.N)
+                                }
+                            </td>
+                            <td class="lh-td">
+                                @if (item.N != null)
+                                {
+                                    @(item.N + 1)
+                                }
+                                else if (item.M != null)
+                                {
+                                    @(item.M - item.M)
+                                }
+                            </td>
+                            <td class="lh-td">
+                                @if (item.M != null)
+                                {
+                                    @(item.M + 1)
+                                }
+                                else if (item.L != null)
+                                {
+                                    @(item.L - item.L)
+                                }
+                            </td>
+                            <td class="lh-td">
+                                @if (item.L != null)
+                                {
+                                    @(item.L + 1)
+                                }
+                                else if (item.K != null)
+                                {
+                                    @(item.K - item.K)
+                                }
+                            </td>
+                            <td class="lh-td">
+                                @if (item.K != null)
+                                {
+                                    @(item.K + 1)
+                                }
+                                else if (item.J != null)
+                                {
+                                    @(item.J - item.J)
+                                }
+                            </td>
+                            <td class="lh-td">
+                                @if (item.J != null)
+                                {
+                                    @(item.J + 1)
+                                }
+                                else if (item.I != null)
+                                {
+                                    @(item.I - item.I)
+                                }
+                            </td>
+                            <td class="lh-td">
+                                @if (item.I != null)
+                                {
+                                    @(item.I + 1)
+                                }
+                                else if (item.H != null)
+                                {
+                                    @(item.H - item.H)
+                                }
+                            </td>
+                            <td class="lh-td">
+                                @if (item.H != null)
+                                {
+                                    @(item.H + 1)
+                                }
+                                else if (item.G != null)
+                                {
+                                    @(item.G - item.G)
+                                }
+                            </td>
+                            <td class="lh-td">
+                                @if (item.G != null)
+                                {
+                                    @(item.G + 1)
+                                }
+                                else if (item.F != null)
+                                {
+                                    @(item.F - item.F)
+                                }
+                            </td>
+                            <td class="lh-td">
+                                @if (item.F != null)
+                                {
+                                    @(item.F + 1)
+                                }
+                                else if (item.E != null)
+                                {
+                                    @(item.E - item.E)
+                                }
+                            </td>
+                            <td class="lh-td">
+                                @if (item.E != null)
+                                {
+                                    @(item.E + 1)
+                                }
+                                else if (item.D != null)
+                                {
+                                    @(item.D - item.D)
+                                }
+                            </td>
+                            <td class="lh-td">
+                                @if (item.D != null)
+                                {
+                                    @(item.D + 1)
+                                }
+                                else if (item.C != null)
+                                {
+                                    @(item.C - item.C)
+                                }
+                            </td>
+                            <td class="lh-td">
+                                @if (item.C != null)
+                                {
+                                    @(item.C + 1)
+                                }
+                                else if (item.B != null)
+                                {
+                                    @(item.B - item.B)
+                                }
+                            </td>
+                            <td class="lh-td">
+                                @if (item.B != null)
+                                {
+                                    @(item.B + 1)
+                                }
+                                else if (item.A != null)
+                                {
+                                    @(item.A - item.A)
+                                }
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="lh-td-spacer"></td>
+                            <td class="lh-td">End</td>
+                            <td class="lh-td">@item.Z</td>
+                            <td class="lh-td">@item.Y</td>
+                            <td class="lh-td">@item.X</td>
+                            <td class="lh-td">@item.W</td>
+                            <td class="lh-td">@item.V</td>
+                            <td class="lh-td">@item.U</td>
+                            <td class="lh-td">@item.T</td>
+                            <td class="lh-td">@item.S</td>
+                            <td class="lh-td">@item.R</td>
+                            <td class="lh-td">@item.Q</td>
+                            <td class="lh-td">@item.P</td>
+                            <td class="lh-td">@item.O</td>
+                            <td class="lh-td">@item.N</td>
+                            <td class="lh-td">@item.M</td>
+                            <td class="lh-td">@item.L</td>
+                            <td class="lh-td">@item.K</td>
+                            <td class="lh-td">@item.J</td>
+                            <td class="lh-td">@item.I</td>
+                            <td class="lh-td">@item.H</td>
+                            <td class="lh-td">@item.G</td>
+                            <td class="lh-td">@item.F</td>
+                            <td class="lh-td">@item.E</td>
+                            <td class="lh-td">@item.D</td>
+                            <td class="lh-td">@item.C</td>
+                            <td class="lh-td">@item.B</td>
+                            <td class="lh-td">@item.A</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
     }
 }
 else
@@ -662,15 +368,12 @@ else
 @code {
     DiveChartView dcv { get; set; }
 
-    List<DiveChartView.Usp_PADINDLPGD_Result> NDLPG_result { get; set; }
     List<DiveChartView.Usp_PADISIC_Result> SIC_result { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         dcv = await client.GetFromJsonAsync<DiveChartView>($"api/padi/byMeasurement?mesurementid=35");
 
-        NDLPG_result = dcv.ListNDLPGD;
         SIC_result = dcv.ListSIC;
-
     }
 }
