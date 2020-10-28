@@ -64,10 +64,6 @@ namespace TheDiveLog.Shared.Models
         #endregion
 
         #region RepetitiveDiveTimetable
-        //public List<I_RepetitiveDiveTimetable> IrdtList { get; set; }
-
-        //public List<M_RepetitiveDiveTimetable> MrdtList { get; set; }
-
         public List<RDT> ListRDT { get; set; }
         public RDT RDT_Result { get; set; }
         public class RDT

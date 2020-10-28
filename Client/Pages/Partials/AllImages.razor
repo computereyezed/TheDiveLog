@@ -1,0 +1,31 @@
+﻿@inject HttpClient client
+@inject IJSRuntime js
+@*<h4>@Model.NumuberofPics pictures in library</h4>*@
+
+    @if (Pic_result != null)
+    {
+        foreach (var item in Pic_result)
+        {
+            var tt = "<span class='text-yellow'>Located in: </span>" + item.Located + "<br /><span class='text-yellow'>Latitude: </span>" + item.Latitude + "<br /><span class='text-yellow'>Longitude: </span>" + item.Longitude + "<br />";
+
+            <div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-3 text-center">
+                <a href="/Pictures/FullPicture/@item.PicturesId">
+                    <img class="image-size" src="data:image;base64,@System.Convert.ToBase64String(item.Image)" />
+                </a>
+                <br />
+                <label class="text-blue" title="@tt" data-placement="auto">@item.Location</label>
+            </div>
+        }
+    }
+
+@code {
+    PictureView pv { get; set; }
+    List<PictureView.Picture> Pic_result { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        pv = await client.GetFromJsonAsync<PictureView>($"api/picture/?pgsize=10&page=1");
+
+        Pic_result = pv.ListPics;
+    }
+}

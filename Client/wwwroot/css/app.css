@@ -607,3 +607,10 @@ input[type=number]::-webkit-outer-spin-button {
     white-space: pre-wrap;
     margin-left: 15px;
 }
+
+.image-size {
+    height: 200px;
+    width: 200px;
+    border: 1px solid blue;
+    border-radius: 10px;
+}
