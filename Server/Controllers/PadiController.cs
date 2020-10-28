@@ -12,6 +12,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using TheDiveLog.Server.Data;
 using TheDiveLog.Shared.Models;
+using TheDiveLog.Shared.Models.PADIDiveChartTables;
 using static TheDiveLog.Shared.Models.DiveChartView;
 
 namespace TheDiveLog.Server.Controllers
@@ -32,12 +33,17 @@ namespace TheDiveLog.Server.Controllers
         {
             DiveChartView diveChartView = new DiveChartView
             {
-                ListNDLPGD = new List<Usp_PADINDLPGD_Result>(),
-                NDLPG_Result = new Usp_PADINDLPGD_Result(),
-                ListSIC =new List<Usp_PADISIC_Result>(),
-                SIC_Result = new Usp_PADISIC_Result()
+                ListNDLPGD = new List<NDLGD>(),
+                NDLPG_Result = new NDLGD(),
+                ListSIC = new List<SIC>(),
+                SIC_Result = new SIC(),
+                ListRDT = new List<RDT>(),
+                RDT_Result = new RDT(),
+                //IrdtList = new List<I_RepetitiveDiveTimetable>(),
+                //MrdtList = new List<M_RepetitiveDiveTimetable>()
             };
 
+            #region No Decompression Limits and Group Designation
             using var ndclconn = new SqlConnection("Data Source=BJS-SURFACE;Initial Catalog=DiveLogBook;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
             {
                 //NDCL
@@ -47,13 +53,13 @@ namespace TheDiveLog.Server.Controllers
                 };
 
                 ndclconn.Open();
-                SqlDataReader ndclreader = cmdndcl.ExecuteReader();
+                SqlDataReader ndclreader = await cmdndcl.ExecuteReaderAsync();
 
                 if (ndclreader.HasRows)
                 {
                     while (ndclreader.Read())
                     {
-                        diveChartView.NDLPG_Result = new Usp_PADINDLPGD_Result
+                        diveChartView.NDLPG_Result = new NDLGD
                         {
                             PressureGroup = (string)ndclreader.GetValue(0),
                             C35 = GetInt(ndclreader, 1),
@@ -73,7 +79,9 @@ namespace TheDiveLog.Server.Controllers
                     }
                 }
             }
+            #endregion
 
+            #region Surface Interval Credit Table (all times in minutes)
             using var sicconn = new SqlConnection("Data Source=BJS-SURFACE;Initial Catalog=DiveLogBook;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False");
             {
                 //SIC
@@ -82,14 +90,16 @@ namespace TheDiveLog.Server.Controllers
                     CommandType = CommandType.StoredProcedure
                 };
 
+                //cmdsic.Parameters.AddWithValue("@Mesurement", mesurementid);
+
                 sicconn.Open();
-                SqlDataReader sicreader = cmdsic.ExecuteReader();
+                SqlDataReader sicreader = await cmdsic.ExecuteReaderAsync();
 
                 if (sicreader.HasRows)
                 {
                     while (sicreader.Read())
                     {
-                        diveChartView.SIC_Result = new Usp_PADISIC_Result()
+                        diveChartView.SIC_Result = new SIC()
                         {
                             StartingPressureGroup = (string)sicreader.GetValue(0),
                             A = GetInt(sicreader, 1),
@@ -123,6 +133,98 @@ namespace TheDiveLog.Server.Controllers
                     }
                 }
             };
+            #endregion
+
+            #region RepetitiveDiveTimetable
+
+            if (mesurementid == 35)
+            {
+                List<I_RepetitiveDiveTimetable> iresult = new List<I_RepetitiveDiveTimetable>();
+
+                iresult = await _divectx.I_RepetitiveDiveTimetable.ToListAsync();
+
+                foreach (var item in iresult)
+                {
+                    RDT rdt = new RDT
+                    {
+                        ID = item.Id,
+                        Column_0 = item.Column_0,
+                        Depth = item.Depth,
+                        Z = item.Z,
+                        Y = item.Y,
+                        X = item.X,
+                        W = item.W,
+                        V = item.V,
+                        U = item.U,
+                        T = item.T,
+                        S = item.S,
+                        R = item.R,
+                        Q = item.Q,
+                        P = item.P,
+                        O = item.O,
+                        N = item.N,
+                        M = item.M,
+                        L = item.L,
+                        K = item.K,
+                        J = item.J,
+                        I = item.I,
+                        H = item.H,
+                        G = item.G,
+                        F = item.F,
+                        E = item.E,
+                        D = item.D,
+                        C = item.C,
+                        B = item.B,
+                        A = item.A,
+                    };
+                    diveChartView.ListRDT.Add(rdt);
+                }
+            }
+            else
+            {
+                List<M_RepetitiveDiveTimetable> mresult = new List<M_RepetitiveDiveTimetable>();
+
+                mresult = await _divectx.M_RepetitiveDiveTimetable.ToListAsync();
+
+                foreach (var item in mresult)
+                {
+                    RDT rdt = new RDT
+                    {
+                        ID = item.Id,
+                        Column_0 = item.Column_0,
+                        Depth = item.Depth,
+                        Z = item.Z,
+                        Y = item.Y,
+                        X = item.X,
+                        W = item.W,
+                        V = item.V,
+                        U = item.U,
+                        T = item.T,
+                        S = item.S,
+                        R = item.R,
+                        Q = item.Q,
+                        P = item.P,
+                        O = item.O,
+                        N = item.N,
+                        M = item.M,
+                        L = item.L,
+                        K = item.K,
+                        J = item.J,
+                        I = item.I,
+                        H = item.H,
+                        G = item.G,
+                        F = item.F,
+                        E = item.E,
+                        D = item.D,
+                        C = item.C,
+                        B = item.B,
+                        A = item.A,
+                    };
+                    diveChartView.ListRDT.Add(rdt);
+                }
+            }
+            #endregion
+
             return Ok(diveChartView);
         }
 

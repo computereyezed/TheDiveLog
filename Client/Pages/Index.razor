@@ -3,11 +3,7 @@
 @inject IJSRuntime JsRuntime;
 
 <div class="container">
-    <div class="row ">
-        <div class="col-sm-12 text-center">
-            <a href="Identity/Account/Manage" class="long-email-address-css">Dive Log Book for: @AppState.User</a>
-        </div>
-    </div>    <div class="row">
+    <div class="row">
         <div class="col-sm-4">
             <div class="card text-blue card-transparent">
                 <h4 class="alert-primary text-lg-center">Our Favorite Diving Locations</h4>
@@ -123,33 +119,12 @@
 </div>
 
 @code{
-    private DiverInformation dvr { get; set; }
-
-    DiverView diverview { get; set; }
-
-
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
             await JsRuntime.InvokeAsync<object>("initializeCarousel");
             firstRender = false;
-        }
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        if (AppState.UserId != null)
-        {
-            diverview = await http.GetFromJsonAsync<DiverView>($"api/diver/byUserId?userid={AppState.UserId}");
-
-            dvr = diverview.Diver;
-
-            if(dvr.DiverName != string.Empty)
-            {
-                AppState.User = dvr.DiverName;
-            }
-
         }
     }
 }

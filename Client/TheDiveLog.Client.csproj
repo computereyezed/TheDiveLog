@@ -12,6 +12,7 @@
     <Content Remove="Pages\DiverInfo\AddEditDiver.razor" />
     <Content Remove="Pages\DiverInfo\DiverForm.razor" />
     <Content Remove="Pages\FetchData.razor" />
+    <Content Remove="Pages\Partials\SicaChart.razor" />
     <Content Remove="Shared\AppTitle.razor" />
     <Content Remove="Shared\LoginDisplay.razor" />
     <Content Remove="Shared\SurveyPrompt.razor" />

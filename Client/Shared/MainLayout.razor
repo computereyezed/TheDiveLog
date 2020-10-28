@@ -1,12 +1,21 @@
-﻿@inherits LayoutComponentBase
-@*@inject IBootstrapCss BootstrapCss*@
+﻿@inject IJSRuntime JsRuntime;
+@inherits LayoutComponentBase
 
 <div class="sidebar">
     <NavMenu />
 </div>
-
-<div class="scrollable-main">
-    @Body
+<div class="main">
+    @if (AppState.User != string.Empty)
+    {
+        <div class="top-row">
+            <div class="col-12 text-center">
+                <a href="Identity/Account/Manage"><h4 class="oi oi-person" aria-hidden="true"> Dive Log Book for: @AppState.User</h4></a>
+            </div>
+        </div>
+    }
+    <div class="scrollable-main">
+        @Body
+    </div>
 </div>
 
 <RadzenDialog />

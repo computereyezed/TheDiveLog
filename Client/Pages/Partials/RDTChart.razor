@@ -1,0 +1,141 @@
+﻿@inject HttpClient client
+@inject IJSRuntime js
+
+@{
+
+    string title = string.Empty;
+    var coldepth = false;
+    var tdbc = "rnt";
+}
+
+@if (AppState.IsAuthenticated)
+{
+    @if (RDT_result == null)
+    {
+        title = "Loading...";
+    }
+    else
+    {
+        <div class="table-responsive">
+            <div class="lh-table-container">
+                <div class="lh-header-container">
+                </div>
+                <div class="lh-td-container">
+                    @if (AppState.Mesurement == 35)
+                    {
+                        <h5 class="verticaltext">&nbsp;&nbsp;&nbsp;Depth&nbsp;in&nbsp;feet</h5>
+                    }
+                    else
+                    {
+                        <h5 class="verticaltext">&nbsp;&nbsp;&nbsp;Depth&nbsp;in&nbsp;meters</h5>
+                    }
+                </div>
+                <div class="lh-table-container-inner">
+                    <table class="table table-sm table-striped lh-table">
+                        <caption class="lh-caption">
+                            Surface Interval Credit Table (all times in minutes)
+                        </caption>
+                        <thead>
+                            <tr>
+                                <th class="lh-th" colspan="27"><div class="lh-th-topline lh-first">Pressure group at end of surface interval (all times in minutes)</div></th>
+                            </tr>
+                            <tr>
+                                <th class="lh-th"><div class="lh-th-bottomline"></div></th>
+                                <th class="lh-th"><div class="lh-th-bottomline"></div></th>
+                                <th class="lh-th"><div class="lh-th-bottomline"></div></th>
+                                <th class="lh-th"><div class="lh-th-bottomline">Z</div></th>
+                                <th class="lh-th"><div class="lh-th-bottomline">Y</div></th>
+                                <th class="lh-th"><div class="lh-th-bottomline">X</div></th>
+                                <th class="lh-th"><div class="lh-th-bottomline">W</div></th>
+                                <th class="lh-th"><div class="lh-th-bottomline">V</div></th>
+                                <th class="lh-th"><div class="lh-th-bottomline">U</div></th>
+                                <th class="lh-th"><div class="lh-th-bottomline">T</div></th>
+                                <th class="lh-th"><div class="lh-th-bottomline">S</div></th>
+                                <th class="lh-th"><div class="lh-th-bottomline">R</div></th>
+                                <th class="lh-th"><div class="lh-th-bottomline">Q</div></th>
+                                <th class="lh-th"><div class="lh-th-bottomline">P</div></th>
+                                <th class="lh-th"><div class="lh-th-bottomline">O</div></th>
+                                <th class="lh-th"><div class="lh-th-bottomline">N</div></th>
+                                <th class="lh-th"><div class="lh-th-bottomline">M</div></th>
+                                <th class="lh-th"><div class="lh-th-bottomline">L</div></th>
+                                <th class="lh-th"><div class="lh-th-bottomline">K</div></th>
+                                <th class="lh-th"><div class="lh-th-bottomline">J</div></th>
+                                <th class="lh-th"><div class="lh-th-bottomline">I</div></th>
+                                <th class="lh-th"><div class="lh-th-bottomline">H</div></th>
+                                <th class="lh-th"><div class="lh-th-bottomline">G</div></th>
+                                <th class="lh-th"><div class="lh-th-bottomline">F</div></th>
+                                <th class="lh-th"><div class="lh-th-bottomline">E</div></th>
+                                <th class="lh-th"><div class="lh-th-bottomline">D</div></th>
+                                <th class="lh-th"><div class="lh-th-bottomline">C</div></th>
+                                <th class="lh-th"><div class="lh-th-bottomline">B</div></th>
+                                <th class="lh-th"><div class="lh-th-bottomline">A</div></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in RDT_result)
+                            {
+                                <tr>
+                                    <td class="lh-td-spacer"></td>
+                                    @if (!coldepth)
+                                    {
+                                        coldepth = true;
+                                        tdbc = "rnt";
+                                        string rntt = "Residual Nitrogen Time (RNT)<br />in minutes and is to be added to<br />Actual Bottom Time (ABT).";
+                                        <td class="lh-td lh-td-rowspan" rowspan="2">@item.Depth</td>
+                                        <td class="lh-td @tdbc" title="@rntt" data-placement="auto" data-container="body">RNT</td>
+                                    }
+                                    else
+                                    {
+                                        coldepth = false;
+                                        tdbc = "abt";
+                                        string abttt = "Actual Bottom Time(ABT)<br />should not exceed this number.";
+                                        <td class="lh-td @tdbc" title="@abttt" data-placement="auto" data-container="body">ABT</td>
+                                    }
+                                    <td class="lh-td @tdbc">@item.Z</td>
+                                    <td class="lh-td @tdbc">@item.Y</td>
+                                    <td class="lh-td @tdbc">@item.X</td>
+                                    <td class="lh-td @tdbc">@item.W</td>
+                                    <td class="lh-td @tdbc">@item.V</td>
+                                    <td class="lh-td @tdbc">@item.U</td>
+                                    <td class="lh-td @tdbc">@item.T</td>
+                                    <td class="lh-td @tdbc">@item.S</td>
+                                    <td class="lh-td @tdbc">@item.R</td>
+                                    <td class="lh-td @tdbc">@item.Q</td>
+                                    <td class="lh-td @tdbc">@item.P</td>
+                                    <td class="lh-td @tdbc">@item.O</td>
+                                    <td class="lh-td @tdbc">@item.N</td>
+                                    <td class="lh-td @tdbc">@item.M</td>
+                                    <td class="lh-td @tdbc">@item.L</td>
+                                    <td class="lh-td @tdbc">@item.K</td>
+                                    <td class="lh-td @tdbc">@item.J</td>
+                                    <td class="lh-td @tdbc">@item.I</td>
+                                    <td class="lh-td @tdbc">@item.H</td>
+                                    <td class="lh-td @tdbc">@item.G</td>
+                                    <td class="lh-td @tdbc">@item.F</td>
+                                    <td class="lh-td @tdbc">@item.E</td>
+                                    <td class="lh-td @tdbc">@item.D</td>
+                                    <td class="lh-td @tdbc">@item.C</td>
+                                    <td class="lh-td @tdbc">@item.B</td>
+                                    <td class="lh-td @tdbc">@item.A</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
+}
+
+@code {
+    DiveChartView dcv { get; set; }
+
+    List<DiveChartView.RDT> RDT_result { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        dcv = await client.GetFromJsonAsync<DiveChartView>($"api/padi/byMeasurement?mesurementid=35");
+
+        RDT_result = dcv.ListRDT;
+    }
+}

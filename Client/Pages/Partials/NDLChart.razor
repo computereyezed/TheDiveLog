@@ -30,7 +30,14 @@
                         </caption>
                         <thead>
                             <tr>
-                                <th class="lh-th" colspan="14"><div class="lh-th-topline lh-first">Depth in feet</div></th>
+                                @if (AppState.Mesurement == 35)
+                                {
+                                    <th class="lh-th" colspan="14"><div class="lh-th-topline lh-first">Depth in feet</div></th>
+                                }
+                                else
+                                {
+                                    <th class="lh-th" colspan="14"><div class="lh-th-topline lh-first">Depth in meters</div></th>
+                                }
                             </tr>
                             <tr>
                                 <th colspan="2" class="lh-th"><div class="lh-th-bottomline"></div></th>
@@ -321,7 +328,7 @@ else
 @code {
     DiveChartView dcv { get; set; }
 
-    List<DiveChartView.Usp_PADINDLPGD_Result> NDLPG_result { get; set; }
+    List<DiveChartView.NDLGD> NDLPG_result { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
