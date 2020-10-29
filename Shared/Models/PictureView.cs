@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using TheDiveLog.Shared.Models.ImageTables;
 
@@ -27,6 +28,7 @@ namespace TheDiveLog.Shared.Models
             public string Comments { get; set; }
             public string Type { get; set; }
             public byte[] Image { get; set; }
+            public string Imgscr { get; set; }
         }
 
     }

@@ -23,7 +23,7 @@ namespace TheDiveLog.Server.Controllers
         }
 
         [HttpGet()]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> Get(int pgsize, int page)
         {
             PictureView pv = new PictureView();
 
@@ -51,14 +51,21 @@ namespace TheDiveLog.Server.Controllers
                                }).ToListAsync();
 
             pv.NumuberofPics = query.ToList().Count();
-            //query = (List<Picture>)query.OrderByDescending(m => m.DateAdded);
-            var query1 = query.Skip(10 * 0).Take(10);
-            pv.ListPics = new List<Picture>(query1);
+            var query1 = query.OrderByDescending(m => m.DateAdded);
+            var query2 = query1.Skip(pgsize * page).Take(pgsize);
+            pv.ListPics = new List<Picture>(query2);
 
             return Ok(pv);
         }
 
-        //public async Task<IActionResult> ShowPicture(int? id)
+
+        //private string ConvertImage(byte[] image, string type)
+        //{
+        //    var img = Convert.ToBase64String(image.ToArray());
+        //    return string.Format($"data:image/{type};base64,{img}");
+        //}
+
+        //public ActionResult ShowPicture(int? id)
         //{
         //    byte[] bytes = GetImage(id.Value, out string mime);
         //    return File(bytes, mime);

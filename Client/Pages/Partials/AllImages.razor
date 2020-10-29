@@ -1,24 +1,27 @@
 ﻿@inject HttpClient client
 @inject IJSRuntime js
-@*<h4>@Model.NumuberofPics pictures in library</h4>*@
+@inject NavigationManager uriHelper
 
-    @if (Pic_result != null)
+<h4>@pv.NumuberofPics pictures in library</h4>
+
+@if (Pic_result != null)
+{
+    foreach (var item in Pic_result)
     {
-        foreach (var item in Pic_result)
-        {
-            var tt = "<span class='text-yellow'>Located in: </span>" + item.Located + "<br /><span class='text-yellow'>Latitude: </span>" + item.Latitude + "<br /><span class='text-yellow'>Longitude: </span>" + item.Longitude + "<br />";
+        var tt = $"Located in: {item.Located}{Environment.NewLine}Latitude: {item.Latitude}{ Environment.NewLine}Longitude: {item.Longitude}";
 
-            <div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-3 text-center">
-                <a href="/Pictures/FullPicture/@item.PicturesId">
-                    <img class="image-size" src="data:image;base64,@System.Convert.ToBase64String(item.Image)" />
-                </a>
-                <br />
-                <label class="text-blue" title="@tt" data-placement="auto">@item.Location</label>
-            </div>
-        }
+        <div class="col-6 col-sm-6 col-md-4 col-lg-3 col-xl-3 text-center">
+            <a href="/Pictures/FullPicture/@item.PicturesId">
+                <img onfocus="@ImageConvertToString(item.Image, item.Type)" class="image-size" src="@ImgSrc" />
+            </a>
+            <br />
+            <label class="text-blue" title="@tt" data-placement="auto">@item.Location</label>
+        </div>
     }
+}
 
 @code {
+    string ImgSrc = string.Empty;
     PictureView pv { get; set; }
     List<PictureView.Picture> Pic_result { get; set; }
 
@@ -27,5 +30,12 @@
         pv = await client.GetFromJsonAsync<PictureView>($"api/picture/?pgsize=10&page=1");
 
         Pic_result = pv.ListPics;
+    }
+
+    private string ImageConvertToString(byte[] image, string type)
+    {
+        var img = Convert.ToBase64String(image.ToArray());
+        ImgSrc = string.Format($"data:image/{type};base64,{img}");
+        return ImgSrc;
     }
 }
