@@ -26,7 +26,6 @@ namespace TheDiveLog.Server.Controllers
         [HttpGet("All")]
         public IActionResult Get()
         {
-            //Guid userid = GetUserId("byron@computereyezed.com");
             ListDV = (List<DiveView>)(from d in _divectx.Dives
                                       join dl in _divectx.Locations on d.DiveLocationID equals dl.Id
                                       join c in _divectx.Countries on dl.CountryID equals c.Id
@@ -54,7 +53,6 @@ namespace TheDiveLog.Server.Controllers
         [HttpGet("byUserId")]
         public async Task<IActionResult> Get(string userid)
         {
-            //Guid userid = GetUserId(email);
             ListDV = (List<DiveView>) await (from d in _divectx.Dives
                                       join dl in _divectx.Locations on d.DiveLocationID equals dl.Id
                                       join c in _divectx.Countries on dl.CountryID equals c.Id
@@ -84,6 +82,7 @@ namespace TheDiveLog.Server.Controllers
         {
             DiveFormData diveFormData = new DiveFormData
             {
+                AllLocs = await _divectx.Locations.ToListAsync(),
                 Dive = await _divectx.Dives.FirstOrDefaultAsync(a => a.Id == id),
                 DDD = await _divectx.DDD.ToListAsync(),
                 Viewlocations = (List<ViewLocation>)(from l in _divectx.Locations

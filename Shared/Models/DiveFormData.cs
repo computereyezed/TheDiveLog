@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TheDiveLog.Shared.Models.DiveSiteTables;
 using TheDiveLog.Shared.Models.DiveTables;
 
 namespace TheDiveLog.Shared.Models
@@ -11,5 +12,6 @@ namespace TheDiveLog.Shared.Models
         public DiveGraphic DG { get; set; }
         public List<DiveDropdownData> DDD { get; set; }
         public List<ViewLocation> Viewlocations { get; set; }
+        public List<Locations> AllLocs { get; set; }
     }
 }

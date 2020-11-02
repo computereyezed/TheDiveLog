@@ -1,0 +1,132 @@
+﻿@inject HttpClient http
+@inject NavigationManager uriHelper
+@inject IJSRuntime js
+
+<div class="modal @ModalClass" tabindex="-1" role="dialog" aria-labelledby="CertModal" aria-hidden="true" style="display:@ModalDisplay">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add New Location</h5>
+                <button type="button" class="close" data-dismiss="modal" @onclick="() => LocationCancel()" aria-label="Cancel">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <EditForm Model="@location">
+                    <div class="row">
+                        <div class="col-6 col-sm-6 col-md-6 col-lg-4">
+                            <span class="field-label" title="Location">Location</span>
+                            <br />
+                            <input type="text" class="form-control form-control-lg " @bind="@location.Location" />
+                            <ValidationMessage For="@(() => location.Location)" />
+                        </div>
+                        <div class="col-6 col-sm-6 col-md-6 col-lg-4">
+                            <span class="field-label" title="Latitude">Latitude</span>
+                            <br />
+                            <input type="number" class="form-control form-control-lg" @bind="@location.Latitude" />
+                            <ValidationMessage For="@(() => location.Latitude)" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-6">
+                            <span class="field-label" title="Longitude">Longitude</span>
+                            <br />
+                            <input type="number" class="form-control form-control-lg" @bind="@location.Longitude" />
+                            <ValidationMessage For="@(() => location.Longitude)" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 col-sm-6 col-md-6 col-lg-4">
+                            <span class="field-label" title="Located">Located</span>
+                            <br />
+                            <input type="text" class="form-control form-control-lg " @bind="@location.Located" />
+                            <ValidationMessage For="@(() => location.Located)" />
+                        </div>
+                        <div class="col-6 col-sm-6 col-md-6 col-lg-4">
+                            <span class="field-label" title="Comments">Comments</span>
+                            <br />
+                            <input type="text" class="form-control form-control-lg" @bind="@location.Comments" />
+                            <ValidationMessage For="@(() => location.Comments)" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 col-sm-6 col-md-6 col-lg-4">
+                            <span class="field-label" title="What To See">What To See</span>
+                            <br />
+                            <input type="text" class="form-control form-control-lg " @bind="@location.WhatToSee" />
+                            <ValidationMessage For="@(() => location.WhatToSee)" />
+                        </div>
+                        <div class="col-6 col-sm-6 col-md-6 col-lg-4">
+                            <span class="field-label" title="Country">Country</span>
+                            <br />
+                            <input type="number" class="form-control form-control-lg" @bind="@location.CountryID" />
+                            <ValidationMessage For="@(() => location.CountryID)" />
+                        </div>
+                    </div>
+                </EditForm>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary">Save changes</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="() => LocationCancel()">Cancel</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="() => GetGeoLocation()">Geo</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if (ShowBackdrop)
+{
+    <div class="modal-backdrop fade show"></div>
+}
+
+@code {
+
+    Locations location { get; set; } = new Locations();
+
+    public Guid Guid = Guid.NewGuid();
+    public string ModalDisplay = "none;";
+    public string ModalClass = "";
+    public bool ShowBackdrop = false;
+
+    public async void LocationOpen(long Id)
+    {
+        if (Id == -1)
+        {
+            location = new Locations();
+        }
+        else
+        {
+            location = await http.GetFromJsonAsync<Locations>($"api/location/byId?id={Id}");
+        }
+
+        ModalDisplay = "block;";
+        ModalClass = "Show";
+        ShowBackdrop = true;
+        StateHasChanged();
+    }
+
+    public void LocationCancel()
+    {
+        ModalDisplay = "none";
+        ModalClass = "";
+        ShowBackdrop = false;
+        StateHasChanged();
+    }
+
+    [Parameter]
+    public decimal Lat { get; set; }
+    public decimal Long { get; set; }
+
+    private async void GetGeoLocation()
+    {
+        string getgeolocaion = await js.InvokeAsync<string>("requestPosition");
+
+        if(getgeolocaion != string.Empty)
+        {
+            string[] geoloc = getgeolocaion.Split(',');
+            //Lat = geoloc[0];
+        }
+
+        StateHasChanged();
+    }
+}

@@ -1,4 +1,5 @@
-﻿
+﻿<TheDiveLog.Client.Pages.Components.LocationModal @ref="locationModal"></TheDiveLog.Client.Pages.Components.LocationModal>
+
 <div class="container">
     <EditForm Model="@div" OnValidSubmit="@OnValidSubmit">
         <DataAnnotationsValidator />
@@ -17,10 +18,11 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-                                    <span class="field-label" title="Location">Location</span>
+                                    <span class="field-label" title="Location">Location</span> 
+                                    <a class="btn btn-transparent text-success" @onclick="@(() => ChkSelected(-1))" data-toggle="tooltip" data-placement="auto" title="Add new Location"><i class="oi oi-plus"></i></a>
                                     <br />
-                                    <select class="form-control form-control-lg" @bind=div.DiveLocationID>
-                                        @foreach (ViewLocation item in loc)
+                                    <select class="form-control form-control-lg" @bind=div.DiveLocationID @onselect="() => ChkSelected(div.DiveLocationID)">
+                                        @foreach (Locations item in alllocs)
                                         {
                                             <option value="@item.Id">@($"{item.Location}, {item.Located}")</option>
                                         }
@@ -287,10 +289,21 @@
 </div>
 
 @code {
+    private TheDiveLog.Client.Pages.Components.LocationModal locationModal { get; set; }
+
     [Parameter] public Dives div { get; set; }
     [Parameter] public List<DiveDropdownData> ddd { get; set; }
     [Parameter] public List<ViewLocation> loc { get; set; }
+    [Parameter] public List<Locations> alllocs { get; set; }
     [Parameter] public DiveGraphic dg { get; set; }
     [Parameter] public string ButtonText { get; set; } = "Save";
     [Parameter] public EventCallback OnValidSubmit { get; set; }
+
+    async Task ChkSelected(long id)
+    {
+        if(id == -1)
+        {
+            locationModal.LocationOpen(id);
+        }
+    }
 }

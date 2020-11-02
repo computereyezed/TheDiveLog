@@ -6,7 +6,7 @@
 <AuthorizeView>
     <Authorized>
         <h5>@butontext</h5>
-        <DiveForm ButtonText=@butontext div="div" loc="loc" ddd="ddd" dg="dg" OnValidSubmit="@SaveDive" />
+        <DiveForm ButtonText=@butontext div="div" loc="loc" ddd="ddd" alllocs="alllocs" dg="dg" OnValidSubmit="@SaveDive" />
     </Authorized>
     <NotAuthorized>
         <h1>Authentication Failure!</h1>
@@ -25,6 +25,7 @@
     Dives div = new Dives();
     List<DiveDropdownData> ddd = new List<DiveDropdownData>();
     List<ViewLocation> loc = new List<ViewLocation>();
+    List<Locations> alllocs = new List<Locations>();
     DiveGraphic dg = new DiveGraphic();
 
     protected async override Task OnParametersSetAsync()
@@ -37,7 +38,7 @@
                 div = dfd.Dive;
                 loc = dfd.Viewlocations;
                 ddd = dfd.DDD;
-
+                alllocs = dfd.AllLocs;
                 butontext = "Update";
             }
             else
@@ -46,6 +47,7 @@
                 div = new Dives();
                 loc = dfd.Viewlocations;
                 ddd = dfd.DDD;
+                alllocs = dfd.AllLocs;
                 butontext = "Add";
             }
         }
