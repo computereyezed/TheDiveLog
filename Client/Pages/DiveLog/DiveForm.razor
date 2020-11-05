@@ -18,10 +18,10 @@
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-                                    <span class="field-label" title="Location">Location</span> 
-                                    <a class="btn btn-transparent text-success" @onclick="@(() => ChkSelected(-1))" data-toggle="tooltip" data-placement="auto" title="Add new Location"><i class="oi oi-plus"></i></a>
+                                    <span class="field-label" title="Location">Location</span>
+                                    @*<a class="btn btn-transparent text-success" @onclick="@(() => ChkSelected(-1))" data-toggle="tooltip" data-placement="auto" title="Add new Location"><i class="oi oi-plus"></i></a>*@
                                     <br />
-                                    <select class="form-control form-control-lg" @bind=div.DiveLocationID @onselect="() => ChkSelected(div.DiveLocationID)">
+                                    <select class="form-control form-control-lg" @bind="@uiLocation">
                                         @foreach (Locations item in alllocs)
                                         {
                                             <option value="@item.Id">@($"{item.Location}, {item.Located}")</option>
@@ -299,11 +299,29 @@
     [Parameter] public string ButtonText { get; set; } = "Save";
     [Parameter] public EventCallback OnValidSubmit { get; set; }
 
-    async Task ChkSelected(long id)
+}
+
+@functions {
+    long _uiLocation;
+    long uiLocation
     {
-        if(id == -1)
+        get
         {
-            locationModal.LocationOpen(id);
+            if(div.DiveLocationID != 0)
+            {
+                _uiLocation = div.DiveLocationID;
+            }
+
+            return _uiLocation;
+        }
+
+        set
+        {
+            if (value == -1)
+            {
+                locationModal.LocationOpen(value);
+            }
+            _uiLocation = value;
         }
     }
 }
