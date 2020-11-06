@@ -21,14 +21,7 @@
                 <div class="lh-header-container">
                 </div>
                 <div class="lh-td-container">
-                    @if (AppState.Mesurement == 35)
-                    {
-                        <h5 class="verticaltext">&nbsp;&nbsp;&nbsp;Depth&nbsp;in&nbsp;feet</h5>
-                    }
-                    else
-                    {
-                        <h5 class="verticaltext">&nbsp;&nbsp;&nbsp;Depth&nbsp;in&nbsp;meters</h5>
-                    }
+                    <h5 class="verticaltext">&nbsp;&nbsp;&nbsp;Depth&nbsp;in&nbsp;@AppState.Mesurtext</h5>
                 </div>
                 <div class="lh-table-container-inner">
                     <table class="table table-sm table-striped lh-table">

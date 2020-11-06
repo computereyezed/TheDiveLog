@@ -1,7 +1,7 @@
 ﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
 
 html, body {
-    height: 85vh;
+    height: 100vh;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     background-color: #8FFFF2;
 }
@@ -164,7 +164,8 @@ app {
     }
 
     .sidebar {
-        width: 12em;
+        /*width: 12em;*/
+        width: 200px;
         height: 100vh;
         position: sticky;
         top: 0;

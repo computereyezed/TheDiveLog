@@ -116,6 +116,13 @@
         }
 
         AppState.Mesurement = dvr.MeasurementID;
+
+        AppState.Mesurtext = "feet";
+
+        if (AppState.Mesurement.HasValue && AppState.Mesurement != 1)
+        {
+            AppState.Mesurtext = "meters";
+        }
     }
 
     private void ToggleNavMenu()

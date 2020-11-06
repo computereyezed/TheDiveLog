@@ -30,14 +30,7 @@
                         </caption>
                         <thead>
                             <tr>
-                                @if (AppState.Mesurement == 35)
-                                {
-                                    <th class="lh-th" colspan="14"><div class="lh-th-topline lh-first">Depth in feet</div></th>
-                                }
-                                else
-                                {
-                                    <th class="lh-th" colspan="14"><div class="lh-th-topline lh-first">Depth in meters</div></th>
-                                }
+                                <th class="lh-th" colspan="14"><div class="lh-th-topline lh-first">Depth in @AppState.Mesurtext</div></th>
                             </tr>
                             <tr>
                                 <th colspan="2" class="lh-th"><div class="lh-th-bottomline"></div></th>

@@ -14,6 +14,7 @@ namespace TheDiveLog.Client.Services
         public static string UserId { get; set; }
         public static long CertId { get; set; }
         public static int? Mesurement { get; set; }
+        public static string Mesurtext { get; set; }
         public string Email { get; private set; } = string.Empty;
 
         //public void UpdateEmail(ComponentBase Source, string Email)
