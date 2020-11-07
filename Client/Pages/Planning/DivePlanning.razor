@@ -3,16 +3,21 @@
 @inject HttpClient client
 @inject IJSRuntime js
 
-<div class="container-fluid">
+@{
+    string title = string.Empty;
+}
+
+@if (AppState.IsAuthenticated)
+{
     <div class="row">
-        <div class="col-10 card mx-auto card-transparent">
+        <div class="col-11 mb-3 card mx-auto card-transparent">
             <h4 class="text-center">
                 The Recreational Dive Planner is designed specifically for planning recreational (no decompression) dives on air only.<br /><span class="text-danger">Do not attempt to use it for planning decompression dives.</span>
             </h4>
         </div>
     </div>
     <div class="row">
-        <div class="col-8 card mx-auto card-transparent">
+        <div class="col-11 mb-3 card mx-auto card-transparent">
             <ul class="nav nav-pills card-transparent">
                 <li class="nav-item">
                     <a class="nav-link active" data-toggle="pill" href="#ed">Emergency Decompression</a>
@@ -108,186 +113,174 @@
     </div>
     <br />
     <div class="row">
-        <div class="col-10 card mx-auto card-transparent" style="border: none;">
-            <div class="row">
-                <div class="col-10 col-sm-10 col-md-6 col-lg-5 col-xl-5 card card-block divegraphcard border-primary card-transparent">
-                    <div class="card-header">
-                        First Dive
-                    </div>
-                    <div class="card-body img-fluid  align-items-center d-flex justify-content-center">
-                        <img class="card-img-bottom my-auto" src="/css/Images/DiveChart.png" alt="Card image" style="width:100%">
-                    </div>
-                    <div class="card-img-overlay">
-                        <br />
-                        <br />
-                        <br />
-                        <div class="float-left">
-                            <span class="field-label">SPG</span>
-                            <br />
-                            <input type="text" title="Starting Pressure Group" id="SPG1" name="SPG1" class="form-control-lg input-1-alpha" maxlength="1" />
-                        </div>
-                        <div class="float-right">
-                            <span class="field-label">EPG</span>
-                            <br />
-                            <input type="text" title="Ending pressure group" class="form-control form-control-lg input-1-alpha" maxlength="1" />
-                        </div>
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                        <div class="float-left md">
-                            <span class="field-label">MD</span>
-                            <br />
-                            <input type="number" title="Max Depth" class="form-control form-control-lg input-6" maxlength="4" />
-                            <span class="field-label">@AppState.Mesurtext</span>
-                        </div>
-                        <br />
-                        <br />
-                        <br />
-                        <div class="bt">
-                            <br />
-                            <span class="field-label">BT</span>
-                            <br />
-                            <input type="number" title="Bottom time (in minutes)" class="form-control form-control-lg input-6" maxlength="3" />
-                            <span class="field-label">minutes</span>
-                        </div>
-                    </div>
+        <div class="col-auto mb-3 card mx-auto card-transparent">
+            <div class="card-header">
+                First Dive
+            </div>
+            <div class="card-body divechartcard">
+                <img class="card-img-bottom my-auto divechartimage" src="/css/Images/DiveChart.png" alt="Dive Chart Image">
+            </div>
+            <div class="card-img-overlay">
+                <br />
+                <div class="float-left">
+                    <span class="field-label">SPG</span>
+                    <br />
+                    <input type="text" title="Starting Pressure Group" id="SPG1" name="SPG1" class="form-control-lg input-1-alpha" maxlength="1" />
                 </div>
-                <div class="col-10 col-sm-10 col-md-6 col-lg-5 col-xl-5 card card-block divegraphcard border-primary card-transparent">
-                    <div class="card-header">
-                        Second Dive
-                    </div>
-                    <div class="card-body img-fluid  align-items-center d-flex justify-content-center">
-                        <img class="card-img-bottom my-auto" src="/css/Images/DiveChart.png" alt="Card image" style="width:100%">
-                    </div>
-                    <div class="card-img-overlay">
-                        <br />
-                        <br />
-                        <br />
-                        <div class="float-left">
-                            <span class="field-label">SPG</span>
-                            <br />
-                            <input type="text" title="Starting Pressure Group" id="SPG1" name="SPG1" class="form-control-lg input-1-alpha" maxlength="1" />
-                        </div>
-                        <div class="float-right">
-                            <span class="field-label">EPG</span>
-                            <br />
-                            <input type="text" title="Ending pressure group" class="form-control form-control-lg input-1-alpha" maxlength="1" />
-                        </div>
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                        <div class="float-left md">
-                            <span class="field-label">MD</span>
-                            <br />
-                            <input type="number" title="Max Depth" class="form-control form-control-lg input-6" maxlength="4" />
-                            <span class="field-label">@AppState.Mesurtext</span>
-                        </div>
-                        <br />
-                        <br />
-                        <br />
-                        <div class="bt">
-                            <br />
-                            <span class="field-label">BT</span>
-                            <br />
-                            <input type="number" title="Bottom time (in minutes)" class="form-control form-control-lg input-6" maxlength="3" />
-                            <span class="field-label">minutes</span>
-                        </div>
-                    </div>
+                <div class="float-right">
+                    <span class="field-label">EPG</span>
+                    <br />
+                    <input type="text" title="Ending pressure group" class="form-control form-control-lg input-1-alpha" maxlength="1" />
                 </div>
-                <div class="col-10 col-sm-10 col-md-6 col-lg-5 col-xl-5 card card-block divegraphcard border-primary card-transparent">
-                    <div class="card-header">
-                        Third Dive
-                    </div>
-                    <div class="card-body img-fluid  align-items-center d-flex justify-content-center">
-                        <img class="card-img-bottom my-auto" src="/css/Images/DiveChart.png" alt="Card image" style="width:100%">
-                    </div>
-                    <div class="card-img-overlay">
-                        <br />
-                        <br />
-                        <br />
-                        <div class="float-left">
-                            <span class="field-label">SPG</span>
-                            <br />
-                            <input type="text" title="Starting Pressure Group" id="SPG1" name="SPG1" class="form-control-lg input-1-alpha" maxlength="1" />
-                        </div>
-                        <div class="float-right">
-                            <span class="field-label">EPG</span>
-                            <br />
-                            <input type="text" title="Ending pressure group" class="form-control form-control-lg input-1-alpha" maxlength="1" />
-                        </div>
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                        <div class="float-left md">
-                            <span class="field-label">MD</span>
-                            <br />
-                            <input type="number" title="Max Depth" class="form-control form-control-lg input-6" maxlength="4" />
-                            <span class="field-label">@AppState.Mesurtext</span>
-                        </div>
-                        <br />
-                        <br />
-                        <br />
-                        <div class="bt">
-                            <br />
-                            <span class="field-label">BT</span>
-                            <br />
-                            <input type="number" title="Bottom time (in minutes)" class="form-control form-control-lg input-6" maxlength="3" />
-                            <span class="field-label">minutes</span>
-                        </div>
-                    </div>
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <div class="float-left md">
+                    <span class="field-label">MD</span>
+                    <br />
+                    <input type="number" title="Max Depth" class="form-control form-control-lg input-6" maxlength="4" />
+                    <span class="field-label">@AppState.Mesurtext</span>
                 </div>
-                <div class="col-10 col-sm-10 col-md-6 col-lg-5 col-xl-5 card card-block divegraphcard border-primary card-transparent">
-                    <div class="card-header">
-                        Fourth Dive
-                    </div>
-                    <div class="card-body img-fluid  align-items-center d-flex justify-content-center">
-                        <img class="card-img-bottom my-auto" src="/css/Images/DiveChart.png" alt="Card image" style="width:100%">
-                    </div>
-                    <div class="card-img-overlay">
-                        <br />
-                        <br />
-                        <br />
-                        <div class="float-left">
-                            <span class="field-label">SPG</span>
-                            <br />
-                            <input type="text" title="Starting Pressure Group" id="SPG1" name="SPG1" class="form-control-lg input-1-alpha" maxlength="1" />
-                        </div>
-                        <div class="float-right">
-                            <span class="field-label">EPG</span>
-                            <br />
-                            <input type="text" title="Ending pressure group" class="form-control form-control-lg input-1-alpha" maxlength="1" />
-                        </div>
-                        <br />
-                        <br />
-                        <br />
-                        <br />
-                        <div class="float-left md">
-                            <span class="field-label">MD</span>
-                            <br />
-                            <input type="number" title="Max Depth" class="form-control form-control-lg input-6" maxlength="4" />
-                            <span class="field-label">@AppState.Mesurtext</span>
-                        </div>
-                        <br />
-                        <br />
-                        <br />
-                        <div class="bt">
-                            <br />
-                            <span class="field-label">BT</span>
-                            <br />
-                            <input type="number" title="Bottom time (in minutes)" class="form-control form-control-lg input-6" maxlength="3" />
-                            <span class="field-label">minutes</span>
-                        </div>
-                    </div>
+                <br />
+                <br />
+                <div class="bt">
+                    <br />
+                    <span class="field-label">BT</span>
+                    <br />
+                    <input type="number" title="Bottom time (in minutes)" class="form-control form-control-lg input-6" maxlength="3" />
+                    <span class="field-label">minutes</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-auto mb-3 card mx-auto card-transparent">
+            <div class="card-header">
+                Second Dive
+            </div>
+            <div class="card-body divechartcard">
+                <img class="card-img-bottom my-auto divechartimage" src="/css/Images/DiveChart.png" alt="Dive Chart Image">
+            </div>
+            <div class="card-img-overlay">
+                <br />
+                <div class="float-left">
+                    <span class="field-label">SPG</span>
+                    <br />
+                    <input type="text" title="Starting Pressure Group" id="SPG1" name="SPG1" class="form-control-lg input-1-alpha" maxlength="1" />
+                </div>
+                <div class="float-right">
+                    <span class="field-label">EPG</span>
+                    <br />
+                    <input type="text" title="Ending pressure group" class="form-control form-control-lg input-1-alpha" maxlength="1" />
+                </div>
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <div class="float-left md">
+                    <span class="field-label">MD</span>
+                    <br />
+                    <input type="number" title="Max Depth" class="form-control form-control-lg input-6" maxlength="4" />
+                    <span class="field-label">@AppState.Mesurtext</span>
+                </div>
+                <br />
+                <br />
+                <div class="bt">
+                    <br />
+                    <span class="field-label">BT</span>
+                    <br />
+                    <input type="number" title="Bottom time (in minutes)" class="form-control form-control-lg input-6" maxlength="3" />
+                    <span class="field-label">minutes</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-auto mb-3 card mx-auto card-transparent">
+            <div class="card-header">
+                Third Dive
+            </div>
+            <div class="card-body divechartcard">
+                <img class="card-img-bottom my-auto divechartimage" src="/css/Images/DiveChart.png" alt="Dive Chart Image">
+            </div>
+            <div class="card-img-overlay">
+                <br />
+                <div class="float-left">
+                    <span class="field-label">SPG</span>
+                    <br />
+                    <input type="text" title="Starting Pressure Group" id="SPG1" name="SPG1" class="form-control-lg input-1-alpha" maxlength="1" />
+                </div>
+                <div class="float-right">
+                    <span class="field-label">EPG</span>
+                    <br />
+                    <input type="text" title="Ending pressure group" class="form-control form-control-lg input-1-alpha" maxlength="1" />
+                </div>
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <div class="float-left md">
+                    <span class="field-label">MD</span>
+                    <br />
+                    <input type="number" title="Max Depth" class="form-control form-control-lg input-6" maxlength="4" />
+                    <span class="field-label">@AppState.Mesurtext</span>
+                </div>
+                <br />
+                <br />
+                <div class="bt">
+                    <br />
+                    <span class="field-label">BT</span>
+                    <br />
+                    <input type="number" title="Bottom time (in minutes)" class="form-control form-control-lg input-6" maxlength="3" />
+                    <span class="field-label">minutes</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-auto mb-3 card mx-auto card-transparent">
+            <div class="card-header">
+                Fourth Dive
+            </div>
+            <div class="card-body divechartcard">
+                <img class="card-img-bottom my-auto divechartimage" src="/css/Images/DiveChart.png" alt="Dive Chart Image">
+            </div>
+            <div class="card-img-overlay">
+                <br />
+                <div class="float-left">
+                    <span class="field-label">SPG</span>
+                    <br />
+                    <input type="text" title="Starting Pressure Group" id="SPG1" name="SPG1" class="form-control-lg input-1-alpha" maxlength="1" />
+                </div>
+                <div class="float-right">
+                    <span class="field-label">EPG</span>
+                    <br />
+                    <input type="text" title="Ending pressure group" class="form-control form-control-lg input-1-alpha" maxlength="1" />
+                </div>
+                <br />
+                <br />
+                <br />
+                <br />
+                <br />
+                <div class="float-left md">
+                    <span class="field-label">MD</span>
+                    <br />
+                    <input type="number" title="Max Depth" class="form-control form-control-lg input-6" maxlength="4" />
+                    <span class="field-label">@AppState.Mesurtext</span>
+                </div>
+                <br />
+                <br />
+                <div class="bt">
+                    <br />
+                    <span class="field-label">BT</span>
+                    <br />
+                    <input type="number" title="Bottom time (in minutes)" class="form-control form-control-lg input-6" maxlength="3" />
+                    <span class="field-label">minutes</span>
                 </div>
             </div>
         </div>
     </div>
-    <br />
+
     <div class="row">
-        <div class="col-10 card mx-auto card-transparent">
+        <div class="col-11 mb-3 card mx-auto card-transparent">
             <ul class="nav nav-pills">
                 <li class="nav-item">
                     <a class="nav-link active" data-toggle="pill" href="#ndlgd">No Decompression Limits and Group Designation</a>
@@ -299,7 +292,7 @@
                     <a class="nav-link" data-toggle="pill" href="#abtsne">Repetitive Dive Timetable</a>
                 </li>
             </ul>
-            <div class="tab-content">
+            <div class="tab-content ">
                 <div class="tab-pane container active float-left" id="ndlgd">
                     <TheDiveLog.Client.Pages.Partials.NDLChart></TheDiveLog.Client.Pages.Partials.NDLChart>
                 </div>
@@ -312,4 +305,13 @@
             </div>
         </div>
     </div>
-</div>
+    <br />
+}
+else
+{
+    <h1>Authentication Failure!</h1>
+    <p>You're not signed in.</p>
+}
+
+@code {
+}

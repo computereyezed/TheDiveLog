@@ -463,13 +463,22 @@ app {
     background: url('/css/Images/DiveChart.png') no-repeat scroll 0 0/20rem 8rem transparent;
 }
 
+.divechartimage {
+    width: 100%;
+    margin-top: 0px;
+}
+
+.divechartcard {
+    height: 290px;
+}
+
 .md {
     margin-left: -10px;
     /*margin-top: 30px;*/
 }
 
 .bt {
-    margin-left: 100px;
+    margin-left: 150px;
     margin-top: 10px;
 }
 

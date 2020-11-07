@@ -1,11 +1,11 @@
 ﻿<TheDiveLog.Client.Pages.Components.LocationModal @ref="locationModal"></TheDiveLog.Client.Pages.Components.LocationModal>
 
-<div class="container">
+@*<div class="container">*@
     <EditForm Model="@div" OnValidSubmit="@OnValidSubmit">
         <DataAnnotationsValidator />
         <div class="accordion" id="diveaccordion">
             @*Dive*@
-            <div class="card" style="background-color:transparent">
+            <div class="col-12 card card-transparent">
                 <div class="card-header alert-danger" id="diveheading">
                     <h2 class="mb-0">
                         <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#dive" aria-expanded="true" aria-controls="dive">
@@ -160,7 +160,7 @@
                 </div>
             </div>
             @*Exposure*@
-            <div class="card" style="background-color:transparent">
+            <div class="col-12 card card-transparent">
                 <div class="card-header alert-info" id="exposureheading">
                     <h2 class="mb-0">
                         <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#exposure" aria-expanded="false" aria-controls="exposure">
@@ -171,7 +171,7 @@
                 <div id="exposure" class="collapse" aria-labelledby="exposureheading" data-parent="#diveaccordion">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-6 col-sm-6 col-md-3 col-lg-3">
+                            <div  class="col-12 col-sm-6 col-md-6 col-lg-6">
                                 <span class="field-label">Suit</span>
                                 <br />
                                 <span class="field-value">
@@ -183,7 +183,7 @@
                                     </select>
                                 </span>
                             </div>
-                            <div class="col-6 col-sm-6 col-md-4 col-lg-3">
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-6">
                                 <span class="field-label">Head/Hands/Feet</span>
                                 <br />
                                 <span class="field-value">
@@ -195,25 +195,24 @@
                                     </select>
                                 </span>
                             </div>
-                            <div class="col-6 col-sm-6 col-md-3 col-lg-3">
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-6">
                                 <span class="field-label">Thickness</span>
                                 <br />
                                 <input type="number" title="Thickness in mm" class="form-control form-control-lg input-5" maxlength="3" @bind="@div.ExposureProtectionMM" />
                                 <ValidationMessage For="@(() => div.ExposureProtectionMM)" />
                             </div>
-                            <div class="col-6 col-sm-6 col-md-2 col-lg-3">
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-6">
                                 <span class="field-label">Weight</span>
                                 <br />
                                 <input type="number" title="Weight" class="form-control form-control-lg input-5" maxlength="3" @bind="@div.Weight" />
                                 <ValidationMessage For="@(() => div.Weight)" />
                             </div>
                         </div>
-                        <br />
                     </div>
                 </div>
             </div>
             @*Local Weather*@
-            <div class="card" style="background-color:transparent">
+            <div class="col-12 card card-transparent">
                 <div class="card-header alert-info" id="locweatherheading">
                     <h2 class="mb-0">
                         <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#locweather" aria-expanded="false" aria-controls="locweather">
@@ -224,7 +223,7 @@
                 <div id="locweather" class="collapse" aria-labelledby="locweatherheading" data-parent="#diveaccordion">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-6">
                                 <span class="field-label">Weather</span>
                                 <br />
                                 <span class="field-value">
@@ -236,7 +235,7 @@
                                     </select>
                                 </span>
                             </div>
-                            <div class="col-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-6">
                                 <span class="field-label">Air temp</span>
                                 <br />
                                 <input type="number" title="Air Temperature" class="form-control form-control-lg input-5" @bind="@div.AirTemperature" />
@@ -257,13 +256,13 @@
                                     </select>
                                 </span>
                             </div>
-                            <div class="col-6 col-sm-4 col-md-3 col-lg-3">
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-6">
                                 <span class="field-label">Surface temp</span>
                                 <br />
                                 <input type="number" title="Surface Temperature" class="form-control form-control-lg input-5" maxlength="3" @bind="@div.WaterSurfaceTemperature" />
                                 <ValidationMessage For="@(() => div.WaterSurfaceTemperature)" />
                             </div>
-                            <div class="col-6 col-sm-4 col-md-3 col-lg-3">
+                            <div class="col-12 col-sm-6 col-md-6 col-lg-6">
                                 <span class="field-label">Bottom temp</span>
                                 <br />
                                 <input type="number" title="Bottom Temperature" class="form-control form-control-lg input-5" maxlength="3" @bind="@div.WaterBottomTemperature" />
@@ -275,7 +274,7 @@
                 </div>
             </div>
             @*Comments*@
-            <div class="card" style="background-color:transparent">
+            <div class="col-12 card card-transparent">
                 <div class="card-header alert-info" id="commentsheading">
                     <h2 class="mb-0">
                         <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#comments" aria-expanded="false" aria-controls="comments">
@@ -300,7 +299,7 @@
             @ButtonText
         </button>
     </EditForm>
-</div>
+@*</div>*@
 
 @code {
     private TheDiveLog.Client.Pages.Components.LocationModal locationModal { get; set; }
