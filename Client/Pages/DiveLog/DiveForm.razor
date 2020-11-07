@@ -17,10 +17,9 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-                                <span class="field-label" title="Location">Location</span>
-                                @*<a class="btn btn-transparent text-success" @onclick="@(() => ChkSelected(-1))" data-toggle="tooltip" data-placement="auto" title="Add new Location"><i class="oi oi-plus"></i></a>*@
+                                <span class="field-label">Location</span>
                                 <br />
-                                <select class="form-control form-control-lg" @bind="@uiLocation">
+                                <select class="form-control form-control-lg" @bind="@uiLocation" title="Location">
                                     @foreach (Locations item in alllocs)
                                     {
                                         <option value="@item.Id">@($"{item.Location}, {item.Located}")</option>
@@ -28,15 +27,15 @@
                                 </select>
                             </div>
                             <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-                                <span class="field-label" title="Dive date & start time">Date &amp; Time</span>
+                                <span class="field-label">Date &amp; Time</span>
                                 <br />
-                                <RadzenDatePicker class="form-control form-control-lg input-datetime" ShowTime="true" @bind-Value="@div.DiveDateTime" HourFormat="12" DateFormat="dd/MM/yyyy hh:mm tt" />
+                                <RadzenDatePicker title="Dive date & start time" class="form-control form-control-lg input-datetime" ShowTime="true" @bind-Value="@div.DiveDateTime" HourFormat="12" DateFormat="dd/MM/yyyy hh:mm tt" />
                             </div>
                             <div class="col-6 col-sm-6 col-md-6 col-lg-4">
-                                <span class="field-label" title="Breathing">Breathing</span>
+                                <span class="field-label">Breathing</span>
                                 <br />
                                 <span class="field-value">
-                                    <select class="form-control form-control-lg select-breathing" @bind=div.BreathingID>
+                                    <select class="form-control form-control-lg select-breathing" @bind=div.BreathingID title="Breathing">
                                         @foreach (DiveDropdownData item in ddd.Where(b => b.TypeId == 1))
                                         {
                                             <option value="@item.Id">@item.Name</option>
@@ -45,21 +44,21 @@
                                 </span>
                             </div>
                             <div class="col-6 col-sm-6 col-md-6 col-lg-4">
-                                <span class="field-label" title="Tank starting pressure">Tank starting pressure</span>
+                                <span class="field-label">Tank starting pressure</span>
                                 <br />
-                                <input type="number" class="form-control form-control-lg input-10" maxlength="5" @bind="@div.TankPressureStart" />
+                                <input type="number" title="Tank starting pressure" class="form-control form-control-lg input-10" maxlength="5" @bind="@div.TankPressureStart" />
                                 <ValidationMessage For="@(() => div.TankPressureStart)" />
                             </div>
                             <div class="col-6 col-sm-6 col-md-6 col-lg-4">
-                                <span class="field-label" title="Tank ending pressure">Tank ending pressure</span>
+                                <span class="field-label">Tank ending pressure</span>
                                 <br />
-                                <input type="number" class="form-control form-control-lg input-10" maxlength="5" @bind="@div.TankPressureEnd" />
+                                <input type="number" title="Tank ending pressure" class="form-control form-control-lg input-10" maxlength="5" @bind="@div.TankPressureEnd" />
                                 <ValidationMessage For="@(() => div.TankPressureEnd)" />
                             </div>
                             <div class="col-6 col-sm-6 col-md-6 col-lg-4">
-                                <span class="field-label" title="Water Type">Water Type</span>
+                                <span class="field-label">Water Type</span>
                                 <br />
-                                <select class="form-control form-control-lg select-water" @bind=div.WaterTypeID>
+                                <select class="form-control form-control-lg select-water" @bind=div.WaterTypeID title="Water Type">
                                     @foreach (DiveDropdownData item in ddd.Where(b => b.TypeId == 2))
                                     {
                                         <option value="@item.Id">@item.Name</option>
@@ -67,9 +66,9 @@
                                 </select>
                             </div>
                             <div class="col-6 col-sm-6 col-md-6 col-lg-4">
-                                <span class="field-label" title="Water Entry">Water Entry</span>
+                                <span class="field-label">Water Entry</span>
                                 <br />
-                                <select class="form-control form-control-lg select-water" @bind=div.WaterEntryID>
+                                <select class="form-control form-control-lg select-water" @bind=div.WaterEntryID title="Water Entry">
                                     @foreach (DiveDropdownData item in ddd.Where(b => b.TypeId == 3))
                                     {
                                         <option value="@item.Id">@item.Name</option>
@@ -77,9 +76,9 @@
                                 </select>
                             </div>
                             <div class="col-6 col-sm-6 col-md-6 col-lg-4">
-                                <span class="field-label" title="Water Visibility">Water Visibility</span>
+                                <span class="field-label">Water Visibility</span>
                                 <br />
-                                <input type="number" class="form-control form-control-lg input-10" maxlength="4" @bind="@div.WaterVisibility" />
+                                <input type="number" title="Water Visibility" class="form-control form-control-lg input-10" maxlength="4" @bind="@div.WaterVisibility" />
                                 <ValidationMessage For="@(() => div.WaterVisibility)" />
                             </div>
                         </div>
@@ -136,9 +135,9 @@
                         </div>
                         <div class=" row">
                             <div class="col-12 col-sm-6 col-md-6 col-lg-3">
-                                <span class="field-label" title="Verifacation Type">Verifacation Type</span>
+                                <span class="field-label">Verifacation Type</span>
                                 <br />
-                                <select class="form-control form-control-lg select-verifacation" @bind=div.SignatureTypeID>
+                                <select class="form-control form-control-lg select-verifacation" @bind=div.SignatureTypeID title="Verifacation Type">
                                     @foreach (DiveDropdownData item in ddd.Where(b => b.TypeId == 8))
                                     {
                                         <option value="@item.Id">@item.Name</option>
@@ -146,15 +145,15 @@
                                 </select>
                             </div>
                             <div class="col-12 col-sm-6 col-md-6 col-lg-3">
-                                <span class="field-label" title="Certification No.">Certification No.</span>
+                                <span class="field-label">Certification No.</span>
                                 <br />
-                                <input type="text" class="form-control form-control-lg" @bind="@div.CertificationNo" />
+                                <input type="text" title="Certification No." class="form-control form-control-lg" @bind="@div.CertificationNo" />
                                 <ValidationMessage For="@(() => div.CertificationNo)" />
                             </div>
                             <div class="col-12 col-sm-12 col-md-12 col-lg-7">
-                                <span class="field-label" title="Signature">Signature</span>
+                                <span class="field-label">Signature</span>
                                 <br />
-                                <SignaturePad />
+                                <SignaturePad title="Signature" />
                             </div>
                         </div>
                     </div>
@@ -173,10 +172,10 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-6 col-sm-6 col-md-3 col-lg-3">
-                                <span class="field-label" title="Suit">Suit</span>
+                                <span class="field-label">Suit</span>
                                 <br />
                                 <span class="field-value">
-                                    <select class="form-control form-control-lg  select-suit" @bind=div.ExposureProtectionID>
+                                    <select class="form-control form-control-lg  select-suit" @bind=div.ExposureProtectionID title="Suit">
                                         @foreach (DiveDropdownData item in ddd.Where(b => b.TypeId == 4))
                                         {
                                             <option value="@item.Id">@item.Name</option>
@@ -185,10 +184,10 @@
                                 </span>
                             </div>
                             <div class="col-6 col-sm-6 col-md-4 col-lg-3">
-                                <span class="field-label" title="Head/Hands/Feet">Head/Hands/Feet</span>
+                                <span class="field-label">Head/Hands/Feet</span>
                                 <br />
                                 <span class="field-value">
-                                    <select class="form-control form-control-lg  select-hhf" @bind=div.ExposureProtectionHHFID>
+                                    <select class="form-control form-control-lg  select-hhf" @bind=div.ExposureProtectionHHFID title="Head/Hands/Feet">
                                         @foreach (DiveDropdownData item in ddd.Where(b => b.TypeId == 5))
                                         {
                                             <option value="@item.Id">@item.Name</option>
@@ -197,15 +196,15 @@
                                 </span>
                             </div>
                             <div class="col-6 col-sm-6 col-md-3 col-lg-3">
-                                <span class="field-label" title="Thickness in mm">Thickness</span>
+                                <span class="field-label">Thickness</span>
                                 <br />
-                                <input type="number" class="form-control form-control-lg input-5" maxlength="3" @bind="@div.ExposureProtectionMM" />
+                                <input type="number" title="Thickness in mm" class="form-control form-control-lg input-5" maxlength="3" @bind="@div.ExposureProtectionMM" />
                                 <ValidationMessage For="@(() => div.ExposureProtectionMM)" />
                             </div>
                             <div class="col-6 col-sm-6 col-md-2 col-lg-3">
-                                <span class="field-label" title="Weight">Weight</span>
+                                <span class="field-label">Weight</span>
                                 <br />
-                                <input type="number" class="form-control form-control-lg input-5" maxlength="3" @bind="@div.Weight" />
+                                <input type="number" title="Weight" class="form-control form-control-lg input-5" maxlength="3" @bind="@div.Weight" />
                                 <ValidationMessage For="@(() => div.Weight)" />
                             </div>
                         </div>
@@ -226,10 +225,10 @@
                     <div class="card-body">
                         <div class="row">
                             <div class="col-6 col-sm-6 col-md-6 col-lg-6">
-                                <span class="field-label" title="Weather">Weather</span>
+                                <span class="field-label">Weather</span>
                                 <br />
                                 <span class="field-value">
-                                    <select class="form-control form-control-lg  select-weather" @bind=div.WeatherID>
+                                    <select class="form-control form-control-lg  select-weather" @bind=div.WeatherID title="Weather">
                                         @foreach (DiveDropdownData item in ddd.Where(b => b.TypeId == 6))
                                         {
                                             <option value="@item.Id">@item.Name</option>
@@ -238,19 +237,19 @@
                                 </span>
                             </div>
                             <div class="col-6 col-sm-6 col-md-6 col-lg-6">
-                                <span class="field-label" title="Air Temperature">Air temp</span>
+                                <span class="field-label">Air temp</span>
                                 <br />
-                                <input type="number" class="form-control form-control-lg input-5" @bind="@div.AirTemperature" />
+                                <input type="number" title="Air Temperature" class="form-control form-control-lg input-5" @bind="@div.AirTemperature" />
                                 <ValidationMessage For="@(() => div.AirTemperature)" />
                             </div>
                         </div>
                         <hr />
                         <div class="row">
                             <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-                                <span class="field-label" title="Water conditions">Water</span>
+                                <span class="field-label">Water</span>
                                 <br />
                                 <span class="field-value">
-                                    <select class="form-control form-control-lg  select-waterc" @bind=div.WaterConditionID>
+                                    <select class="form-control form-control-lg  select-waterc" @bind=div.WaterConditionID title="Water conditions">
                                         @foreach (DiveDropdownData item in ddd.Where(b => b.TypeId == 7))
                                         {
                                             <option value="@item.Id">@item.Name</option>
@@ -259,15 +258,15 @@
                                 </span>
                             </div>
                             <div class="col-6 col-sm-4 col-md-3 col-lg-3">
-                                <span class="field-label" title="Surface Temperature">Surface temp</span>
+                                <span class="field-label">Surface temp</span>
                                 <br />
-                                <input type="number" class="form-control form-control-lg input-5" maxlength="3" @bind="@div.WaterSurfaceTemperature" />
+                                <input type="number" title="Surface Temperature" class="form-control form-control-lg input-5" maxlength="3" @bind="@div.WaterSurfaceTemperature" />
                                 <ValidationMessage For="@(() => div.WaterSurfaceTemperature)" />
                             </div>
                             <div class="col-6 col-sm-4 col-md-3 col-lg-3">
-                                <span class="field-label" title="Bottom Temperature">Bottom temp</span>
+                                <span class="field-label">Bottom temp</span>
                                 <br />
-                                <input type="number" class="form-control form-control-lg input-5" maxlength="3" @bind="@div.WaterBottomTemperature" />
+                                <input type="number" title="Bottom Temperature" class="form-control form-control-lg input-5" maxlength="3" @bind="@div.WaterBottomTemperature" />
                                 <ValidationMessage For="@(() => div.WaterBottomTemperature)" />
                             </div>
                         </div>
@@ -287,9 +286,9 @@
                 <div id="comments" class="collapse" aria-labelledby="commentsheading" data-parent="#diveaccordion">
                     <div class="card-body">
                         <div class="row">
-                            <span class="field-label" title="Comments">Comments</span>
+                            <span class="field-label">Comments</span>
                             <br />
-                            <textarea rows="10" spellcheck="true" class="form-control form-control-lg" @bind="@div.Comments" />
+                            <textarea rows="10" spellcheck="true" class="form-control form-control-lg" @bind="@div.Comments" title="Comments" />
                             <ValidationMessage For="@(() => div.Comments)" />
                         </div>
                     </div>

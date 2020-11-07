@@ -15,51 +15,51 @@
                 <EditForm Model="@certinfo">
                     <div class="row">
                         <div class="col-6 col-sm-6 col-md-6 col-lg-4">
-                            <span class="field-label" title="Instructors No.">Instructors No.</span>
+                            <span class="field-label">Instructors No.</span>
                             <br />
-                            <input type="text" class="form-control form-control-lg " @bind="@certinfo.InstrNo" />
+                            <input type="text" title="Instructors No." class="form-control form-control-lg " @bind="@certinfo.InstrNo" />
                             <ValidationMessage For="@(() => certinfo.InstrNo)" />
                         </div>
                         <div class="col-6 col-sm-6 col-md-6 col-lg-4">
-                            <span class="field-label" title="Instructors Name">Instructors Name</span>
+                            <span class="field-label">Instructors Name</span>
                             <br />
-                            <input type="text" class="form-control form-control-lg" @bind="@certinfo.InstrName" />
+                            <input type="text" title="Instructors Name" class="form-control form-control-lg" @bind="@certinfo.InstrName" />
                             <ValidationMessage For="@(() => certinfo.InstrName)" />
                         </div>
                     </div>
                     <div class="row">                        
                         <div class="col-12 col-sm-12 col-md-12 col-lg-6">
-                            <span class="field-label" title="Location">Location</span>
+                            <span class="field-label">Location</span>
                             <br />
-                            <input type="text" class="form-control form-control-lg" @bind="@certinfo.Location" />
+                            <input type="text" title="Location" class="form-control form-control-lg" @bind="@certinfo.Location" />
                             <ValidationMessage For="@(() => certinfo.Location)" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-6 col-sm-6 col-md-6 col-lg-4">
-                            <span class="field-label" title="Phone No.">Phone No.</span>
+                            <span class="field-label">Phone No.</span>
                             <br />
-                            <input type="text" class="form-control form-control-lg " @bind="@certinfo.Phone" />
+                            <input type="text" title="Phone No." class="form-control form-control-lg " @bind="@certinfo.Phone" />
                             <ValidationMessage For="@(() => certinfo.Phone)" />
                         </div>
                         <div class="col-6 col-sm-6 col-md-6 col-lg-4">
-                            <span class="field-label" title="Cert Date">Cert Date</span>
+                            <span class="field-label">Cert Date</span>
                             <br />
-                            <input type="date" class="form-control form-control-lg" @bind="@certinfo.CertDate" />
+                            <input type="date" title="Cert Date" class="form-control form-control-lg" @bind="@certinfo.CertDate" />
                             <ValidationMessage For="@(() => certinfo.CertDate)" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-6 col-sm-6 col-md-6 col-lg-4">
-                            <span class="field-label" title="Certification">Certification</span>
+                            <span class="field-label">Certification</span>
                             <br />
-                            <input type="text" class="form-control form-control-lg " @bind="@certinfo.CertificationID" />
+                            <input type="text" title="Certification" class="form-control form-control-lg " @bind="@certinfo.CertificationID" />
                             <ValidationMessage For="@(() => certinfo.CertificationID)" />
                         </div>
                         <div class="col-6 col-sm-6 col-md-6 col-lg-4">
-                            <span class="field-label" title="Country">Country</span>
+                            <span class="field-label">Country</span>
                             <br />
-                            <input type="text" class="form-control form-control-lg" @bind="@certinfo.CountryCode" />
+                            <input type="text" title="Country" class="form-control form-control-lg" @bind="@certinfo.CountryCode" />
                             <ValidationMessage For="@(() => certinfo.CountryCode)" />
                         </div>
                     </div>

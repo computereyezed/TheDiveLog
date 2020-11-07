@@ -40,37 +40,37 @@
 
                     <div class="row">
                         <div class="col-7">
-                            <span class="field-label" title="First and Last Name">First and Last Name</span>
+                            <span class="field-label">First and Last Name</span>
                             <br />
-                            <input type="text" class="form-control form-control-lg" @bind="@dvr.DiverName" />
+                            <input type="text" title="First and Last Name" class="form-control form-control-lg" @bind="@dvr.DiverName" />
                             <ValidationMessage For="@(() => dvr.DiverName)" />
                         </div>
                         <div class="col-5">
-                            <span class="field-label" title="Birthday">Birthday</span>
+                            <span class="field-label">Birthday</span>
                             <br />
-                            <input type="date" class="form-control form-control-lg" @bind="@dvr.Birthday" />
+                            <input type="date" title="Birthday" class="form-control form-control-lg" @bind="@dvr.Birthday" />
                             <ValidationMessage For="@(() => dvr.Birthday)" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-6">
-                            <span class="field-label" title="Diver No.">Diver No.</span>
+                            <span class="field-label">Diver No.</span>
                             <br />
-                            <input type="text" class="form-control form-control-lg" @bind="@dvr.DiverNo" />
+                            <input type="text" title="Diver No." class="form-control form-control-lg" @bind="@dvr.DiverNo" />
                             <ValidationMessage For="@(() => dvr.DiverNo)" />
                         </div>
                         <div class="col-6">
-                            <span class="field-label" title="Measurement">Measurement</span>
+                            <span class="field-label">Measurement</span>
                             <br />
-                            <input type="text" class="form-control form-control-lg" @bind="@dvr.MeasurementID" />
+                            <input type="text" title="Measurement" class="form-control form-control-lg" @bind="@dvr.MeasurementID" />
                             <ValidationMessage For="@(() => dvr.MeasurementID)" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-12">
-                            <span class="field-label" title="Email">Email</span>
+                            <span class="field-label">Email</span>
                             <br />
-                            <input type="text" class="form-control form-control-lg" @bind="@dvr.Email" />
+                            <input type="text" title="Email" class="form-control form-control-lg" @bind="@dvr.Email" />
                             <ValidationMessage For="@(() => dvr.Email)" />
                         </div>
                     </div>

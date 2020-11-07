@@ -15,51 +15,51 @@
                 <EditForm Model="@location">
                     <div class="row">
                         <div class="col-6 col-sm-6 col-md-6 col-lg-4">
-                            <span class="field-label" title="Location">Location</span>
+                            <span class="field-label">Location</span>
                             <br />
-                            <input type="text" class="form-control form-control-lg " @bind="@location.Location" />
+                            <input type="text" title="Location" class="form-control form-control-lg " @bind="@location.Location" />
                             <ValidationMessage For="@(() => location.Location)" />
                         </div>
                         <div class="col-6 col-sm-6 col-md-6 col-lg-4">
-                            <span class="field-label" title="Latitude">Latitude</span>
+                            <span class="field-label">Latitude</span>
                             <br />
-                            <input type="number" class="form-control form-control-lg" @bind="@location.Latitude" />
+                            <input type="number" title="Latitude" class="form-control form-control-lg" @bind="@location.Latitude" />
                             <ValidationMessage For="@(() => location.Latitude)" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-12 col-sm-12 col-md-12 col-lg-6">
-                            <span class="field-label" title="Longitude">Longitude</span>
+                            <span class="field-label">Longitude</span>
                             <br />
-                            <input type="number" class="form-control form-control-lg" @bind="@location.Longitude" />
+                            <input type="number" title="Longitude" class="form-control form-control-lg" @bind="@location.Longitude" />
                             <ValidationMessage For="@(() => location.Longitude)" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-6 col-sm-6 col-md-6 col-lg-4">
-                            <span class="field-label" title="Located">Located</span>
+                            <span class="field-label">Located</span>
                             <br />
-                            <input type="text" class="form-control form-control-lg " @bind="@location.Located" />
+                            <input type="text" title="Located" class="form-control form-control-lg " @bind="@location.Located" />
                             <ValidationMessage For="@(() => location.Located)" />
                         </div>
                         <div class="col-6 col-sm-6 col-md-6 col-lg-4">
-                            <span class="field-label" title="Comments">Comments</span>
+                            <span class="field-label">Comments</span>
                             <br />
-                            <input type="text" class="form-control form-control-lg" @bind="@location.Comments" />
+                            <input type="text" title="Comments" class="form-control form-control-lg" @bind="@location.Comments" />
                             <ValidationMessage For="@(() => location.Comments)" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-6 col-sm-6 col-md-6 col-lg-4">
-                            <span class="field-label" title="What To See">What To See</span>
+                            <span class="field-label">What To See</span>
                             <br />
-                            <input type="text" class="form-control form-control-lg " @bind="@location.WhatToSee" />
+                            <input type="text" title="What To See" class="form-control form-control-lg " @bind="@location.WhatToSee" />
                             <ValidationMessage For="@(() => location.WhatToSee)" />
                         </div>
                         <div class="col-6 col-sm-6 col-md-6 col-lg-4">
-                            <span class="field-label" title="Country">Country</span>
+                            <span class="field-label">Country</span>
                             <br />
-                            <input type="number" class="form-control form-control-lg" @bind="@location.CountryID" />
+                            <input type="number" title="Country" class="form-control form-control-lg" @bind="@location.CountryID" />
                             <ValidationMessage For="@(() => location.CountryID)" />
                         </div>
                     </div>
