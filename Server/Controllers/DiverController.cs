@@ -60,13 +60,7 @@ namespace TheDiveLog.Server.Controllers
             return Ok(diverview);
         }
 
-        [HttpGet("byCertId")]
-        public async Task<IActionResult> Get(long certid)
-        {
-            Certifications cert = await _divectx.Certifications.FirstOrDefaultAsync(a => a.Id == certid);
-            return Ok(cert);
-        }
-
+        [HttpPost("Diver")]
         public async Task<IActionResult> Post(DiverInformation dvr)
         {
             _divectx.Add(dvr);

@@ -61,7 +61,7 @@ else
         if (Act)
         {
             await http.PutAsJsonAsync("api/dive", div);
-            await js.InvokeVoidAsync("alert", $"Updated Suicessfully!");
+            await js.InvokeVoidAsync("alert", $"Updated Successfully!");
             uriHelper.NavigateTo("viewdives");
 
         }

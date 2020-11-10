@@ -31,8 +31,8 @@
     }
     else
     {
+        @*Diver Info Form*@
         <div class="row">
-            @*Diver Info Form*@
             <div class="col-1 col-sm-1 col-md-1 col-lg-1"></div>
             <div class="col-10 col-sm-10 col-md-10 col-lg-10">
                 <EditForm Model="@dvr" OnValidSubmit="@SaveDiver">
@@ -87,8 +87,13 @@
         </div>
         <div class="col-1 col-sm-1 col-md-1 col-lg-1"></div>
         <br />
+        @*Certifacations*@
         <div class="row">
-            @*Certifacations*@
+            <div class="col-sm-3 form-group">
+                <a class="btn btn-success" @onclick="() => ShowModal(0,false)" data-toggle="tooltip" data-placement="auto" title="Log New Certification"><i class="oi oi-plus"></i></a>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-11 col-sm-11 col-md-11 col-lg-11">
                 <div class="row">
                     <div class="col-12 table">
@@ -112,7 +117,7 @@
                                         {
                                             <tr>
                                                 <td class="lh-td">
-                                                    <a class="btn btn-transparent text-primary" @onclick="() => CertModal.CertOpen(cert.Id)"><i class="oi oi-pencil"></i></a>
+                                                    <a class="btn btn-transparent text-primary" @onclick="() => ShowModal(cert.Id, true)"><i class="oi oi-pencil"></i></a>
                                                 </td>
                                                 <td class="lh-td">@cert.CertDate?.ToString("MM/dd/yyyy")</td>
                                                 <td class="col-1 lh-td">@cert.Certification</td>
@@ -148,6 +153,11 @@ else
 
     DiverView diverview { get; set; }
     Certifications certinfo { get; set; } = new Certifications();
+
+    private void ShowModal(long id, bool act)
+    {
+        CertModal.CertOpen(id, act);
+    }
 
     protected override async Task OnInitializedAsync()
     {
@@ -191,5 +201,12 @@ else
             await http.PostAsJsonAsync("api/diver", dvr);
             uriHelper.NavigateTo("viewdives");
         }
+    }
+}
+
+@functions{
+    public void Refresh()
+    {
+        this.StateHasChanged();
     }
 }
