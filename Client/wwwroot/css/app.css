@@ -73,6 +73,10 @@ app {
         top: -2px;
     }
 
+    .sidebar .nav-link {
+        padding: .5em .5em;
+    }
+
     .sidebar .nav-item {
         font-size: 1rem;
         padding-bottom: 0.5rem;
@@ -92,7 +96,7 @@ app {
             height: 3rem;
             display: flex;
             align-items: center;
-            line-height: 3rem;
+            line-height: 1rem;
         }
 
             .sidebar .nav-item a.active {
@@ -145,7 +149,7 @@ app {
     }
 
 @media (max-width: 767.98px) {
-    /* .main .top-row:not(.auth) {
+     .main .top-row:not(.auth) {
         display: none;
     }
 
@@ -155,7 +159,7 @@ app {
 
     .main .top-row a, .main .top-row .btn-link {
         margin-left: 0;
-    }*/
+    }
 }
 
 @media (min-width: 768px) {
@@ -165,21 +169,11 @@ app {
 
     .sidebar {
         /*width: 12em;*/
-        width: 200px;
+        width: 280px;
         height: 100vh;
         position: sticky;
         top: 0;
     }
-
-    /*.main .top-row {
-        position: sticky;
-        top: 0;
-    }
-
-    .main > div {
-        padding-left: 2rem !important;
-        padding-right: 1.5rem !important;
-    }*/
 
     .navbar-toggler {
         display: none;
@@ -257,6 +251,11 @@ app {
 /*#region Card Section*/
 .card-transparent {
     background-color: transparent;
+}
+
+.card-transparent-fixed-width {
+    background-color: transparent;
+    width: 30rem;
 }
 /*#endregion*/
 
