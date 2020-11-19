@@ -3,7 +3,7 @@
 @inject NavigationManager uriHelper
 @inject IJSRuntime js
 
-<TheDiveLog.Client.Pages.Components.CertModal @ref="CertModal"></TheDiveLog.Client.Pages.Components.CertModal>
+<CertModal @ref="CertModal" ButtonClicked="@OnCloseAndRefresh"></CertModal>
 
 <h3>View Diver Information</h3>
 
@@ -145,7 +145,7 @@ else
 }
 
 @code {
-    private TheDiveLog.Client.Pages.Components.CertModal CertModal { get; set; }
+    private CertModal CertModal { get; set; }
     private bool act { get; set; }
     private string butontext = string.Empty;
 
@@ -154,7 +154,7 @@ else
     DiverView diverview { get; set; }
     Certifications certinfo { get; set; } = new Certifications();
 
-    private void ShowModal(long id, bool act)
+    protected void ShowModal(long id, bool act)
     {
         CertModal.CertOpen(id, act);
     }
@@ -175,10 +175,9 @@ else
             act = true;
             butontext = "Update";
         }
-
     }
 
-    async Task Delete(long diverId)
+    protected async Task Delete(long diverId)
     {
         if (await js.InvokeAsync<bool>("confirm", $"Do you want to delete diver {dvr.DiverName} record?"))
         {
@@ -187,26 +186,29 @@ else
         }
     }
 
-    async Task SaveDiver()
+    protected async Task SaveDiver()
     {
         if (act)
         {
             await http.PutAsJsonAsync("api/diver", dvr);
-            await js.InvokeVoidAsync("alert", $"Updated Suicessfully!");
-            uriHelper.NavigateTo("viewdives");
+            await js.InvokeVoidAsync("alert", $"Updated Sucessfully!");
+            uriHelper.NavigateTo("viewdiver");
 
         }
         else
         {
             await http.PostAsJsonAsync("api/diver", dvr);
-            uriHelper.NavigateTo("viewdives");
+            uriHelper.NavigateTo("viewdiver");
         }
-    }
-}
 
-@functions{
-    public void Refresh()
+        await OnInitializedAsync();
+    }
+
+    protected async Task OnCloseAndRefresh(bool refresh)
     {
-        this.StateHasChanged();
+        if(refresh)
+        {
+            await OnInitializedAsync();
+        }
     }
 }

@@ -7,10 +7,10 @@
 
   <ItemGroup>
     <Content Remove="Pages\Components\AddEditCert.razor" />
-    <Content Remove="Pages\Components\Modal.razor" />
     <Content Remove="Pages\Counter.razor" />
     <Content Remove="Pages\DiverInfo\AddEditDiver.razor" />
     <Content Remove="Pages\DiverInfo\DiverForm.razor" />
+    <Content Remove="Pages\DiverInfo\TestDiver.razor" />
     <Content Remove="Pages\FetchData.razor" />
     <Content Remove="Pages\Partials\SicaChart.razor" />
     <Content Remove="Shared\AppTitle.razor" />

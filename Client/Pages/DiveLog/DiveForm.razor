@@ -1,311 +1,307 @@
-﻿<TheDiveLog.Client.Pages.Components.LocationModal @ref="locationModal"></TheDiveLog.Client.Pages.Components.LocationModal>
+﻿<LocationModal @ref="locationmodal"></LocationModal>
 
-@*<div class="container">*@
-    <EditForm Model="@div" OnValidSubmit="@OnValidSubmit">
-        <DataAnnotationsValidator />
-        <div class="accordion" id="diveaccordion">
-            @*Dive*@
-            <div class="col-12 card card-transparent">
-                <div class="card-header alert-danger" id="diveheading">
-                    <h2 class="mb-0">
-                        <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#dive" aria-expanded="true" aria-controls="dive">
-                            Dive information <span class="text-danger">(Required)</span>
-                        </button>
-                    </h2>
-                </div>
-                <div id="dive" class="collapse show" aria-labelledby="diveheading" data-parent="#diveaccordion">
-                    <div class="card-body">
-                        @{ 
-                            div.UserID = new Guid(AppState.UserId);
-                        }
-                        <div class="row">
-                            <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-                                <span class="field-label">Location</span>
-                                <br />
-                                <select class="form-control form-control-lg" @bind="@uiLocation" title="Location">
-                                    @foreach (Locations item in alllocs)
-                                    {
-                                        <option value="@item.Id">@($"{item.Location}, {item.Located}")</option>
-                                    }
-                                </select>
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-                                <span class="field-label">Date &amp; Time</span>
-                                <br />
-                                <RadzenDatePicker title="Dive date & start time" class="form-control form-control-lg input-datetime" ShowTime="true" @bind-Value="@div.DiveDateTime" HourFormat="12" DateFormat="dd/MM/yyyy hh:mm tt" />
-                            </div>
-                            <div class="col-6 col-sm-6 col-md-6 col-lg-4">
-                                <span class="field-label">Breathing</span>
-                                <br />
-                                <span class="field-value">
-                                    <select class="form-control form-control-lg select-breathing" @bind=div.BreathingID title="Breathing">
-                                        @foreach (DiveDropdownData item in ddd.Where(b => b.TypeId == 1))
-                                        {
-                                            <option value="@item.Id">@item.Name</option>
-                                        }
-                                    </select>
-                                </span>
-                            </div>
-                            <div class="col-6 col-sm-6 col-md-6 col-lg-4">
-                                <span class="field-label">Tank starting pressure</span>
-                                <br />
-                                <input type="number" title="Tank starting pressure" class="form-control form-control-lg input-10" maxlength="5" @bind="@div.TankPressureStart" />
-                                <ValidationMessage For="@(() => div.TankPressureStart)" />
-                            </div>
-                            <div class="col-6 col-sm-6 col-md-6 col-lg-4">
-                                <span class="field-label">Tank ending pressure</span>
-                                <br />
-                                <input type="number" title="Tank ending pressure" class="form-control form-control-lg input-10" maxlength="5" @bind="@div.TankPressureEnd" />
-                                <ValidationMessage For="@(() => div.TankPressureEnd)" />
-                            </div>
-                            <div class="col-6 col-sm-6 col-md-6 col-lg-4">
-                                <span class="field-label">Water Type</span>
-                                <br />
-                                <select class="form-control form-control-lg select-water" @bind=div.WaterTypeID title="Water Type">
-                                    @foreach (DiveDropdownData item in ddd.Where(b => b.TypeId == 2))
-                                    {
-                                        <option value="@item.Id">@item.Name</option>
-                                    }
-                                </select>
-                            </div>
-                            <div class="col-6 col-sm-6 col-md-6 col-lg-4">
-                                <span class="field-label">Water Entry</span>
-                                <br />
-                                <select class="form-control form-control-lg select-water" @bind=div.WaterEntryID title="Water Entry">
-                                    @foreach (DiveDropdownData item in ddd.Where(b => b.TypeId == 3))
-                                    {
-                                        <option value="@item.Id">@item.Name</option>
-                                    }
-                                </select>
-                            </div>
-                            <div class="col-6 col-sm-6 col-md-6 col-lg-4">
-                                <span class="field-label">Water Visibility</span>
-                                <br />
-                                <input type="number" title="Water Visibility" class="form-control form-control-lg input-10" maxlength="4" @bind="@div.WaterVisibility" />
-                                <ValidationMessage For="@(() => div.WaterVisibility)" />
-                            </div>
-                        </div>
-                        <br />
-                        <div class="row">
-                            <div class="col-3"></div>
-                            <div class="card card-block divegraphcard border-primary mb-3 card-transparent">
-                                <div class="card-header">
-                                    Dive Chart
-                                </div>
-                                <div class="card-body img-fluid  align-items-center d-flex justify-content-center">
-                                    <img class="card-img-bottom my-auto" src="/css/Images/DiveChart.png" alt="Card image" style="width:100%">
-                                </div>
-                                <div class="card-img-overlay">
-                                    <br />
-                                    <br />
-                                    <br />
-                                    <div class="float-left">
-                                        <span class="field-label">SPG</span>
-                                        <br />
-                                        <input type="text" title="Starting Pressure Group" class="form-control-lg input-1-alpha" maxlength="1" @bind="@div.StartPressureGroup" />
-                                        <ValidationMessage For="@(() => div.StartPressureGroup)" />
-                                    </div>
-                                    <div class="float-right">
-                                        <span class="field-label">EPG</span>
-                                        <br />
-                                        <input type="text" title="Ending pressure group" class="form-control form-control-lg input-1-alpha" maxlength="1" @bind="@div.EndPressureGroup" />
-                                        <ValidationMessage For="@(() => div.EndPressureGroup)" />
-                                    </div>
-                                    <br />
-                                    <br />
-                                    <br />
-                                    <br />
-                                    <div class="float-left md">
-                                        <span class="field-label">MD</span>
-                                        <br />
-                                        <input type="number" title="Max Depth" class="form-control form-control-lg input-6" maxlength="4" @bind="@div.Depth" />
-                                        <ValidationMessage For="@(() => div.Depth)" />
-                                        <span class="field-label">@AppState.Mesurtext</span>
-                                    </div>
-                                    <br />
-                                    <br />
-                                    <br />
-                                    <div class="bt">
-                                        <br />
-                                        <span class="field-label">BT</span>
-                                        <br />
-                                        <input type="number" title="Bottom time (in minutes)" class="form-control form-control-lg input-6" maxlength="3" @bind="@div.BottomTime" />
-                                        <ValidationMessage For="@(() => div.BottomTime)" />
-                                        <span class="field-label">minutes</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class=" row">
-                            <div class="col-12 col-sm-6 col-md-6 col-lg-3">
-                                <span class="field-label">Verifacation Type</span>
-                                <br />
-                                <select class="form-control form-control-lg select-verifacation" @bind=div.SignatureTypeID title="Verifacation Type">
-                                    @foreach (DiveDropdownData item in ddd.Where(b => b.TypeId == 8))
-                                    {
-                                        <option value="@item.Id">@item.Name</option>
-                                    }
-                                </select>
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-6 col-lg-3">
-                                <span class="field-label">Certification No.</span>
-                                <br />
-                                <input type="text" title="Certification No." class="form-control form-control-lg" @bind="@div.CertificationNo" />
-                                <ValidationMessage For="@(() => div.CertificationNo)" />
-                            </div>
-                            <div class="col-12 col-sm-12 col-md-12 col-lg-7">
-                                <span class="field-label">Signature</span>
-                                <br />
-                                <SignaturePad title="Signature" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
+<EditForm Model="@div" OnValidSubmit="@OnValidSubmit">
+    <DataAnnotationsValidator />
+    <div class="accordion" id="diveaccordion">
+        @*Dive*@
+        <div class="col-12 card card-transparent">
+            <div class="card-header alert-danger" id="diveheading">
+                <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#dive" aria-expanded="true" aria-controls="dive">
+                        Dive information <span class="text-danger">(Required)</span>
+                    </button>
+                </h2>
             </div>
-            @*Exposure*@
-            <div class="col-12 card card-transparent">
-                <div class="card-header alert-info" id="exposureheading">
-                    <h2 class="mb-0">
-                        <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#exposure" aria-expanded="false" aria-controls="exposure">
-                            Exposure Suit/Weight <span class="text-info">(Optional)</span>
-                        </button>
-                    </h2>
-                </div>
-                <div id="exposure" class="collapse" aria-labelledby="exposureheading" data-parent="#diveaccordion">
-                    <div class="card-body">
-                        <div class="row">
-                            <div  class="col-12 col-sm-6 col-md-6 col-lg-6">
-                                <span class="field-label">Suit</span>
-                                <br />
-                                <span class="field-value">
-                                    <select class="form-control form-control-lg  select-suit" @bind=div.ExposureProtectionID title="Suit">
-                                        @foreach (DiveDropdownData item in ddd.Where(b => b.TypeId == 4))
-                                        {
-                                            <option value="@item.Id">@item.Name</option>
-                                        }
-                                    </select>
-                                </span>
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-                                <span class="field-label">Head/Hands/Feet</span>
-                                <br />
-                                <span class="field-value">
-                                    <select class="form-control form-control-lg  select-hhf" @bind=div.ExposureProtectionHHFID title="Head/Hands/Feet">
-                                        @foreach (DiveDropdownData item in ddd.Where(b => b.TypeId == 5))
-                                        {
-                                            <option value="@item.Id">@item.Name</option>
-                                        }
-                                    </select>
-                                </span>
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-                                <span class="field-label">Thickness</span>
-                                <br />
-                                <input type="number" title="Thickness in mm" class="form-control form-control-lg input-5" maxlength="3" @bind="@div.ExposureProtectionMM" />
-                                <ValidationMessage For="@(() => div.ExposureProtectionMM)" />
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-                                <span class="field-label">Weight</span>
-                                <br />
-                                <input type="number" title="Weight" class="form-control form-control-lg input-5" maxlength="3" @bind="@div.Weight" />
-                                <ValidationMessage For="@(() => div.Weight)" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @*Local Weather*@
-            <div class="col-12 card card-transparent">
-                <div class="card-header alert-info" id="locweatherheading">
-                    <h2 class="mb-0">
-                        <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#locweather" aria-expanded="false" aria-controls="locweather">
-                            Weather & Conditions <span class="text-info">(Optional)</span>
-                        </button>
-                    </h2>
-                </div>
-                <div id="locweather" class="collapse" aria-labelledby="locweatherheading" data-parent="#diveaccordion">
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-                                <span class="field-label">Weather</span>
-                                <br />
-                                <span class="field-value">
-                                    <select class="form-control form-control-lg  select-weather" @bind=div.WeatherID title="Weather">
-                                        @foreach (DiveDropdownData item in ddd.Where(b => b.TypeId == 6))
-                                        {
-                                            <option value="@item.Id">@item.Name</option>
-                                        }
-                                    </select>
-                                </span>
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-                                <span class="field-label">Air temp</span>
-                                <br />
-                                <input type="number" title="Air Temperature" class="form-control form-control-lg input-5" @bind="@div.AirTemperature" />
-                                <ValidationMessage For="@(() => div.AirTemperature)" />
-                            </div>
-                        </div>
-                        <hr />
-                        <div class="row">
-                            <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-                                <span class="field-label">Water</span>
-                                <br />
-                                <span class="field-value">
-                                    <select class="form-control form-control-lg  select-waterc" @bind=div.WaterConditionID title="Water conditions">
-                                        @foreach (DiveDropdownData item in ddd.Where(b => b.TypeId == 7))
-                                        {
-                                            <option value="@item.Id">@item.Name</option>
-                                        }
-                                    </select>
-                                </span>
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-                                <span class="field-label">Surface temp</span>
-                                <br />
-                                <input type="number" title="Surface Temperature" class="form-control form-control-lg input-5" maxlength="3" @bind="@div.WaterSurfaceTemperature" />
-                                <ValidationMessage For="@(() => div.WaterSurfaceTemperature)" />
-                            </div>
-                            <div class="col-12 col-sm-6 col-md-6 col-lg-6">
-                                <span class="field-label">Bottom temp</span>
-                                <br />
-                                <input type="number" title="Bottom Temperature" class="form-control form-control-lg input-5" maxlength="3" @bind="@div.WaterBottomTemperature" />
-                                <ValidationMessage For="@(() => div.WaterBottomTemperature)" />
-                            </div>
-                        </div>
-                        <br />
-                    </div>
-                </div>
-            </div>
-            @*Comments*@
-            <div class="col-12 card card-transparent">
-                <div class="card-header alert-info" id="commentsheading">
-                    <h2 class="mb-0">
-                        <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#comments" aria-expanded="false" aria-controls="comments">
-                            Comments <span class="text-info">(Optional)</span>
-                        </button>
-                    </h2>
-                </div>
-                <div id="comments" class="collapse" aria-labelledby="commentsheading" data-parent="#diveaccordion">
-                    <div class="card-body">
-                        <div class="row">
-                            <span class="field-label">Comments</span>
+            <div id="dive" class="collapse show" aria-labelledby="diveheading" data-parent="#diveaccordion">
+                <div class="card-body">
+                    @{
+                        div.UserID = new Guid(AppState.UserId);
+                    }
+                    <div class="row">
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                            <span class="field-label">Location</span>
                             <br />
-                            <textarea rows="10" spellcheck="true" class="form-control form-control-lg" @bind="@div.Comments" title="Comments" />
-                            <ValidationMessage For="@(() => div.Comments)" />
+                            <select class="form-control form-control-lg" @bind="@uiLocation" title="Location">
+                                @foreach (Locations item in alllocs)
+                                {
+                                    <option value="@item.Id">@($"{item.Location}, {item.Located}")</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                            <span class="field-label">Date &amp; Time</span>
+                            <br />
+                            <RadzenDatePicker title="Dive date & start time" class="form-control form-control-lg input-datetime" ShowTime="true" @bind-Value="@div.DiveDateTime" HourFormat="12" DateFormat="dd/MM/yyyy hh:mm tt" />
+                        </div>
+                        <div class="col-6 col-sm-6 col-md-6 col-lg-4">
+                            <span class="field-label">Breathing</span>
+                            <br />
+                            <span class="field-value">
+                                <select class="form-control form-control-lg select-breathing" @bind=div.BreathingID title="Breathing">
+                                    @foreach (DiveDropdownData item in ddd.Where(b => b.TypeId == 1))
+                                    {
+                                        <option value="@item.Id">@item.Name</option>
+                                    }
+                                </select>
+                            </span>
+                        </div>
+                        <div class="col-6 col-sm-6 col-md-6 col-lg-4">
+                            <span class="field-label">Tank starting pressure</span>
+                            <br />
+                            <input type="number" title="Tank starting pressure" class="form-control form-control-lg input-10" maxlength="5" @bind="@div.TankPressureStart" />
+                            <ValidationMessage For="@(() => div.TankPressureStart)" />
+                        </div>
+                        <div class="col-6 col-sm-6 col-md-6 col-lg-4">
+                            <span class="field-label">Tank ending pressure</span>
+                            <br />
+                            <input type="number" title="Tank ending pressure" class="form-control form-control-lg input-10" maxlength="5" @bind="@div.TankPressureEnd" />
+                            <ValidationMessage For="@(() => div.TankPressureEnd)" />
+                        </div>
+                        <div class="col-6 col-sm-6 col-md-6 col-lg-4">
+                            <span class="field-label">Water Type</span>
+                            <br />
+                            <select class="form-control form-control-lg select-water" @bind=div.WaterTypeID title="Water Type">
+                                @foreach (DiveDropdownData item in ddd.Where(b => b.TypeId == 2))
+                                {
+                                    <option value="@item.Id">@item.Name</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-6 col-sm-6 col-md-6 col-lg-4">
+                            <span class="field-label">Water Entry</span>
+                            <br />
+                            <select class="form-control form-control-lg select-water" @bind=div.WaterEntryID title="Water Entry">
+                                @foreach (DiveDropdownData item in ddd.Where(b => b.TypeId == 3))
+                                {
+                                    <option value="@item.Id">@item.Name</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-6 col-sm-6 col-md-6 col-lg-4">
+                            <span class="field-label">Water Visibility</span>
+                            <br />
+                            <input type="number" title="Water Visibility" class="form-control form-control-lg input-10" maxlength="4" @bind="@div.WaterVisibility" />
+                            <ValidationMessage For="@(() => div.WaterVisibility)" />
+                        </div>
+                    </div>
+                    <br />
+                    <div class="row">
+                        <div class="col-3"></div>
+                        <div class="card card-block divegraphcard border-primary mb-3 card-transparent">
+                            <div class="card-header">
+                                Dive Chart
+                            </div>
+                            <div class="card-body img-fluid  align-items-center d-flex justify-content-center">
+                                <img class="card-img-bottom my-auto" src="/css/Images/DiveChart.png" alt="Card image" style="width:100%">
+                            </div>
+                            <div class="card-img-overlay">
+                                <br />
+                                <br />
+                                <br />
+                                <div class="float-left">
+                                    <span class="field-label">SPG</span>
+                                    <br />
+                                    <input type="text" title="Starting Pressure Group" class="form-control-lg input-1-alpha" maxlength="1" @bind="@div.StartPressureGroup" />
+                                    <ValidationMessage For="@(() => div.StartPressureGroup)" />
+                                </div>
+                                <div class="float-right">
+                                    <span class="field-label">EPG</span>
+                                    <br />
+                                    <input type="text" title="Ending pressure group" class="form-control form-control-lg input-1-alpha" maxlength="1" @bind="@div.EndPressureGroup" />
+                                    <ValidationMessage For="@(() => div.EndPressureGroup)" />
+                                </div>
+                                <br />
+                                <br />
+                                <br />
+                                <br />
+                                <div class="float-left md">
+                                    <span class="field-label">MD</span>
+                                    <br />
+                                    <input type="number" title="Max Depth" class="form-control form-control-lg input-6" maxlength="4" @bind="@div.Depth" />
+                                    <ValidationMessage For="@(() => div.Depth)" />
+                                    <span class="field-label">@AppState.Mesurtext</span>
+                                </div>
+                                <br />
+                                <br />
+                                <br />
+                                <div class="bt">
+                                    <br />
+                                    <span class="field-label">BT</span>
+                                    <br />
+                                    <input type="number" title="Bottom time (in minutes)" class="form-control form-control-lg input-6" maxlength="3" @bind="@div.BottomTime" />
+                                    <ValidationMessage For="@(() => div.BottomTime)" />
+                                    <span class="field-label">minutes</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class=" row">
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                            <span class="field-label">Verifacation Type</span>
+                            <br />
+                            <select class="form-control form-control-lg select-verifacation" @bind=div.SignatureTypeID title="Verifacation Type">
+                                @foreach (DiveDropdownData item in ddd.Where(b => b.TypeId == 8))
+                                {
+                                    <option value="@item.Id">@item.Name</option>
+                                }
+                            </select>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                            <span class="field-label">Certification No.</span>
+                            <br />
+                            <input type="text" title="Certification No." class="form-control form-control-lg" @bind="@div.CertificationNo" />
+                            <ValidationMessage For="@(() => div.CertificationNo)" />
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12 col-lg-7">
+                            <span class="field-label">Signature</span>
+                            <br />
+                            <SignaturePad title="Signature" />
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <br />
-        <button type="submit" class="btn btn-success">
-            @ButtonText
-        </button>
-    </EditForm>
-@*</div>*@
+        @*Exposure*@
+        <div class="col-12 card card-transparent">
+            <div class="card-header alert-info" id="exposureheading">
+                <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#exposure" aria-expanded="false" aria-controls="exposure">
+                        Exposure Suit/Weight <span class="text-info">(Optional)</span>
+                    </button>
+                </h2>
+            </div>
+            <div id="exposure" class="collapse" aria-labelledby="exposureheading" data-parent="#diveaccordion">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                            <span class="field-label">Suit</span>
+                            <br />
+                            <span class="field-value">
+                                <select class="form-control form-control-lg  select-suit" @bind=div.ExposureProtectionID title="Suit">
+                                    @foreach (DiveDropdownData item in ddd.Where(b => b.TypeId == 4))
+                                    {
+                                        <option value="@item.Id">@item.Name</option>
+                                    }
+                                </select>
+                            </span>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                            <span class="field-label">Head/Hands/Feet</span>
+                            <br />
+                            <span class="field-value">
+                                <select class="form-control form-control-lg  select-hhf" @bind=div.ExposureProtectionHHFID title="Head/Hands/Feet">
+                                    @foreach (DiveDropdownData item in ddd.Where(b => b.TypeId == 5))
+                                    {
+                                        <option value="@item.Id">@item.Name</option>
+                                    }
+                                </select>
+                            </span>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                            <span class="field-label">Thickness</span>
+                            <br />
+                            <input type="number" title="Thickness in mm" class="form-control form-control-lg input-5" maxlength="3" @bind="@div.ExposureProtectionMM" />
+                            <ValidationMessage For="@(() => div.ExposureProtectionMM)" />
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                            <span class="field-label">Weight</span>
+                            <br />
+                            <input type="number" title="Weight" class="form-control form-control-lg input-5" maxlength="3" @bind="@div.Weight" />
+                            <ValidationMessage For="@(() => div.Weight)" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*Local Weather*@
+        <div class="col-12 card card-transparent">
+            <div class="card-header alert-info" id="locweatherheading">
+                <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#locweather" aria-expanded="false" aria-controls="locweather">
+                        Weather & Conditions <span class="text-info">(Optional)</span>
+                    </button>
+                </h2>
+            </div>
+            <div id="locweather" class="collapse" aria-labelledby="locweatherheading" data-parent="#diveaccordion">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                            <span class="field-label">Weather</span>
+                            <br />
+                            <span class="field-value">
+                                <select class="form-control form-control-lg  select-weather" @bind=div.WeatherID title="Weather">
+                                    @foreach (DiveDropdownData item in ddd.Where(b => b.TypeId == 6))
+                                    {
+                                        <option value="@item.Id">@item.Name</option>
+                                    }
+                                </select>
+                            </span>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                            <span class="field-label">Air temp</span>
+                            <br />
+                            <input type="number" title="Air Temperature" class="form-control form-control-lg input-5" @bind="@div.AirTemperature" />
+                            <ValidationMessage For="@(() => div.AirTemperature)" />
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="row">
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                            <span class="field-label">Water</span>
+                            <br />
+                            <span class="field-value">
+                                <select class="form-control form-control-lg  select-waterc" @bind=div.WaterConditionID title="Water conditions">
+                                    @foreach (DiveDropdownData item in ddd.Where(b => b.TypeId == 7))
+                                    {
+                                        <option value="@item.Id">@item.Name</option>
+                                    }
+                                </select>
+                            </span>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                            <span class="field-label">Surface temp</span>
+                            <br />
+                            <input type="number" title="Surface Temperature" class="form-control form-control-lg input-5" maxlength="3" @bind="@div.WaterSurfaceTemperature" />
+                            <ValidationMessage For="@(() => div.WaterSurfaceTemperature)" />
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-6 col-lg-6">
+                            <span class="field-label">Bottom temp</span>
+                            <br />
+                            <input type="number" title="Bottom Temperature" class="form-control form-control-lg input-5" maxlength="3" @bind="@div.WaterBottomTemperature" />
+                            <ValidationMessage For="@(() => div.WaterBottomTemperature)" />
+                        </div>
+                    </div>
+                    <br />
+                </div>
+            </div>
+        </div>
+        @*Comments*@
+        <div class="col-12 card card-transparent">
+            <div class="card-header alert-info" id="commentsheading">
+                <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#comments" aria-expanded="false" aria-controls="comments">
+                        Comments <span class="text-info">(Optional)</span>
+                    </button>
+                </h2>
+            </div>
+            <div id="comments" class="collapse" aria-labelledby="commentsheading" data-parent="#diveaccordion">
+                <div class="card-body">
+                    <div class="row">
+                        <span class="field-label">Comments</span>
+                        <br />
+                        <textarea rows="10" spellcheck="true" class="form-control form-control-lg" @bind="@div.Comments" title="Comments" />
+                        <ValidationMessage For="@(() => div.Comments)" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br />
+    <button type="submit" class="btn btn-success">@ButtonText</button>
+</EditForm>
 
 @code {
-    private TheDiveLog.Client.Pages.Components.LocationModal locationModal { get; set; }
+    private LocationModal locationmodal { get; set; }
 
     [Parameter] public Dives div { get; set; }
     [Parameter] public List<DiveDropdownData> ddd { get; set; }
@@ -335,7 +331,7 @@
         {
             if (value == -1)
             {
-                locationModal.LocationOpen(value);
+                locationmodal.LocationOpen(value);
             }
             _uiLocation = value;
         }

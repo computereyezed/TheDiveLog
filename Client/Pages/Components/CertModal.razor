@@ -13,6 +13,7 @@
             </div>
             <div class="modal-body">
                 <EditForm Model="@certinfo">
+                    <DataAnnotationsValidator />
                     @{
                         certinfo.UserID = new Guid(AppState.UserId);
                     }
@@ -69,7 +70,9 @@
                 </EditForm>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" @onclick="() => SaveCert()">@buttontext</button>
+                @*<button type="submit" class="btn btn-success">@buttontext</button>*@
+
+                <button type="submit" class="btn btn-primary" @onclick="() => SaveCert()">@buttontext</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="() => CertCancel()">Cancel</button>
             </div>
         </div>
@@ -84,6 +87,7 @@
 @code {
     [Parameter] public bool Act { get; set; }
     [Parameter] public int Id { get; set; }
+    [Parameter] public EventCallback<bool> ButtonClicked { get; set; }
 
     string buttontext = string.Empty;
     Certifications certinfo { get; set; } = new Certifications();
@@ -120,18 +124,25 @@
         {
             await http.PutAsJsonAsync("api/cert", certinfo);
             await js.InvokeVoidAsync("alert", $"Updated Successfully!");
-            CertCancel();
         }
         else
         {
             await http.PostAsJsonAsync("api/cert", certinfo);
             await js.InvokeVoidAsync("alert", $"Added Successfully!");
-            CertCancel();
         }
+
+        await ButtonClicked.InvokeAsync(true);
+
+        ModalDisplay = "none";
+        ModalClass = "";
+        ShowBackdrop = false;
+        StateHasChanged();
     }
 
-    public void CertCancel()
+    protected async Task CertCancel()
     {
+        await ButtonClicked.InvokeAsync(false);
+
         ModalDisplay = "none";
         ModalClass = "";
         ShowBackdrop = false;

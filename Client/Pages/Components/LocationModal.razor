@@ -113,9 +113,8 @@
         StateHasChanged();
     }
 
-    [Parameter]
-    public decimal Lat { get; set; }
-    public decimal Long { get; set; }
+    [Parameter] public decimal Lat { get; set; }
+    [Parameter] public decimal Long { get; set; }
 
     private async void GetGeoLocation()
     {
@@ -124,9 +123,19 @@
         if(getgeolocaion != string.Empty)
         {
             string[] geoloc = getgeolocaion.Split(',');
-            //Lat = geoloc[0];
+            Lat = StringtoDecimal(geoloc[0]);
+            Long = StringtoDecimal(geoloc[1]);
         }
 
         StateHasChanged();
+    }
+
+    private decimal StringtoDecimal(string val)
+    {
+        decimal dec;
+        if (Decimal.TryParse(val, out dec))
+              dec = 0;
+
+        return dec;
     }
 }
