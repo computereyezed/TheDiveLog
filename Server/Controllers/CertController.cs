@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TheDiveLog.Server.Data;
+using TheDiveLog.Shared.Models;
 using TheDiveLog.Shared.Models.DiverTables;
 
 namespace TheDiveLog.Server.Controllers
@@ -18,14 +19,20 @@ namespace TheDiveLog.Server.Controllers
 
         public CertController(DiveCtx context)
         {
-            this._divectx = context;
+            _divectx = context;
         }
 
         [HttpGet("byCertId")]
         public async Task<IActionResult> Get(long certid)
         {
-            Certifications cert = await _divectx.Certifications.FirstOrDefaultAsync(a => a.Id == certid);
-            return Ok(cert);
+            CertForm certForm = new CertForm
+            {
+                Certification = await _divectx.Certifications.FirstOrDefaultAsync(a => a.Id == certid),
+                ListCertCountries = _divectx.Countries.ToList(),
+                ListCertDDD = _divectx.DDD.Where(w => w.TypeId == 9).ToList()
+            };
+
+            return Ok(certForm);
         }
 
         [HttpPost]

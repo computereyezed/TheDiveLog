@@ -57,21 +57,29 @@
                         <div class="col-6 col-sm-6 col-md-6 col-lg-4">
                             <span class="field-label">Certification</span>
                             <br />
-                            <input type="text" title="Certification" class="form-control form-control-lg " @bind="@certinfo.CertificationID" />
+                            <select class="form-control form-control-lg" @bind="@certinfo.CertificationID" title="Certification">
+                                @foreach (DiveDropdownData item in certddd)
+                                {
+                                    <option value="@item.Id">@item.Name</option>
+                                }
+                            </select>
                             <ValidationMessage For="@(() => certinfo.CertificationID)" />
                         </div>
                         <div class="col-6 col-sm-6 col-md-6 col-lg-4">
                             <span class="field-label">Country</span>
                             <br />
-                            <input type="text" title="Country" class="form-control form-control-lg" @bind="@certinfo.CountryCode" />
+                            <select class="form-control form-control-lg" @bind="@certinfo.CountryCode" title="Country">
+                                @foreach (Countries item in certcountries)
+                                {
+                                    <option value="@item.Id">@item.Country</option>
+                                }
+                            </select>
                             <ValidationMessage For="@(() => certinfo.CountryCode)" />
                         </div>
                     </div>
                 </EditForm>
             </div>
             <div class="modal-footer">
-                @*<button type="submit" class="btn btn-success">@buttontext</button>*@
-
                 <button type="submit" class="btn btn-primary" @onclick="() => SaveCert()">@buttontext</button>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal" @onclick="() => CertCancel()">Cancel</button>
             </div>
@@ -89,13 +97,17 @@
     [Parameter] public int Id { get; set; }
     [Parameter] public EventCallback<bool> ButtonClicked { get; set; }
 
-    string buttontext = string.Empty;
+    CertForm certform { get; set; } = new CertForm();
     Certifications certinfo { get; set; } = new Certifications();
+    List<Countries> certcountries { get; set; } = new List<Countries>();
+    List<DiveDropdownData> certddd { get; set; } = new List<DiveDropdownData>();
 
     public Guid Guid = Guid.NewGuid();
     public string ModalDisplay = "none;";
     public string ModalClass = "";
     public bool ShowBackdrop = false;
+
+    private string buttontext = string.Empty;
 
     public async void CertOpen(long certId, bool act)
     {
@@ -104,7 +116,11 @@
         if (Act)
         {
             buttontext = "Update";
-            certinfo = await http.GetFromJsonAsync<Certifications>($"api/cert/byCertId?certid={certId}");
+            certform = await http.GetFromJsonAsync<CertForm>($"api/cert/byCertId?certid={certId}");
+
+            certinfo = certform.Certification;
+            certcountries = certform.ListCertCountries;
+            certddd = certform.ListCertDDD;
         }
         else
         {

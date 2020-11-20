@@ -59,7 +59,12 @@
                         <div class="col-6 col-sm-6 col-md-6 col-lg-4">
                             <span class="field-label">Country</span>
                             <br />
-                            <input type="number" title="Country" class="form-control form-control-lg" @bind="@location.CountryID" />
+                            <select class="form-control form-control-lg" @bind="@location.CountryID" title="Country">
+                                @foreach (Countries item in loccountries)
+                                {
+                                    <option value="@item.Id">@item.Country</option>
+                                }
+                            </select>
                             <ValidationMessage For="@(() => location.CountryID)" />
                         </div>
                     </div>
@@ -80,7 +85,12 @@
 }
 
 @code {
+    [Parameter] public EventCallback<bool> ButtonClicked { get; set; }
+    [Parameter] public decimal Lat { get; set; }
+    [Parameter] public decimal Long { get; set; }
 
+    LocationForm locform { get; set; } = new LocationForm();
+    List<Countries> loccountries { get; set; } = new List<Countries>();
     Locations location { get; set; } = new Locations();
 
     public Guid Guid = Guid.NewGuid();
@@ -90,14 +100,17 @@
 
     public async void LocationOpen(long Id)
     {
+        locform = await http.GetFromJsonAsync<LocationForm>($"api/location/byLocId?id={Id}");
+
+        location = locform.Location;
+        loccountries = locform.ListLocCountries;
+
         if (Id == -1)
         {
             location = new Locations();
         }
-        else
-        {
-            location = await http.GetFromJsonAsync<Locations>($"api/location/byId?id={Id}");
-        }
+
+        await ButtonClicked.InvokeAsync(true);
 
         ModalDisplay = "block;";
         ModalClass = "Show";
@@ -105,36 +118,40 @@
         StateHasChanged();
     }
 
-    public void LocationCancel()
+    protected async Task LocationCancel()
     {
+        await ButtonClicked.InvokeAsync(false);
+
         ModalDisplay = "none";
         ModalClass = "";
         ShowBackdrop = false;
         StateHasChanged();
     }
 
-    [Parameter] public decimal Lat { get; set; }
-    [Parameter] public decimal Long { get; set; }
-
     private async void GetGeoLocation()
     {
         string getgeolocaion = await js.InvokeAsync<string>("requestPosition");
 
-        if(getgeolocaion != string.Empty)
+        if(!string.IsNullOrEmpty(getgeolocaion))
         {
             string[] geoloc = getgeolocaion.Split(',');
-            Lat = StringtoDecimal(geoloc[0]);
-            Long = StringtoDecimal(geoloc[1]);
+            location.Latitude = StringtoDecimal(geoloc[0]);
+            location.Longitude = StringtoDecimal(geoloc[1]);
+        }
+        else
+        {
+            location.Latitude = null;
+            location.Longitude = null;
         }
 
         StateHasChanged();
     }
 
-    private decimal StringtoDecimal(string val)
+    private double StringtoDecimal(string val)
     {
-        decimal dec;
-        if (Decimal.TryParse(val, out dec))
-              dec = 0;
+        double dec;
+        if (double.TryParse(val, out dec))
+            dec = 0;
 
         return dec;
     }
